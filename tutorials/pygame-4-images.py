@@ -30,7 +30,7 @@ CHOCOLATE = (210, 105, 30)
 # Hiervoor gebruiken het pygame object :image:
 # Dit object heeft een functie pg.image.load
 # Omdat de tutorial in de folfer tutorials staat, begint het pad met "../"
-queen_image = pg.image.load("../assets/pieces/W_Queen.png")
+queen_image = pg.image.load("./assets/pieces/W_Queen.png")
 
 # Eerst kleuren we een vierkantje (alsof het een vakje is van een schaakbord)
 rect1 = pg.Rect((100, 240, 42, 42))  # (left,top,width,height)

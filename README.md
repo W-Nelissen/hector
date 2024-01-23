@@ -11,6 +11,7 @@ Project: schaakbot.
 * Adam Idan: status onbekend
 * Abdullah Tahir: INSTALLATIE OK
 * Vivianne Michiels: status onbekend
+* Nuri Eltayeb: status onbekend
 
 ## Te verdelen taken
 * Taak 1: Aanmaken basisstructuur chessboard+pieces: Robin Berger (reeds gedaan want nodig voor alle volgende taken)
