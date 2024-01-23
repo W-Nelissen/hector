@@ -10,7 +10,8 @@ Project: schaakbot.
 * Chems Dahhane: installatie OK
 * Adam Idan: status onbekend
 * Abdullah Tahir: INSTALLATIE OK
-* Vivianne Michiels: status onbekend
+* Vivianne Michiels: INSTALLATIE OK
+
 
 ## Te verdelen taken
 * Taak 1: Aanmaken basisstructuur chessboard+pieces: Robin Berger (reeds gedaan want nodig voor alle volgende taken)
