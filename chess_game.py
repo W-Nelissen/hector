@@ -4,6 +4,7 @@ from game import Game
 from chess_area_game import GameAreaChessBoard
 from chess_area_history import GameAreaHistory
 from chess_area_players import GameAreaPlayers
+from chess_area_SANDBOX import GameAreaSANDBOX
 from chess_area_controls import GameAreaControls
 from chess_board import ChessBoard
 
@@ -21,6 +22,15 @@ class ChessGame(Game):
         self.history_area = GameAreaHistory(self, HIST_RECT)
         self.player_area = GameAreaPlayers(self, PLAYER_RECT)
         self.control_area = GameAreaControls(self, CONTROL_RECT)
+        # Voeg areas toe aan event handling
+        self.evtObjects.append(self.chessboard_area)
+        self.evtObjects.append(self.history_area)
+        self.evtObjects.append(self.player_area)
+        self.evtObjects.append(self.control_area)
+
+        if SHOW_SANDBOX:
+            self.SANDBOX_area = GameAreaSANDBOX(self, SANDBOX_RECT)
+            self.evtObjects.append(self.SANDBOX_area)
 
         # We definieren de datastructuren van ons spel
         self.chess_board = ChessBoard()
@@ -42,15 +52,4 @@ class ChessGame(Game):
         self.history_area.draw()
         self.player_area.draw()
         self.control_area.draw()
-
-    """
-    Voorbeeld hoe event functies doorgegeven worden naar lager niveau
-    Elk object moet zelf beslissen welke onderliggende objecten deze functies doorkrijgen
-    """
-    def MOUSEBUTTONDOWN(self, mouse_x, mouse_y):
-        self.chessboard_area.MOUSEBUTTONDOWN(mouse_x, mouse_y)
-        self.history_area.MOUSEBUTTONDOWN(mouse_x, mouse_y)
-        self.player_area.MOUSEBUTTONDOWN(mouse_x, mouse_y)
-        self.control_area.MOUSEBUTTONDOWN(mouse_x, mouse_y)
-
-
+        self.SANDBOX_area.draw()

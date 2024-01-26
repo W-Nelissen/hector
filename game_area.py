@@ -7,7 +7,7 @@ class GameArea(EvtObj):
     """
     Generieke klasse die een deel van het scherm afbakend
     Alle schermgebieden worden hiervan afgeleid
-    GameArea is afgeleid van EvtObj zodat het user events kan ontvangen
+    GameArea is afgeleid van EvtObj zodat het user-events kan ontvangen
     """
     def __init__(self, game, r):
         # :param game: wordt mee doorgegeven zodat we toegang hebben tot alle spelparameters en structuren

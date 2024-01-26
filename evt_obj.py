@@ -1,5 +1,5 @@
 from colors import *
-
+import pygame as pg
 """"
  EvtObj handles standard events.
     Buttons
@@ -32,18 +32,24 @@ class EvtObj:
         self.mod_ctrl_right = False
         self.mod_alt = False
 
+        self.evtObjects = []
+
     # checks if click was within object. Needs override
     def isMouseWithin(self, mouse_x, mouse_y):
         return False
 
     def MOUSEWHEEL(self, _wheel):
         pass
+
     def MOUSEBUTTONDOWN(self, mouse_x, mouse_y):
-        pass
+        for obj in self.evtObjects:
+            obj.MOUSEBUTTONDOWN(mouse_x, mouse_y)
     def MOUSEBUTTONUP(self, mouse_x, mouse_y):
-        pass
+        for obj in self.evtObjects:
+            obj.MOUSEBUTTONUP(mouse_x, mouse_y)
     def MOUSEMOTION(self, mouse_x, mouse_y):
-        pass
+        for obj in self.evtObjects:
+            obj.MOUSEMOTION(mouse_x, mouse_y)
 
     def action_hovering(self):
         pass
@@ -53,3 +59,44 @@ class EvtObj:
         pass
     def action_clicked(self):
         pass
+
+class EvtBtn(EvtObj):
+    def __init__(self, x, y, w, h, name, action):
+        EvtObj.__init__(self)
+        self.rect = pg.Rect((x, y, w, h))
+        self.name = name
+        self.action = action
+
+    def isMouseWithin(self, mouse_x, mouse_y):
+        return self.rect.left < mouse_x < self.rect.right and self.rect.top < mouse_y < self.rect.bottom
+
+    def MOUSEBUTTONDOWN(self, mouse_x, mouse_y):
+        self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
+        if self.isWithin:
+            self.isPressed = True
+
+    def MOUSEBUTTONUP(self, mouse_x, mouse_y):
+        self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
+        if self.isWithin and self.isPressed:
+            self.action_clicked()
+        self.isPressed = False
+
+    def MOUSEMOTION(self, mouse_x, mouse_y):
+        self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
+
+    def write_string(self, win, strText, text_color, x, y):
+        self.font = pg.font.Font("freesansbold.ttf", 24)
+        text_surface = self.font.render(strText, True, text_color)
+        win.blit(text_surface, (x, y))
+
+    def draw(self, win):
+        bg_color = BLUE
+        fg_color = RED
+        txt_color = RED
+        if self.isPressed and self.isWithin:
+            fg_color = BLUE
+            bg_color = RED
+            txt_color = BLUE
+        pg.draw.rect(win, bg_color, self.rect, 0)
+        pg.draw.rect(win, fg_color, self.rect, 4)
+        self.write_string(win, self.name, txt_color, self.rect.left + 4, self.rect.top + 4)
