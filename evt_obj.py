@@ -32,15 +32,20 @@ class EvtObj:
         self.mod_ctrl_right = False
         self.mod_alt = False
 
+        self.rect = None
+
         self.evtObjects = []
 
     # checks if click was within object. Needs override
     def isMouseWithin(self, mouse_x, mouse_y):
-        return False
+        if self.rect is not None:
+            return self.rect.left < mouse_x < self.rect.right and self.rect.top < mouse_y < self.rect.bottom
+        else:
+            return False
 
     def MOUSEWHEEL(self, _wheel):
-        pass
-
+        for obj in self.evtObjects:
+            obj.MOUSEWHEEL(_wheel)
     def MOUSEBUTTONDOWN(self, mouse_x, mouse_y):
         for obj in self.evtObjects:
             obj.MOUSEBUTTONDOWN(mouse_x, mouse_y)
@@ -61,19 +66,25 @@ class EvtObj:
         pass
 
 class EvtBtn(EvtObj):
-    def __init__(self, x, y, w, h, name, action):
-        EvtObj.__init__(self)
+    def __init__(self, x, y, w, h, name, action, has_select=False, has_dragging=False):
+        EvtObj.__init__(self, has_select, has_dragging)
         self.rect = pg.Rect((x, y, w, h))
         self.name = name
         self.action = action
-
-    def isMouseWithin(self, mouse_x, mouse_y):
-        return self.rect.left < mouse_x < self.rect.right and self.rect.top < mouse_y < self.rect.bottom
+        self.x1 = 0
+        self.y1 = 0
+        self.x2 = 0
+        self.y2 = 0
 
     def MOUSEBUTTONDOWN(self, mouse_x, mouse_y):
         self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
         if self.isWithin:
             self.isPressed = True
+            self.x1 = mouse_x
+            self.y1 = mouse_y
+            self.x2 = mouse_x
+            self.y2 = mouse_y
+
 
     def MOUSEBUTTONUP(self, mouse_x, mouse_y):
         self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
@@ -83,6 +94,8 @@ class EvtBtn(EvtObj):
 
     def MOUSEMOTION(self, mouse_x, mouse_y):
         self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
+        self.x2 = mouse_x
+        self.y2 = mouse_y
 
     def write_string(self, win, strText, text_color, x, y):
         self.font = pg.font.Font("freesansbold.ttf", 24)
@@ -100,3 +113,4 @@ class EvtBtn(EvtObj):
         pg.draw.rect(win, bg_color, self.rect, 0)
         pg.draw.rect(win, fg_color, self.rect, 4)
         self.write_string(win, self.name, txt_color, self.rect.left + 4, self.rect.top + 4)
+

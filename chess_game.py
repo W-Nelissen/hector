@@ -23,6 +23,7 @@ class ChessGame(Game):
         self.player_area = GameAreaPlayers(self, PLAYER_RECT)
         self.control_area = GameAreaControls(self, CONTROL_RECT)
         # Voeg areas toe aan event handling
+        # Hierdoor worden alle muisacties doorgegeven naar de onderliggende objecten
         self.evtObjects.append(self.chessboard_area)
         self.evtObjects.append(self.history_area)
         self.evtObjects.append(self.player_area)
