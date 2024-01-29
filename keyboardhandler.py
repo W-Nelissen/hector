@@ -46,19 +46,22 @@ class KeyboardHandler:
             self.add_key(key, action)
         return KEY_SET
 
+    # only used with listener, not needed if pygame is used
     def on_key_press(self, key):
         #  print(f'Key {key} pressed')
         for k in self.keys:
             if str(k.key) == str(key):
                 k.down = True
 
+    # only used with listener, not needed if pygame is used
     def on_key_release(self, key):
         # print(f'Key {key} released')
         for k in self.keys:
             if str(k.key) == str(key):
                 k.down = False
 
-    def active(self, action):
+    # only used with pygame, not needed if listener is used
+    def is_active(self, action):
         keys = pg.key.get_pressed()
         for k in self.keys:
             if k.action == action:

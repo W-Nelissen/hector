@@ -14,7 +14,8 @@ class Game(EvtObj):
         self.clock = clock
         self.keep_running = True
         self.last_cycle = t.time()
-        self.action_keys = KeyboardHandler()
+        # action_keys will collect a series of keys with action,and will check if they are pressed
+        self.key_handler = KeyboardHandler()
     def handle_events(self):
         """
         Deze functie zet pygame events om naar onze eigen handige routines

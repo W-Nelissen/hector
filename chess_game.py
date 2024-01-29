@@ -46,6 +46,7 @@ class ChessGame(Game):
         self.win.set_clip((0, 0, WINDOW_WIDTH, WINDOW_HEIGHT))
         self.win.fill(GAME_BG_COLOR)
 
+
     def draw(self):
         # Dit object vraagt aan de deelobjecten om zichzelf te tekenen
         self.clear_window()
