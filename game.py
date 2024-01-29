@@ -2,25 +2,29 @@ from game_constants import *
 from evt_obj import EvtObj
 import time as t
 import pygame as pg
-
+from keyboardhandler import KeyboardHandler
 """
 Generieke klasse Game die basisfunctionaliteiten voor een game beheert
 Heeft niets te maken met de specifieke functionaliteiten zoals die van van een schaakspel
 """
 class Game(EvtObj):
     def __init__(self, window, clock):
-        EvtObj.__init__(self)
+        EvtObj.__init__(self, self)
         self.win = window
         self.clock = clock
         self.keep_running = True
         self.last_cycle = t.time()
+        self.action_keys = KeyboardHandler()
     def handle_events(self):
         """
         Deze functie zet pygame events om naar onze eigen handige routines
         Je kan dan bijvoorbeeld de functie self.MOUSEBUTTONDOWN(x, y) oproepen,
         zonder te weten hoe de pygame eventhandler dit opslaat.
         """
-        # Keyboard Events are already filtered out
+
+        # Keyboard Events are handled separately
+        self.handle_keyboard_events()
+
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.keep_running = False

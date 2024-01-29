@@ -12,7 +12,7 @@ class GameArea(EvtObj):
     def __init__(self, game, r):
         # :param game: wordt mee doorgegeven zodat we toegang hebben tot alle spelparameters en structuren
         # :param r: geeft de rechthoek aan waarbinnen we tekenen (clippen indien nodig)
-        EvtObj.__init__(self)
+        EvtObj.__init__(self, game)
         self.game = game
         self.rect = pg.Rect(r)
 

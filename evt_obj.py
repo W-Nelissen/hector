@@ -8,8 +8,9 @@ import pygame as pg
 
 """
 class EvtObj:
-    def __init__(self, has_select=False, has_dragging=False):
+    def __init__(self, parent, has_select=False, has_dragging=False):
         #all features are turned off by default, but adding them is just adding parameters
+        self.parent = parent
         self.has_select = has_select
         self.has_dragging = has_dragging
 
@@ -56,6 +57,10 @@ class EvtObj:
         for obj in self.evtObjects:
             obj.MOUSEMOTION(mouse_x, mouse_y)
 
+    def handle_keyboard_events(self):
+        for obj in self.evtObjects:
+            obj.handle_keyboard_events()
+
     def action_hovering(self):
         pass
     def action_dragging(self):
@@ -66,8 +71,9 @@ class EvtObj:
         pass
 
 class EvtBtn(EvtObj):
-    def __init__(self, x, y, w, h, name, action, has_select=False, has_dragging=False):
-        EvtObj.__init__(self, has_select, has_dragging)
+    def __init__(self, parent, x, y, w, h, name, action, has_select=False, has_dragging=False):
+        EvtObj.__init__(self, parent, has_select, has_dragging)
+        self.parent = parent
         self.rect = pg.Rect((x, y, w, h))
         self.name = name
         self.action = action
@@ -85,7 +91,6 @@ class EvtBtn(EvtObj):
             self.x2 = mouse_x
             self.y2 = mouse_y
 
-
     def MOUSEBUTTONUP(self, mouse_x, mouse_y):
         self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
         if self.isWithin and self.isPressed:
@@ -96,6 +101,18 @@ class EvtBtn(EvtObj):
         self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
         self.x2 = mouse_x
         self.y2 = mouse_y
+
+    def action_clicked(self):
+        if self.parent:
+            self.parent.execute_action(self.action)
+        else:
+            self.execute()
+
+    def execute_action(self, action):
+        pass
+
+    def execute(self):
+        pass
 
     def write_string(self, win, strText, text_color, x, y):
         self.font = pg.font.Font("freesansbold.ttf", 24)
