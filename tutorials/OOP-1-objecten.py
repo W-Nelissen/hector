@@ -36,6 +36,8 @@ class Persoon:
         return int((self.gewicht*10000)/(self.lengte*self.lengte))
 
 
+
+
 Robin = Persoon("Berger", "Robin", "2006-01-12", 182, 55)		# zonder self
 Batman = Persoon("Wayne", "Bruce", "2016-02-23", 175, 75)		# zonder self
 
