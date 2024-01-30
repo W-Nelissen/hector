@@ -52,6 +52,7 @@ win.blit(scaled_queen_image, rect1)
 
 pg.display.update()
 
+
 keep_running = True
 while keep_running:
     for event in pg.event.get():
