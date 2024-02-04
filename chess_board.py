@@ -6,7 +6,7 @@ import pygame as pg
 DARKSQUARE = 1
 LIGHTSQUARE = 2
 
-
+#test GitHub update
 class BoardSquare:
     def __init__(self, x, y): #x en y gaan van 1 tot 8
         self.x = x
