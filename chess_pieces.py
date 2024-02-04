@@ -14,14 +14,11 @@ class ChessPiece:
         self.extra_capture_moves = []
         self.repeat_moves = False
         self.BW = black_or_white
-        self.image = None
         if black_or_white == CP_BLACK:
             self.image_name = B_name
         else:
             self.image_name = W_name
         self.image_opacity = self.image_name
-
-    def init(self):
         self.image = pg.image.load(self.image_name)
         self.image_opacity = pg.image.load(self.image_name).convert_alpha()
         opacity = 100  # Opaciteitswaarde tussen 0 (transparant) en 255 (ondoorzichtig)
@@ -44,7 +41,7 @@ class ChessPieceKing(ChessPiece):
         self.repeat_moves = False
         # Alle mogelijke moves, zonder rekening te houden met het bord
         self.possible_moves=[(1,0),(1,1),(0,1),(-1,-1),(-1,0),(-1,-1),(0,-1),(1,-1)]
-        self.init()
+
 class ChessPieceQueen(ChessPiece):
     def __init__(self, black_or_white):
         ChessPiece.__init__(self, black_or_white, "assets/pieces/B_Queen.png", "assets/pieces/W_Queen.png")
@@ -53,28 +50,28 @@ class ChessPieceQueen(ChessPiece):
         # Alle mogelijke moves, zonder rekening te houden met het bord
         # Dus hetzelfde als bij de Koning
         self.possible_moves = [(1, 0), (1, 1), (0, 1), (-1, -1), (-1, 0), (-1, -1), (0, -1), (1, -1)]
-        self.init()
+
 class ChessPieceKnight(ChessPiece):
     def __init__(self, black_or_white):
         ChessPiece.__init__(self, black_or_white, "assets/pieces/B_Knight.png", "assets/pieces/W_Knight.png")
         self.repeat_moves = False
         # 8 mogelijke zetten van het paard
         self.possible_moves=[(2, 1),(1,2),(-1, 2),(1,-2),(-2,-1),(-1,-2),(1,-2),(2,-1)]
-        self.init()
+
 class ChessPieceBishop(ChessPiece):
     def __init__(self, black_or_white):
         ChessPiece.__init__(self, black_or_white, "assets/pieces/B_Bishop.png", "assets/pieces/W_Bishop.png")
         self.repeat_moves = True
         # Enkel schuin bewegen
         self.possible_moves = [(1, 1), (-1, 1), (-1, -1), (1, -1)]
-        self.init()
+
 class ChessPieceTower(ChessPiece):
     def __init__(self, black_or_white):
         ChessPiece.__init__(self, black_or_white, "assets/pieces/B_Tower.png", "assets/pieces/W_Tower.png")
         self.repeat_moves = True
         # Enkel recht bewegen
         self.possible_moves=[(0,-1),(1,0),(0,1),(-1,0)]
-        self.init()
+
 class ChessPiecePawn(ChessPiece):
     def __init__(self, black_or_white):
         ChessPiece.__init__(self, black_or_white, "assets/pieces/B_Pawn.png", "assets/pieces/W_Pawn.png")
@@ -87,4 +84,3 @@ class ChessPiecePawn(ChessPiece):
         self.capture_moves = [(1, 1),(1, -1)]
         # En passant slaan
         self.extra_capture_moves = [(1, 1),(1, -1)]
-        self.init()
