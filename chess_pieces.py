@@ -1,6 +1,7 @@
 from colors import *
 import pygame as pg
 
+
 CP_WHITE = 1
 CP_BLACK = 2
 class ChessPiece:
