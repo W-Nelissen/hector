@@ -3,10 +3,9 @@ from game_constants import *
 import chess_pieces as cp
 import pygame as pg
 
-# Test Github Commit
-
 DARKSQUARE = 1
 LIGHTSQUARE = 2
+
 
 class BoardSquare:
     def __init__(self, x, y): #x en y gaan van 1 tot 8
