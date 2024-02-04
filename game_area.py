@@ -16,6 +16,7 @@ class GameArea(EvtObj):
         self.game = game
         self.rect = pg.Rect(r)
 
+
     def frame_area(self):
         # Tekent een kader rond de game area
         pg.draw.rect(self.game.win, BLUE, self.rect,4)
