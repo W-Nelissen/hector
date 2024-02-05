@@ -6,7 +6,7 @@ Project: schaakbot.
 ## developers checking in 
 * Willem Nelissen: INSTALLATIE OK
 * Bintou Barrie: installatie ok
-* Robin Berger: PYCHARM + GIT-interface OK
+* Robin Berger: PC:PYCHARM / Chromebook:VSCode + Git
 * Chems Dahhane: installatie OK
 * Adam Idan: installatie ok
 * Abdullah Tahir: INSTALLATIE OK
