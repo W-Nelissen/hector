@@ -1,5 +1,5 @@
 from game_area import GameArea
-
+import pygame as pg
 
 class GameAreaControls(GameArea):
     def __init__(self, game, r):
@@ -9,3 +9,4 @@ class GameAreaControls(GameArea):
         GameArea.draw(self)
         # Teken hier de controls
         # Save, Open, Quit, ...
+
