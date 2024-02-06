@@ -11,7 +11,7 @@ Project: schaakbot.
 * Adam Idan: installatie ok
 * Abdullah Tahir: INSTALLATIE OK
 * Vivianne Michiels: Installatie OK
-* Nuri TEST
+* Nuri TEST TEST NUMMER 2
 
 ## Te verdelen taken
 * Taak 1: Aanmaken basisstructuur chessboard+pieces: Robin Berger (reeds gedaan want nodig voor alle volgende taken)
