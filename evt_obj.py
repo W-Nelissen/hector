@@ -33,7 +33,7 @@ class EvtObj:
         self.mod_ctrl_right = False
         self.mod_alt = False
 
-        self.rect = None
+        self.rect = pg.Rect(0, 0, 0, 0)
 
         self.evtObjects = []
 

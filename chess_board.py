@@ -1,3 +1,4 @@
+from evt_obj import EvtObj
 from colors import *
 from game_constants import *
 import chess_pieces as cp
@@ -7,11 +8,11 @@ DARKSQUARE = 1
 LIGHTSQUARE = 2
 
 
-class BoardSquare:
+class BoardSquare(EvtObj):
     def __init__(self, x, y): #x en y gaan van 1 tot 8
+        EvtObj.__init__(self, self)
         self.x = x
         self.y = y
-        self.rect = pg.Rect(0, 0, 0, 0)
         if (self.x + self.y) % 2 == 0:
             self.type = LIGHTSQUARE
         else:
