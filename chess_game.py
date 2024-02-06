@@ -1,11 +1,11 @@
 from game_constants import *
 from colors import *
 from game import Game
-from chess_area_game import GameAreaChessBoard
-from chess_area_history import GameAreaHistory
-from chess_area_players import GameAreaPlayers
-from chess_area_SANDBOX import GameAreaSANDBOX
-from chess_area_controls import GameAreaControls
+from game_area_chessboard import GameAreaChessBoard
+from game_area_history import GameAreaHistory
+from game_area_players import GameAreaPlayers
+from game_area_SANDBOX import GameAreaSANDBOX
+from game_area_controls import GameAreaControls
 from chess_board import ChessBoard
 
 """
