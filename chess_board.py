@@ -120,5 +120,7 @@ class ChessBoard:
         #voorlopige rechthoek waar het schaakbord zal komen
         pg.draw.rect(win, RED, self.rect)
 
+        pg.draw.rect(win,BLUE,(400,300,2,2))
+
         """
         """
