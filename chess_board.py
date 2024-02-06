@@ -120,15 +120,7 @@ class ChessBoard:
         #voorlopige rechthoek waar het schaakbord zal komen
         pg.draw.rect(win, RED, self.rect)
 
+        pg.draw.rect(win,BLUE,(400,300,2,2))
+
         """
-        #Je kan alle vakjes aflopen met een dubbele for
-        for x in range(8):
-            for y in range(8):
-                #je laat elk object zichzelf tekenen
-                self.squares[x][y].draw(win)
-        # je kan alle stukken aflopen door de vakjes af te lopen
-        for x in range(8):
-            for y in range(8):
-                if self.squares[x][y].piece:
-                    self.squares[x][y].piece.draw(win)
         """

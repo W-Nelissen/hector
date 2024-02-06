@@ -17,6 +17,8 @@ class ChessSquare(EvtBtn):
             pg.draw.rect(win, B_burlywood, self.rect, 0)
         else:
             pg.draw.rect(win, B_rosybrown, self.rect, 0)
+
+
 class Horse(EvtBtn):
     def __init__(self, parent, x, y):
         EvtBtn.__init__(self, parent, x, y, 44, 44, "", 0,  False, True)
@@ -48,6 +50,7 @@ class Textje(EvtBtn):
 
     def draw(self, win):
         write_string(win, self.name, BLACK, self.rect.left + 4, self.rect.top + 4, 20)
+
 class NamedRect(EvtBtn):
     def __init__(self, parent, x, y, w, h, name):
         EvtBtn.__init__(self,parent,x,y,w,h,name,0)
@@ -60,6 +63,7 @@ class NamedRect(EvtBtn):
 A_HILITE_A = 100001
 A_HILITE_B = 100002
 A_DEMO_CLICK = 100003
+
 class GameAreaSANDBOX(GameArea):
     def __init__(self, game, r):
         GameArea.__init__(self, game, r)
