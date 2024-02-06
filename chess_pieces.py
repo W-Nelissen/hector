@@ -29,8 +29,12 @@ class ChessPiece:
         # De positie is in pixels en moet worden doorgegeven
         # Je kan images gebruiken uit data/pieces/
         # Of je laadt zelf images op in data/pieces/
+        """
+        # altijd eerst kijken of er wel een stuk is
         if self.image:
+        # je kan een image altijd blitten
             win.blit(self.image, self.square.rect)
+        """
 
 class ChessPieceKing(ChessPiece):
     def __init__(self, black_or_white):
