@@ -24,6 +24,10 @@ class ChessPiece:
         opacity = 100  # Opaciteitswaarde tussen 0 (transparant) en 255 (ondoorzichtig)
         self.image_opacity.set_alpha(opacity)
 
+    def setSquare(self, square):
+        self.square = square
+        # self.rect = square.rect
+        
     def draw(self,win):
         # Teken stuk, square_width = de afmeting van het vakje en de positie
         # De positie is in pixels en moet worden doorgegeven
