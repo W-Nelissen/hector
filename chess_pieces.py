@@ -1,10 +1,12 @@
+from evt_obj import EvtObj
 from colors import *
 import pygame as pg
 
 CP_WHITE = 1
 CP_BLACK = 2
-class ChessPiece:
+class ChessPiece(EvtObj):
     def __init__(self, black_or_white, B_name, W_name):
+        EvtObj.__init__(self, self, 0, 0, 0, 0, "", 0) 
         # positie van het schaakstuk (1-8,1-8)
         self.square = None
         # een generiek stuk heeft nog geen moves, elk schaakstuk moet dat zelf invullen
@@ -26,7 +28,7 @@ class ChessPiece:
 
     def setSquare(self, square):
         self.square = square
-        # self.rect = square.rect
+        self.rect = square.rect
         
     def draw(self,win):
         # Teken stuk, square_width = de afmeting van het vakje en de positie
