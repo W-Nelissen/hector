@@ -66,7 +66,7 @@ class GameAreaSANDBOX(GameArea):
 
         # code om button te testen
         self.test_button = EvtBtn(self, self._x(10), self._y(10), self.rect.width - 20, 40, "Klik mij", "DEMO_CLICK")
-        self.evtObjects.append(self.test_button)
+        #self.evtObjects.append(self.test_button)
         self.nr_of_clicks_text = Textje(self, self._x(40), self._y(60), 150, 36, '0')
         self.nr_of_clicks = 0
 
@@ -77,9 +77,9 @@ class GameAreaSANDBOX(GameArea):
             for j in range(3):
                 new_square = ChessSquare(self, self._x(20 + j * 60), self._y(160 + i * 60 + j * 10), 44,44)
                 self.chessSquares.append(new_square)
-                self.evtObjects.append(new_square)
+                self.addEvtObj(new_square)
         self.horse = Horse(self, self._x(20), self._y(160))
-        self.evtObjects.append(self.horse)
+        self.addEvtObj(self.horse)
 
         # code om keyboard te lezen
         self. keyboard_instruction = Textje(self, self._x(10), self._y(360), 150, 36, "Tik 'a' of 'b'")

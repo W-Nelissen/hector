@@ -9,8 +9,8 @@ LIGHTSQUARE = 2
 
 
 class BoardSquare(EvtObj):
-    def __init__(self, x, y): #x en y gaan van 1 tot 8
-        EvtObj.__init__(self, self)
+    def __init__(self, parent, x, y): #x en y gaan van 1 tot 8
+        EvtObj.__init__(self, parent)
         self.x = x
         self.y = y
         if (self.x + self.y) % 2 == 0:
@@ -35,12 +35,13 @@ class BoardSquare(EvtObj):
         piece.square = self
 
 
-class ChessBoard:
+class ChessBoard(EvtObj):
     """
     Het chessboard bevat schaakstukken. We beginnen met een lege array.
     Om snel te starten resetten we het bord bij initialisatie zodat er stukken opstaan
     """
-    def __init__(self):
+    def __init__(self,parent):
+        EvtObj.__init__(self, parent)
         self.margin_x = 20
         self.margin_y = 20
         self.size = 0
@@ -50,7 +51,7 @@ class ChessBoard:
         self.squares = [[None for _ in range(8)] for _ in range(8)]  # Lege 8x8-matrix
         for x in range(8):
             for y in range(8):
-                self.squares[x][y] = BoardSquare(x + 1, y + 1)
+                self.squares[x][y] = BoardSquare(self, x + 1, y + 1)
         self.resize(pg.Rect(GAME_RECT))
         # Een array van de stukken die op het bord staan
         #self.pieces = []
@@ -77,6 +78,7 @@ class ChessBoard:
 
     def GetSquare(self, x, y):
         return self.squares[x - 1][y - 1]
+    
     def AddPiece(self, x, y, piece):
 
         square = self.GetSquare(x, y)
@@ -90,30 +92,30 @@ class ChessBoard:
         self.ClearBoard()
 
         # We plaatsen alle zwarte stukken bovenaan
-        self.AddPiece( 1, 8, cp.ChessPieceTower(cp.CP_BLACK))
-        self.AddPiece( 2, 8, cp.ChessPieceKnight(cp.CP_BLACK))
-        self.AddPiece( 3, 8, cp.ChessPieceBishop(cp.CP_BLACK))
-        self.AddPiece( 4, 8, cp.ChessPieceQueen(cp.CP_BLACK))
-        self.AddPiece(5, 8, cp.ChessPieceKing(cp.CP_BLACK))
-        self.AddPiece( 6, 8, cp.ChessPieceBishop(cp.CP_BLACK))
-        self.AddPiece( 7, 8, cp.ChessPieceKnight(cp.CP_BLACK))
-        self.AddPiece( 8, 8, cp.ChessPieceTower(cp.CP_BLACK))
+        self.AddPiece( 1, 8, cp.ChessPieceTower(self,cp.CP_BLACK))
+        self.AddPiece( 2, 8, cp.ChessPieceKnight(self,cp.CP_BLACK))
+        self.AddPiece( 3, 8, cp.ChessPieceBishop(self,cp.CP_BLACK))
+        self.AddPiece( 4, 8, cp.ChessPieceQueen(self,cp.CP_BLACK))
+        self.AddPiece(5, 8, cp.ChessPieceKing(self,cp.CP_BLACK))
+        self.AddPiece( 6, 8, cp.ChessPieceBishop(self,cp.CP_BLACK))
+        self.AddPiece( 7, 8, cp.ChessPieceKnight(self,cp.CP_BLACK))
+        self.AddPiece( 8, 8, cp.ChessPieceTower(self,cp.CP_BLACK))
         # Ook een rij pionnen
         for i in range(1, 9):
-            self.AddPiece(i, 7, cp.ChessPiecePawn(cp.CP_BLACK))
+            self.AddPiece(i, 7, cp.ChessPiecePawn(self,cp.CP_BLACK))
 
         # We plaatsen alle witte stukken onderaan
-        self.AddPiece(1, 1, cp.ChessPieceTower(cp.CP_WHITE))
-        self.AddPiece(2, 1, cp.ChessPieceKnight(cp.CP_WHITE))
-        self.AddPiece(3, 1, cp.ChessPieceBishop(cp.CP_WHITE))
-        self.AddPiece(4, 1, cp.ChessPieceQueen(cp.CP_WHITE))
-        self.AddPiece(5, 1, cp.ChessPieceKing(cp.CP_WHITE))
-        self.AddPiece(6, 1, cp.ChessPieceBishop(cp.CP_WHITE))
-        self.AddPiece(7, 1, cp.ChessPieceKnight(cp.CP_WHITE))
-        self.AddPiece(8, 1, cp.ChessPieceTower(cp.CP_WHITE))
+        self.AddPiece(1, 1, cp.ChessPieceTower(self,cp.CP_WHITE))
+        self.AddPiece(2, 1, cp.ChessPieceKnight(self,cp.CP_WHITE))
+        self.AddPiece(3, 1, cp.ChessPieceBishop(self,cp.CP_WHITE))
+        self.AddPiece(4, 1, cp.ChessPieceQueen(self,cp.CP_WHITE))
+        self.AddPiece(5, 1, cp.ChessPieceKing(self,cp.CP_WHITE))
+        self.AddPiece(6, 1, cp.ChessPieceBishop(self,cp.CP_WHITE))
+        self.AddPiece(7, 1, cp.ChessPieceKnight(self,cp.CP_WHITE))
+        self.AddPiece(8, 1, cp.ChessPieceTower(self,cp.CP_WHITE))
         # Ook een rij witte pionnen
         for i in range(1, 9):
-            self.AddPiece(i, 2, cp.ChessPiecePawn(cp.CP_WHITE))
+            self.AddPiece(i, 2, cp.ChessPiecePawn(self,cp.CP_WHITE))
 
 
     def draw(self,win,r):

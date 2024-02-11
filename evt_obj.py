@@ -36,6 +36,11 @@ class EvtObj:
         self.rect = pg.Rect(0, 0, 0, 0)
 
         self.evtObjects = []
+        if self.parent:
+            self.parent.addEvtObj(self)
+
+    def addEvtObj(self, evtObj):
+        self.evtObjects.append(evtObj)
 
     # checks if click was within object. Needs override
     def isMouseWithin(self, mouse_x, mouse_y):

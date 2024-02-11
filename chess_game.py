@@ -22,19 +22,12 @@ class ChessGame(Game):
         self.history_area = GameAreaHistory(self, HIST_RECT)
         self.player_area = GameAreaPlayers(self, PLAYER_RECT)
         self.control_area = GameAreaControls(self, CONTROL_RECT)
-        # Voeg areas toe aan event handling
-        # Hierdoor worden alle muisacties doorgegeven naar de onderliggende objecten
-        self.evtObjects.append(self.chessboard_area)
-        self.evtObjects.append(self.history_area)
-        self.evtObjects.append(self.player_area)
-        self.evtObjects.append(self.control_area)
 
         if SHOW_SANDBOX:
             self.SANDBOX_area = GameAreaSANDBOX(self, SANDBOX_RECT)
-            self.evtObjects.append(self.SANDBOX_area)
 
         # We definieren de datastructuren van ons spel
-        self.chess_board = ChessBoard()
+        self.chess_board = ChessBoard(self.chessboard_area)
 
     def update_data(self):
         # whatever needs to change (animation,...)
@@ -54,4 +47,5 @@ class ChessGame(Game):
         self.history_area.draw()
         self.player_area.draw()
         self.control_area.draw()
-        self.SANDBOX_area.draw()
+        if SHOW_SANDBOX:
+            self.SANDBOX_area.draw()

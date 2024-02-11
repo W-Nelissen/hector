@@ -9,7 +9,7 @@ Heeft niets te maken met de specifieke functionaliteiten zoals die van van een s
 """
 class Game(EvtObj):
     def __init__(self, window, clock):
-        EvtObj.__init__(self, self)
+        EvtObj.__init__(self, None)
         self.win = window
         self.clock = clock
         self.keep_running = True
