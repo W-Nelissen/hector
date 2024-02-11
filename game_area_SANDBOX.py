@@ -1,4 +1,3 @@
-
 from game_area import GameArea
 from evt_obj import *
 from keyboardhandler import KeyboardHandler
@@ -60,16 +59,13 @@ class NamedRect(EvtBtn):
         pg.draw.rect(win, self.cNormal, self.rect, 0)
         write_string(win, self.name, GREY, self.rect.left + 4, self.rect.top + 4, 20)
 
-A_HILITE_A = 100001
-A_HILITE_B = 100002
-A_DEMO_CLICK = 100003
 
 class GameAreaSANDBOX(GameArea):
     def __init__(self, game, r):
         GameArea.__init__(self, game, r)
 
         # code om button te testen
-        self.test_button = EvtBtn(self, self._x(10), self._y(10), self.rect.width - 20, 40, "Klik mij", A_DEMO_CLICK)
+        self.test_button = EvtBtn(self, self._x(10), self._y(10), self.rect.width - 20, 40, "Klik mij", "DEMO_CLICK")
         self.evtObjects.append(self.test_button)
         self.nr_of_clicks_text = Textje(self, self._x(40), self._y(60), 150, 36, '0')
         self.nr_of_clicks = 0
@@ -87,8 +83,8 @@ class GameAreaSANDBOX(GameArea):
 
         # code om keyboard te lezen
         self. keyboard_instruction = Textje(self, self._x(10), self._y(360), 150, 36, "Tik 'a' of 'b'")
-        self.game.key_handler.set_key(pg.K_a, A_HILITE_A)
-        self.game.key_handler.set_key(pg.K_b, A_HILITE_B)
+        self.game.key_handler.set_key(pg.K_a, "HILITE_A")
+        self.game.key_handler.set_key(pg.K_b, "HILITE_B")
         self.A_pressed = NamedRect(self, self._x(10), self._y(400), 160, 36, "'a' is pressed")
         self.B_pressed = NamedRect(self, self._x(10), self._y(440), 160, 36, "'b' is pressed")
 
@@ -99,16 +95,16 @@ class GameAreaSANDBOX(GameArea):
                 chessPiece.rect.y = chess_square.rect.y
 
     def execute_action(self, action):
-        if action == A_DEMO_CLICK:
+        if action == "DEMO_CLICK":
             self.nr_of_clicks += 1
             self.nr_of_clicks_text.name = str(self.nr_of_clicks)
 
     def handle_keyboard_events(self):
-        if self.game.key_handler.is_active(A_HILITE_A):
+        if self.game.key_handler.is_active("HILITE_A"):
             self.A_pressed.cNormal = GREEN
         else:
             self.A_pressed.cNormal = GREY
-        if self.game.key_handler.is_active(A_HILITE_B):
+        if self.game.key_handler.is_active("HILITE_B"):
             self.B_pressed.cNormal = GREEN
         else:
             self.B_pressed.cNormal = GREY
