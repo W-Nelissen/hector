@@ -98,7 +98,10 @@ class EvtBtn(EvtObj):
 
     def MOUSEBUTTONUP(self, mouse_x, mouse_y):
         self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
-        if self.isWithin and self.isPressed:
+        if self.has_dragging:
+            if self.isPressed:
+                self.action_dragged()
+        elif self.isWithin and self.isPressed:
             self.action_clicked()
         self.isPressed = False
 
@@ -107,6 +110,9 @@ class EvtBtn(EvtObj):
         self.x2 = mouse_x
         self.y2 = mouse_y
 
+    def action_dragged(self):
+        pass
+    
     def action_clicked(self):
         if self.parent:
             self.parent.execute_action(self.action)

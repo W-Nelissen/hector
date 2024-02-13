@@ -29,11 +29,9 @@ class Horse(EvtBtn):
     def getOffsetRect(self, dx, dy):
         return pg.Rect(self.rect.left + dx, self.rect.top + dy, self.rect.width, self.rect.height)
 
-    def MOUSEBUTTONUP(self, mouse_x, mouse_y):
-        if self.isPressed:
-            self.parent.checkMove(self)
-        EvtBtn.MOUSEBUTTONUP(self, mouse_x, mouse_y)
-
+    def action_dragged(self):
+        self.parent.checkMove(self)
+    
     def draw(self, win):
         bg_color = BLUE
         fg_color = RED
