@@ -48,6 +48,18 @@ class EvtObj:
             return self.rect.left < mouse_x < self.rect.right and self.rect.top < mouse_y < self.rect.bottom
         else:
             return False
+        
+    def _x(self, x):
+        if self.rect:
+            return self.rect.left + x
+        else:
+            return x
+
+    def _y(self, y):
+        if self.rect:
+            return self.rect.top + y
+        else:
+            return y
 
     def MOUSEWHEEL(self, _wheel):
         for obj in self.evtObjects:

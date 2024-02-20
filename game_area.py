@@ -21,12 +21,6 @@ class GameArea(EvtObj):
         # Tekent een kader rond de game area
         pg.draw.rect(self.game.win, BLUE, self.rect,4)
 
-    def _x(self, x):
-        return self.rect.left + x
-
-    def _y(self, y):
-        return self.rect.top + y
-
     def draw(self):
         # Indien de afgeleide klasse nog geen draw(self) methode heeft wordt een frame getekend
         self.frame_area()
