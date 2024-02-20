@@ -1,19 +1,23 @@
 from game_area import GameArea
 import pygame as pg
+pg.init()
 import colors
-LTRED = (252, 50, 50)
-DRED = (191, 17, 17)
+
+
+
+
+
+
 class GameAreaControls(GameArea):
     def __init__(self, game, r):
         GameArea.__init__(self, game, r)
 
     def draw(self):
         GameArea.draw(self)
+        rect2 = pg.Rect((40,80,70,67))
+        pg.draw.rect(self.game.win, colors.RED, rect2 , 5)
         # Teken hier de controls
         # Save, Open, Quit, ...
-        rect = pg.Rect((645, 45, 150, 70))
-        pg.draw.rect(self.game.win, LTRED, rect, 0)
-        pg.draw.rect(self.game.win, DRED, rect,4)
-        pg.draw.line(self.game.win,DRED, (rect.left, rect.top), (rect.right, rect.bottom), 4)
+
 
 
