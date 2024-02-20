@@ -18,7 +18,15 @@ class GameAreaPlayers(GameArea):
 
     def draw(self):
         GameArea.draw(self)
-        # Teken hier de Player informatie
-        # Player 1: naam, tijd, ...
-        # Player 2: naam, tijd, ...
 
+
+        JULIET = (188,143,143 )
+        ROMEO= (177,102,102)
+
+        rect1 = pg.Rect((5, 200, 200, 75))  # (left,top,width,height) 
+        pg.draw.rect(self.game.win, JULIET , rect1, 100)
+        
+        rect2 = pg.Rect((5, 200, 200, 50))  # (left,top,width,height) 
+        pg.draw.rect(self.game.win, ROMEO , rect2, 100)
+
+        
