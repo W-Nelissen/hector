@@ -1,13 +1,10 @@
 from colors import *
 import pygame as pg
-""""
- EvtObj handles standard events.
-    Buttons
-    Drag/drop objects
-    ...
 
-"""
 class EvtObj:
+    """
+    A class that handles all events, such as clicking and dragging
+    """
     def __init__(self, parent, has_select=False, has_dragging=False):
         #all features are turned off by default, but adding them is just adding parameters
         self.parent = parent
@@ -42,20 +39,29 @@ class EvtObj:
     def addEvtObj(self, evtObj):
         self.evtObjects.append(evtObj)
 
-    # checks if click was within object. Needs override
     def isMouseWithin(self, mouse_x, mouse_y):
+        """
+        Checks if the click was within an object. Needs override.
+        What do you mean with override?
+        """
         if self.rect is not None:
             return self.rect.left < mouse_x < self.rect.right and self.rect.top < mouse_y < self.rect.bottom
         else:
             return False
         
     def _x(self, x):
+        """
+        What does this function do? How should the user use it?
+        """
         if self.rect:
             return self.rect.left + x
         else:
             return x
 
     def _y(self, y):
+        """
+        What does this function do? How should the user use it?
+        """
         if self.rect:
             return self.rect.top + y
         else:
@@ -88,6 +94,9 @@ class EvtObj:
         pass
 
 class EvtBtn(EvtObj):
+    """
+    Class for buttons.
+    """
     def __init__(self, parent, x, y, w, h, name, action, has_select=False, has_dragging=False):
         EvtObj.__init__(self, parent, has_select, has_dragging)
         self.parent = parent
