@@ -18,3 +18,12 @@ class GameAreaChessBoard(GameArea):
         # left = self.rect[0]
         # top = self.rect[1]
         # pg.draw.rect(self.game.win,BLACK,(self.rect[0],self.rect[1],10,10))
+
+        # tip: gebruik een dubbele for-loop
+        # left = self.rect[0]
+        # top = self.rect[1]
+        # width = 20
+        # height = 20
+        # for row in range(6):
+        #     for col in range(6):
+        #         pg.draw.rect(self.game.win,BLACK,(left+30*row,top+30*col,width,height),2)
