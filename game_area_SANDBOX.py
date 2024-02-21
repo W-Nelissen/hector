@@ -80,7 +80,7 @@ class GameAreaSANDBOX(GameArea):
         self.addEvtObj(self.horse)
 
         # code om keyboard te lezen
-        self. keyboard_instruction = Textje(self, self._x(10), self._y(360), 150, 36, "Tik 'a' of 'b'")
+        self.keyboard_instruction = Textje(self, self._x(10), self._y(360), 150, 36, "Tik 'a' of 'b'")
         self.game.key_handler.set_key(pg.K_a, "HILITE_A")
         self.game.key_handler.set_key(pg.K_b, "HILITE_B")
         self.A_pressed = NamedRect(self, self._x(10), self._y(400), 160, 36, "'a' is pressed")
