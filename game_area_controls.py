@@ -3,6 +3,9 @@ import pygame as pg
 import colors
 LTRED = (252, 50, 50)
 DRED = (191, 17, 17)
+# feedback: definieer alle kleuren mee in de file colors.py en gebruik dan die kleuren
+# op die manier zorg je ervoor dat iedereen dezelfde kleuren gebruikt -> leesbaardere code
+
 class GameAreaControls(GameArea):
     def __init__(self, game, r):
         GameArea.__init__(self, game, r)
