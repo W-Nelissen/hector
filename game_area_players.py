@@ -3,18 +3,20 @@ import pygame as pg
 pg.init()
 win = pg.display.set_mode((1200, 600))
 
-
+# tip: zet alles wat je wil tekenen in de draw functie
+# wat doet dit hier?
 BROWN= ( 132, 94, 66)
 rect1 = pg.Rect((40, 80, 200, 75))  # (left,top,width,height)
 pg.draw.rect(win, BROWN , rect1, 4)
-#feedback: zet alles wat je wil tekenen in de draw functie
 
-"""
+
+
+class GameAreaPlayers(GameArea):
+    """
    Dit is de game area waar alle spelerinformatie wordt getoond 
    player1: name, type, timer, ...
    player2: name, type, timer, ...
-"""
-class GameAreaPlayers(GameArea):
+   """
     def __init__(self, game, r):
         GameArea.__init__(self, game, r)
 
@@ -24,7 +26,7 @@ class GameAreaPlayers(GameArea):
 
         JULIET = (188,143,143 )
         ROMEO= (177,102,102)
-        #feedback: definieer je kleuren in de file colors.py en gebruik die kleuren
+        # tip: definieer je kleuren in de file colors.py en gebruik die kleuren
         # op die manier zorg je ervoor dat iedereen dezelfde kleuren gebruikt -> leesbare code
 
         rect1 = pg.Rect((5, 200, 200, 75))  # (left,top,width,height) 
@@ -32,5 +34,11 @@ class GameAreaPlayers(GameArea):
         
         rect2 = pg.Rect((5, 200, 200, 50))  # (left,top,width,height) 
         pg.draw.rect(self.game.win, ROMEO , rect2, 100)
+
+        # tip 2: self.rect bevat de coördinaten van de linkerbovenhoek. Die kan je opslaan in een variabelen om er verder mee te rekenen
+        # vb/ 
+        # left = self.rect[0]
+        # top = self.rect[1]
+        # pg.draw.rect(self.game.win,BLACK,(self.rect[0],self.rect[1],10,10))
 
         
