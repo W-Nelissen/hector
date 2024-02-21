@@ -96,6 +96,13 @@ class EvtObj:
 class EvtBtn(EvtObj):
     """
     Class for buttons.
+    Parameters:
+    parent: use 'self'
+    x, y: coördinates of top-left
+    w: width
+    h: height
+    name: text on the button
+    action: (@Robin: what should the user provide here?)
     """
     def __init__(self, parent, x, y, w, h, name, action, has_select=False, has_dragging=False):
         EvtObj.__init__(self, parent, has_select, has_dragging)
