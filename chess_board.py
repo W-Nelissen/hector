@@ -1,4 +1,4 @@
-from evt_obj import EvtObj
+from event_handler import EventHandler
 from colors import *
 from game_constants import *
 import chess_pieces as cp
@@ -8,9 +8,9 @@ DARKSQUARE = 1
 LIGHTSQUARE = 2
 
 
-class BoardSquare(EvtObj):
+class BoardSquare(EventHandler):
     def __init__(self, parent, x, y): #x en y gaan van 1 tot 8
-        EvtObj.__init__(self, parent)
+        EventHandler.__init__(self, parent)
         self.x = x
         self.y = y
         if (self.x + self.y) % 2 == 0:
@@ -35,13 +35,13 @@ class BoardSquare(EvtObj):
         piece.square = self
 
 
-class ChessBoard(EvtObj):
+class ChessBoard(EventHandler):
     """
     Het chessboard bevat schaakstukken. We beginnen met een lege array.
     Om snel te starten resetten we het bord bij initialisatie zodat er stukken opstaan
     """
     def __init__(self,parent):
-        EvtObj.__init__(self, parent)
+        EventHandler.__init__(self, parent)
         self.margin_x = 20
         self.margin_y = 20
         self.size = 0

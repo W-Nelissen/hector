@@ -2,7 +2,7 @@ from game_area import GameArea
 import pygame as pg
 from colors import *
 
-from evt_obj import EvtBtn as Button
+from event_handler import Button as Button
 
 LTRED = (252, 50, 50)
 DRED = (191, 17, 17)

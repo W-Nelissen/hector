@@ -1,12 +1,12 @@
-from evt_obj import EvtBtn
+from event_handler import Button
 from colors import *
 import pygame as pg
 
 CP_WHITE = 1
 CP_BLACK = 2
-class ChessPiece(EvtBtn):
+class ChessPiece(Button):
     def __init__(self, parent, black_or_white, B_name, W_name):
-        EvtBtn.__init__(self, parent, 0, 0, 0, 0, "", 0) 
+        Button.__init__(self, parent, 0, 0, 0, 0, "", 0) 
         # positie van het schaakstuk (1-8,1-8)
         self.square = None
         # een generiek stuk heeft nog geen moves, elk schaakstuk moet dat zelf invullen

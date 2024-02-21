@@ -1,9 +1,9 @@
 from game_constants import *
 from colors import *
-from evt_obj import EvtObj
+from event_handler import EventHandler
 import pygame as pg
 
-class GameArea(EvtObj):
+class GameArea(EventHandler):
     """
     Generieke klasse die een deel van het scherm afbakend
     Alle schermgebieden worden hiervan afgeleid
@@ -12,7 +12,7 @@ class GameArea(EvtObj):
     def __init__(self, game, r):
         # :param game: wordt mee doorgegeven zodat we toegang hebben tot alle spelparameters en structuren
         # :param r: geeft de rechthoek aan waarbinnen we tekenen (clippen indien nodig)
-        EvtObj.__init__(self, game)
+        EventHandler.__init__(self, game)
         self.game = game
         self.rect = pg.Rect(r)
 

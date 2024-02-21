@@ -1,5 +1,5 @@
 from game_constants import *
-from evt_obj import EvtObj
+from event_handler import EventHandler
 import time as t
 import pygame as pg
 from keyboardhandler import KeyboardHandler
@@ -7,9 +7,9 @@ from keyboardhandler import KeyboardHandler
 Generieke klasse Game die basisfunctionaliteiten voor een game beheert
 Heeft niets te maken met de specifieke functionaliteiten zoals die van van een schaakspel
 """
-class Game(EvtObj):
+class Game(EventHandler):
     def __init__(self, window, clock):
-        EvtObj.__init__(self, None)
+        EventHandler.__init__(self, None)
         self.win = window
         self.clock = clock
         self.keep_running = True

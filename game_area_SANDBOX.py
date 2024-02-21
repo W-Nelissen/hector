@@ -1,5 +1,5 @@
 from game_area import GameArea
-from evt_obj import *
+from event_handler import *
 from keyboardhandler import KeyboardHandler
 
 def write_string( win, strText, text_color, x, y, size):
@@ -7,9 +7,9 @@ def write_string( win, strText, text_color, x, y, size):
     text_surface = font.render(strText, True, text_color)
     win.blit(text_surface, (x, y))
 
-class ChessSquare(EvtBtn):
+class ChessSquare(Button):
     def __init__(self, parent, x, y, w, h):
-        EvtBtn.__init__(self, parent,x, y, w, h, "", 0, False, False)
+        Button.__init__(self, parent,x, y, w, h, "", 0, False, False)
 
     def draw(self, win):
         if self.isWithin:
@@ -18,9 +18,9 @@ class ChessSquare(EvtBtn):
             pg.draw.rect(win, B_rosybrown, self.rect, 0)
 
 
-class Horse(EvtBtn):
+class Horse(Button):
     def __init__(self, parent, x, y):
-        EvtBtn.__init__(self, parent, x, y, 44, 44, "", 0,  False, True)
+        Button.__init__(self, parent, x, y, 44, 44, "", 0,  False, True)
         self.horse_image = pg.image.load("assets/pieces/W_Knight.png")
         self.horse_image_opacity = pg.image.load("assets/pieces/W_Knight.png").convert_alpha()
         opacity = 100  # Opaciteitswaarde tussen 0 (transparant) en 255 (ondoorzichtig)
@@ -41,16 +41,16 @@ class Horse(EvtBtn):
         else:
             win.blit(self.horse_image, self.rect)
 
-class Textje(EvtBtn):
+class Textje(Button):
     def __init__(self, parent, x, y, w, h, name):
-        EvtBtn.__init__(self,parent, x,y,w,h,name,0)
+        Button.__init__(self,parent, x,y,w,h,name,0)
 
     def draw(self, win):
         write_string(win, self.name, BLACK, self.rect.left + 4, self.rect.top + 4, 20)
 
-class NamedRect(EvtBtn):
+class NamedRect(Button):
     def __init__(self, parent, x, y, w, h, name):
-        EvtBtn.__init__(self,parent,x,y,w,h,name,0)
+        Button.__init__(self,parent,x,y,w,h,name,0)
         self.cNormal = GREEN
 
     def draw(self, win):
@@ -63,7 +63,7 @@ class GameAreaSANDBOX(GameArea):
         GameArea.__init__(self, game, r)
 
         # code om button te testen
-        self.test_button = EvtBtn(self, self._x(10), self._y(10), self.rect.width - 20, 40, "Klik mij", "DEMO_CLICK")
+        self.test_button = Button(self, self._x(10), self._y(10), self.rect.width - 20, 40, "Klik mij", "DEMO_CLICK")
         #self.evtObjects.append(self.test_button)
         self.nr_of_clicks_text = Textje(self, self._x(40), self._y(60), 150, 36, '0')
         self.nr_of_clicks = 0
