@@ -4,6 +4,10 @@ import pygame as pg
 class EvtObj:
     """
     A class that handles all events, such as clicking and dragging
+    Parameters:
+    parent: use 'self' here when defining the object
+    has_select: ??
+    has_dragging: ??
     """
     def __init__(self, parent, has_select=False, has_dragging=False):
         #all features are turned off by default, but adding them is just adding parameters
@@ -97,7 +101,7 @@ class EvtBtn(EvtObj):
     """
     Class for buttons.
     Parameters:
-    parent: use 'self'
+    parent: use 'self' here when defining the object
     x, y: coördinates of top-left
     w: width
     h: height
