@@ -1,7 +1,6 @@
 from colors import *
 from game_area import GameArea
 import pygame as pg
-from evt_obj import EvtBtn as Button
 
 class GameAreaChessBoard(GameArea):
     def __init__(self, game, r):
