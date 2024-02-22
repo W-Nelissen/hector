@@ -3,22 +3,21 @@ from event_handler import EventHandler
 import time as t
 import pygame as pg
 from keyboardhandler import KeyboardHandler
-"""
-Generieke klasse Game die basisfunctionaliteiten voor een game beheert
-Heeft niets te maken met de specifieke functionaliteiten zoals die van van een schaakspel
-"""
 class Game(EventHandler):
+    """
+    Implementeert basisfunctionaliteiten voor een generiek game
+    Heeft niets te maken met specifieke functionaliteiten zoals die van een schaakspel
+    """
     def __init__(self, window, clock):
         EventHandler.__init__(self, None)
         self.win = window
         self.clock = clock
         self.keep_running = True
         self.last_cycle = t.time()
-        # action_keys will collect a series of keys with action,and will check if they are pressed
         self.key_handler = KeyboardHandler()
     def handle_events(self):
         """
-        Deze functie zet pygame events om naar onze eigen handige routines
+        Zet pygame events om naar onze eigen handige routines
         Je kan dan bijvoorbeeld de functie self.MOUSEBUTTONDOWN(x, y) oproepen,
         zonder te weten hoe de pygame eventhandler dit opslaat.
         """
@@ -51,7 +50,7 @@ class Game(EventHandler):
 
     # execute_cycle is typically called from the main loop
     # execute_cycle can be called from 'background' routine like an AI-learning cycle
-    # we can then play the game while the AI learns in the background
+    #   - we can then play the game while the AI learns in the background
     def execute_cycle(self):
         self.last_cycle = t.time()
         self.handle_events()
@@ -64,6 +63,9 @@ class Game(EventHandler):
             pg.display.update()
             self.clock.tick(FRAME_RATE)
 
+    # execute_from_background must be called from 'background' routine like an AI-learning cycle
+    # if not called, the background routine locks the user out.
+    # call frequency must be higher than FRAME_RATE to avoid lagging.
     def execute_from_background(self):
         elapsed_time = t.time() - self.last_cycle
         if elapsed_time * FRAME_RATE > 1:

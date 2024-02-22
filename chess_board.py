@@ -4,6 +4,7 @@ from game_constants import *
 import chess_pieces as cp
 import pygame as pg
 
+# Een schaakbord heeft donkere en lichte vakjes
 DARKSQUARE = 1
 LIGHTSQUARE = 2
 
@@ -37,8 +38,8 @@ class BoardSquare(EventHandler):
 
 class ChessBoard(EventHandler):
     """
-    Het chessboard bevat schaakstukken. We beginnen met een lege array.
-    Om snel te starten resetten we het bord bij initialisatie zodat er stukken opstaan
+    Het chessboard bevat vakjes (BoardSquare). 
+    Een BoardSquare kan 1 schaakstuk bevatten (ChessPiece).
     """
     def __init__(self,parent):
         EventHandler.__init__(self, parent)
@@ -52,13 +53,17 @@ class ChessBoard(EventHandler):
         for x in range(8):
             for y in range(8):
                 self.squares[x][y] = BoardSquare(self, x + 1, y + 1)
-        self.resize(pg.Rect(GAME_RECT))
-        # Een array van de stukken die op het bord staan
-        #self.pieces = []
 
+        # Wanneer de game area met het schaakbord wordt vergroot of verkleind moet de afmetingen van het schaakbord worden herrekend
+        # We roepen die functie ook op bij de aanmaak van het schaakbord
+        self.resize(pg.Rect(GAME_RECT))
+        # Om snel te starten resetten we het bord bij initialisatie zodat er stukken opstaan
         self.resetBoard()
 
     def resize(self, r):
+        """
+        r: Rect waarbinnen het schaakbord moet worden getekend
+        """
         if r.height - 2 * self.margin_y >= r.width - 2 * self.margin_x:
             self.size = r.width - 2 * self.margin_x
         else:
@@ -72,15 +77,12 @@ class ChessBoard(EventHandler):
                 self.squares[x][y].rect.height, self.squares[x][y].rect.width = size, size
 
     def ClearBoard(self):
-        # Een 8x8 matrix maken waar elk vakje leeg is (None bevat)
-        #self.squares = [[None for _ in range(8)] for _ in range(8)]
         pass
 
     def GetSquare(self, x, y):
         return self.squares[x - 1][y - 1]
     
     def AddPiece(self, x, y, piece):
-
         square = self.GetSquare(x, y)
         square.setPiece(piece)
 
@@ -122,8 +124,14 @@ class ChessBoard(EventHandler):
         self.resize(r)
         #voorlopige rechthoek waar het schaakbord zal komen
         pg.draw.rect(win, RED, self.rect)
-
         pg.draw.rect(win,BLUE,(400,300,2,2))
 
-        """
-        """
+        # Je moet nu de vakjes tekenen.
+        # Je kan daartoe een dubbele for-loop gebruiken.
+        # Je moet nu de vakjes tekenen.
+        # for x in range(8):
+        #    for y in range(8):
+        # Gebruik steeds de GetSquare(x,y) functie om een vakje te krijgen                 
+
+        # Vervolgens moet je de schaakstukken tekenen.
+        # Overloop de vakjes en teken het schaakstuk dat erop staat.

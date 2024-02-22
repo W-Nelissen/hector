@@ -5,9 +5,9 @@ import pygame as pg
 
 class GameArea(EventHandler):
     """
-    Generieke klasse die een deel van het scherm afbakend
-    Alle schermgebieden worden hiervan afgeleid
-    GameArea is afgeleid van EvtObj zodat het user-events kan ontvangen
+    Generieke klasse die een deel van het scherm afbakent
+    -  Alle schermgebieden (game areas) worden hiervan afgeleid
+    -  Afgeleid van EvtentHandler zodat het user-events worden doorgegeven aan de areas
     """
     def __init__(self, game, r):
         # :param game: wordt mee doorgegeven zodat we toegang hebben tot alle spelparameters en structuren
@@ -18,9 +18,15 @@ class GameArea(EventHandler):
 
 
     def frame_area(self):
-        # Tekent een kader rond de game area
+        # Hier kan je alles tekenen dat gemeenschappelijk is voor een game area
+        # - Kader
+        # - Achtergrond patroon
+
+        # Teken een kader rond de game area
         pg.draw.rect(self.game.win, BLUE, self.rect,4)
 
     def draw(self):
         # Indien de afgeleide klasse nog geen draw(self) methode heeft wordt een frame getekend
+        # Indien de afgeleide klasse wel een draw(self) methode heeft 
+        #    kan je daar GameArea.draw(self) oproepen voor je extra dingen tekent
         self.frame_area()

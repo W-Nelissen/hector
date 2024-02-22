@@ -8,12 +8,12 @@ from game_area_SANDBOX import GameAreaSANDBOX
 from game_area_controls import GameAreaControls
 from chess_board import ChessBoard
 
-"""
-   Dit is het game object dat alles van het spel implementeert
-   Het is afgeleid van de basis klasse Game die de algemene spelflow controleert
-"""
 
 class ChessGame(Game):
+    """
+    Dit is het game object dat alles van het schaakspel implementeert
+    Het is afgeleid van de basis klasse Game die de algemene spelflow controleert
+    """
     def __init__(self, window, clock):
         Game.__init__(self, window, clock)
         # We definieren de verschillende delen van het scherm, die elk weten hoe ze zich moeten tekenen.
@@ -23,6 +23,7 @@ class ChessGame(Game):
         self.player_area = GameAreaPlayers(self, PLAYER_RECT)
         self.control_area = GameAreaControls(self, CONTROL_RECT)
 
+        # SANDBOX is een zandbak waarin je mag spelen, maar die in het afgewerkte spel niet wordt getoond
         if SHOW_SANDBOX:
             self.SANDBOX_area = GameAreaSANDBOX(self, SANDBOX_RECT)
 
