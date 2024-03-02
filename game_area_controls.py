@@ -22,16 +22,16 @@ class GameAreaControls(GameArea):
         pg.draw.rect(self.game.win, DRED, rect,4)
         pg.draw.line(self.game.win,DRED, (rect.left, rect.top), (rect.right, rect.bottom), 4)
         
-        # tip 1: self.rect bevat de coördinaten van de linkerbovenhoek. Die kan je opslaan in een variabelen om er verder mee te rekenen
+        # tip 1: self.rect bevat de coördinaten van de linkerbovenhoek.
+        # Je kan relatieve coordinaten gebruiken t.o.v die bovenhoek via self._x() en self._y()
         # vb/ 
-        # left = self.rect[0]
-        # top = self.rect[1]
-        # pg.draw.rect(self.game.win,BLACK,(self.rect[0],self.rect[1],10,10))
+        # x = self._x(20)
+        # y = self._y(10)
+        # pg.draw.rect(self.game.win,BLACK,(x,y,200,50))
 
-
-        # tip 2: gebruik de EvtBtn klasse in evt_obj.py (zie ook import hierboven)
+        # tip 2: gebruik de Button klasse in event_handler.py (zie ook import hierboven)
         # ga eens op zoek naar de definitie van die klasse 
-        # button = Button(self,500,500,100,100,"test","test")
+        # button = Button(self,500,500,100,100,"test","test") (steek dit in de __init__)
         # button.draw(self.game.win)
         
 

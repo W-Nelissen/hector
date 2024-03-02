@@ -35,10 +35,11 @@ class GameAreaPlayers(GameArea):
         rect2 = pg.Rect((5, 200, 200, 50))  # (left,top,width,height) 
         pg.draw.rect(self.game.win, ROMEO , rect2, 100)
 
-        # tip 2: self.rect bevat de coördinaten van de linkerbovenhoek. Die kan je opslaan in een variabelen om er verder mee te rekenen
+        # tip 2: self.rect bevat de coördinaten van de linkerbovenhoek.
+        # Je kan relatieve coordinaten gebruiken t.o.v die bovenhoek via self._x() en self._y()
         # vb/ 
-        # left = self.rect[0]
-        # top = self.rect[1]
-        # pg.draw.rect(self.game.win,BLACK,(self.rect[0],self.rect[1],10,10))
+        # x = self._x(20)
+        # y = self._y(10)
+        # pg.draw.rect(self.game.win,BLACK,(x,y,200,50))
 
         

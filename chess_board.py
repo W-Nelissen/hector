@@ -80,6 +80,9 @@ class ChessBoard(EventHandler):
         pass
 
     def GetSquare(self, x, y):
+        # We nummeren onze vierkantjes van 1-8,1-8
+        # Maar arrays beginnen te tellen van 0
+        # Returnt het BoardSquare (zie lijn 12) dat op die plaats op het bord ligt
         return self.squares[x - 1][y - 1]
     
     def AddPiece(self, x, y, piece):
@@ -128,10 +131,10 @@ class ChessBoard(EventHandler):
 
         # Je moet nu de vakjes tekenen.
         # Je kan daartoe een dubbele for-loop gebruiken.
-        # Je moet nu de vakjes tekenen.
         # for x in range(8):
         #    for y in range(8):
         # Gebruik steeds de GetSquare(x,y) functie om een vakje te krijgen                 
-
+        #       square=GetSquare(x,y)
+        #       square.draw(win)             
         # Vervolgens moet je de schaakstukken tekenen.
         # Overloop de vakjes en teken het schaakstuk dat erop staat.

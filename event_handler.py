@@ -106,7 +106,7 @@ class Button(EventHandler):
     w: width
     h: height
     name: text on the button
-    action: (@Robin: what should the user provide here?)
+    action: unique string to identify your action e.g.:"move_chess_piece"
     """
     def __init__(self, parent, x, y, w, h, name, action, has_select=False, has_dragging=False):
         EventHandler.__init__(self, parent, has_select, has_dragging)

@@ -77,32 +77,3 @@ class KeyboardHandler:
 
 # KBH = KeyboardHandler()
 
-
-"""
-    def checkActionKeys(self, action):
-        keys = pg.key.get_pressed()
-        action
-            if 
-            pass
-def on_key_press(key):
-    KBH.on_key_press(key)
-
-
-def on_key_release(key):
-    KBH.on_key_release(key)
-
-
-listener = keyboard.Listener(
-            on_press=on_key_press,
-            on_release=on_key_release,
-            repeat=False,
-            suppress=False  # Allow key events to be sent to other applications
-        )
-
-listener.start()  # Start listening for keyboard events
-# KBH.listener.join()   # Wait for the listener to finish
-"""
-
-
-"""
-"""
