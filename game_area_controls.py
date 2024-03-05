@@ -4,10 +4,7 @@ from colors import *
 
 from event_handler import Button
 
-LTRED = (252, 50, 50)
-DRED = (191, 17, 17)
-# feedback: definieer alle kleuren mee in de file colors.py en gebruik dan die kleuren
-# op die manier zorg je ervoor dat iedereen dezelfde kleuren gebruikt -> leesbaardere code
+
 
 class GameAreaControls(GameArea):
     def __init__(self, game, r):
@@ -17,11 +14,22 @@ class GameAreaControls(GameArea):
         GameArea.draw(self)
         # Teken hier de controls
         # Save, Open, Quit, ...
-        rect = pg.Rect((645, 45, 150, 70))
-        pg.draw.rect(self.game.win, LTRED, rect, 0)
-        pg.draw.rect(self.game.win, DRED, rect,4)
-        pg.draw.line(self.game.win,DRED, (rect.left, rect.top), (rect.right, rect.bottom), 4)
-        
+        # rect = pg.Rect((645, 45, 150, 70))
+        # pg.draw.rect(self.game.win, LTRED, rect, 0)
+        # pg.draw.rect(self.game.win, DRED, rect,4)
+        # pg.draw.line(self.game.win,DRED, (rect.left, rect.top), (rect.right, rect.bottom), 4)
+        # pg.draw.line(self.game.win,DRED, (rect.right, rect.top), (rect.left, rect.bottom), 4)
+
+        startbutton= Button(self, 645, 45, 150, 70, "start", "launch_start" )
+        startbutton.draw(self.game.win)
+
+    def execute_action(self,action):
+        pg.draw.line(self.game.win,B_brown, (500,200), (1000,300), 4)
+        pg.display.update
+
+
+
+
         # tip 1: self.rect bevat de coördinaten van de linkerbovenhoek.
         # Je kan relatieve coordinaten gebruiken t.o.v die bovenhoek via self._x() en self._y()
         # vb/ 
