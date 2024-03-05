@@ -9,6 +9,10 @@ from event_handler import Button
 class GameAreaControls(GameArea):
     def __init__(self, game, r):
         GameArea.__init__(self, game, r)
+        # Alle buttons moeten in de init worden gedefinieerd
+        # Coordinaten relatief: _x _y
+        # Button staat in de verkeerde area! Control area is beneden
+        self.startbutton = Button(self, 645, 45, 150, 70, "start", "launch_start" )
 
     def draw(self):
         GameArea.draw(self)
@@ -20,11 +24,12 @@ class GameAreaControls(GameArea):
         # pg.draw.line(self.game.win,DRED, (rect.left, rect.top), (rect.right, rect.bottom), 4)
         # pg.draw.line(self.game.win,DRED, (rect.right, rect.top), (rect.left, rect.bottom), 4)
 
-        startbutton= Button(self, 645, 45, 150, 70, "start", "launch_start" )
-        startbutton.draw(self.game.win)
+        
+        self.startbutton.draw(self.game.win)
 
-    def execute_action(self,action):
+    def execute_action(self, action):
         pg.draw.line(self.game.win,B_brown, (500,200), (1000,300), 4)
+        # in iets anders dan self.draw mag je niets tekenen, omdat het de volgende frame overtekend wordt
         pg.display.update
 
 
