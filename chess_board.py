@@ -4,6 +4,8 @@ from game_constants import *
 import chess_pieces as cp
 import pygame as pg
 
+
+
 # Een schaakbord heeft donkere en lichte vakjes
 DARKSQUARE = 1
 LIGHTSQUARE = 2
@@ -139,7 +141,10 @@ class ChessBoard(EventHandler):
         # Vervolgens moet je de schaakstukken tekenen.
         # Overloop de vakjes en teken het schaakstuk dat erop staat.
 
-        # for x in range(8):
-        #     for y in range(8):
-        #         square=GetSquare(x,y)
-        #         square.draw(win)
+        for x in range(8):
+            for y in range(8):
+                square=self.GetSquare(x,y) # jullie waren hier vergeten om het keyword "self" toe te voegen
+                square.draw(win)
+        # probeer ook te begrijpen hoe het komt dat de squares juist getekend worden!
+
+        
