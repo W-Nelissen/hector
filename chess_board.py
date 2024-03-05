@@ -138,3 +138,7 @@ class ChessBoard(EventHandler):
         #       square.draw(win)             
         # Vervolgens moet je de schaakstukken tekenen.
         # Overloop de vakjes en teken het schaakstuk dat erop staat.
+        for x in range(8):
+            for y in range(8):
+                square=GetSquare(x,y)
+                square.draw(win)
