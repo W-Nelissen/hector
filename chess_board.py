@@ -58,7 +58,7 @@ class ChessBoard(EventHandler):
 
         # Wanneer de game area met het schaakbord wordt vergroot of verkleind moet de afmetingen van het schaakbord worden herrekend
         # We roepen die functie ook op bij de aanmaak van het schaakbord
-        self.resize(pg.Rect(GAME_RECT))
+        self.resize(pg.Rect(self.parent.rect))
         # Om snel te starten resetten we het bord bij initialisatie zodat er stukken opstaan
         self.resetBoard()
 
@@ -125,11 +125,10 @@ class ChessBoard(EventHandler):
             self.AddPiece(i, 2, cp.ChessPiecePawn(self,cp.CP_WHITE))
 
 
-    def draw(self,win,r):
-        self.resize(r)
+    def draw(self,win):
         #voorlopige rechthoek waar het schaakbord zal komen
         pg.draw.rect(win, RED, self.rect)
-        pg.draw.rect(win,BLUE,(400,300,2,2))
+        pg.draw.rect(win,GREEN,(400,300,2,2))
 
         # Je moet nu de vakjes tekenen.
         # Je kan daartoe een dubbele for-loop gebruiken.

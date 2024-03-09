@@ -12,6 +12,6 @@ class GameAreaChessBoard(GameArea):
         # Hier moet het bord met de stukken getekend worden.
         # We laten het chessboard object dit zelf doen
         # We geven het window en de rechthoek waarin getekend moet worden mee door
-        self.game.chess_board.draw(self.game.win, self.rect)
+        self.game.chess_board.draw(self.game.win)
         
         

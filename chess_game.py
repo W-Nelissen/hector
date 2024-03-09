@@ -7,6 +7,7 @@ from game_area_players import GameAreaPlayers
 from game_area_SANDBOX import GameAreaSANDBOX
 from game_area_controls import GameAreaControls
 from chess_board import ChessBoard
+from chess_clock import ChessClock
 
 
 class ChessGame(Game):
@@ -29,6 +30,7 @@ class ChessGame(Game):
 
         # We definieren de datastructuren van ons spel
         self.chess_board = ChessBoard(self.chessboard_area)
+        self.chess_clock = ChessClock(self.player_area)
 
     def update_data(self):
         # whatever needs to change (animation,...)

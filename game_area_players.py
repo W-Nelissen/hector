@@ -15,6 +15,7 @@ class GameAreaPlayers(GameArea):
     def draw(self):
         GameArea.draw(self)
 
+        self.game.chess_clock.draw(self.game.win)
 
         JULIET = (188,143,143 )
         ROMEO= (177,102,102)

@@ -96,6 +96,8 @@ class EventHandler:
         pass
     def action_clicked(self):
         pass
+    def execute_action(self, action):
+        pass
 
 class Button(EventHandler):
     """
@@ -150,9 +152,6 @@ class Button(EventHandler):
             self.parent.execute_action(self.action)
         else:
             self.execute()
-
-    def execute_action(self, action):
-        pass
 
     def execute(self):
         pass
