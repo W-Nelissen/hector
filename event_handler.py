@@ -156,10 +156,15 @@ class Button(EventHandler):
     def execute(self):
         pass
 
-    def write_string(self, win, strText, text_color, x, y):
+    def write_string(self, win, strText, text_color, x, y, mode="LEFT"):
         self.font = pg.font.Font("freesansbold.ttf", 24)
         text_surface = self.font.render(strText, True, text_color)
-        win.blit(text_surface, (x, y))
+        width = text_surface.get_width()
+        height = text_surface.get_height()
+        if mode == "LEFT":
+            win.blit(text_surface, (x, y))
+        elif mode == "CENTER":
+            win.blit(text_surface, (x - width // 2, y - height // 2))
 
     def draw(self, win):
         bg_color = BLUE
@@ -171,5 +176,5 @@ class Button(EventHandler):
             txt_color = BLUE
         pg.draw.rect(win, bg_color, self.rect, 0)
         pg.draw.rect(win, fg_color, self.rect, 4)
-        self.write_string(win, self.name, txt_color, self.rect.left + 4, self.rect.top + 4)
+        self.write_string(win, self.name, txt_color, self.rect.centerx, self.rect.centery, "CENTER")
 
