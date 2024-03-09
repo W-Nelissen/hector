@@ -1,5 +1,6 @@
 from game_area import GameArea
 from event_handler import *
+from game_constants import *
 from keyboardhandler import KeyboardHandler
 
 def write_string( win, strText, text_color, x, y, size):
@@ -63,7 +64,7 @@ class GameAreaSANDBOX(GameArea):
         GameArea.__init__(self, game, r)
 
         # code om button te testen
-        self.test_button = Button(self, self._x(10), self._y(10), self.rect.width - 20, 40, "Klik mij", "DEMO_CLICK")
+        self.test_button = Button(self, self._x(10), self._y(10), self.rect.width - 20, BUTTON_HEIGHT, "Klik mij", "DEMO_CLICK")
         #self.evtObjects.append(self.test_button)
         self.nr_of_clicks_text = Textje(self, self._x(40), self._y(60), 150, 36, '0')
         self.nr_of_clicks = 0

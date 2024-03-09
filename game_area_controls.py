@@ -1,5 +1,6 @@
 from game_area import GameArea
 import pygame as pg
+from game_constants import *
 from colors import *
 
 from event_handler import Button
@@ -10,9 +11,10 @@ class GameAreaControls(GameArea):
     def __init__(self, game, r):
         GameArea.__init__(self, game, r)
         # Alle buttons moeten in de init worden gedefinieerd
-        # Coordinaten relatief: _x _y
+        # Coordinaten relatief: _x() _y()
         # Button staat in de verkeerde area! Control area is beneden
-        self.startbutton = Button(self, 645, 45, 150, 70, "start", "launch_start" )
+        # Gebruik BUTTON_WIDTH, BUTTON_HEIGHT
+        self.startbutton = Button(self, 645, 45, 150, BUTTON_HEIGHT, "start", "launch_start" )
 
     def draw(self):
         GameArea.draw(self)

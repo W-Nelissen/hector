@@ -1,3 +1,4 @@
+from game_styles import gs
 from colors import *
 import pygame as pg
 
@@ -110,7 +111,7 @@ class Button(EventHandler):
     name: text on the button
     action: unique string to identify your action e.g.:"move_chess_piece"
     """
-    def __init__(self, parent, x, y, w, h, name, action, has_select=False, has_dragging=False):
+    def __init__(self, parent, x, y, w, h, name, action, has_select=False, has_dragging=False, btn_style = "STDBTN"):
         EventHandler.__init__(self, parent, has_select, has_dragging)
         self.parent = parent
         self.rect = pg.Rect((x, y, w, h))
@@ -120,6 +121,7 @@ class Button(EventHandler):
         self.y1 = 0
         self.x2 = 0
         self.y2 = 0
+        self.game_style = gs.get_style(btn_style)
 
     def MOUSEBUTTONDOWN(self, mouse_x, mouse_y):
         self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
@@ -170,11 +172,17 @@ class Button(EventHandler):
         bg_color = BLUE
         fg_color = RED
         txt_color = RED
+        bg_image = self.game_style.bg_image
         if self.isPressed and self.isWithin:
+            bg_image = self.game_style.bg_image_pressed
             fg_color = BLUE
             bg_color = RED
             txt_color = BLUE
-        pg.draw.rect(win, bg_color, self.rect, 0)
-        pg.draw.rect(win, fg_color, self.rect, 4)
+        if bg_image:
+            scaled_bg_image = pg.transform.scale(bg_image,(self.rect.width, self.rect.height))
+            win.blit(scaled_bg_image,(self.rect.x,self.rect.y))
+        else:
+            pg.draw.rect(win, bg_color, self.rect, 0)
+            pg.draw.rect(win, fg_color, self.rect, 4)
         self.write_string(win, self.name, txt_color, self.rect.centerx, self.rect.centery, "CENTER")
 

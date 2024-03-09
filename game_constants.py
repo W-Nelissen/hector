@@ -1,5 +1,6 @@
 # central place for all game constants
 # can become chess.ini file later
+BUTTON_WIDTH, BUTTON_HEIGHT = 200, 40
 WINDOW_WIDTH, WINDOW_HEIGHT = 1028, 600
 GAME_BG_COLOR = (135, 206, 235)
 FRAME_RATE = 60
