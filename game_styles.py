@@ -2,7 +2,7 @@ import re
 import pygame as pg
 
 class GameStyle:
-	def __init__(self, name, font, size, fontcolor, bgimg, bgimg_hover, bgimg_pressed, bgimg_inactive, bgcolor, bgcolor_hover, bgcolor_pressed, bgcolor_inactive):
+	def __init__(self, name, font, size, fontcolor, bgimg, bgimg_hover, bgimg_pressed, bgimg_inactive, bgcolor, bgcolor_hover, bgcolor_pressed, bgcolor_inactive, txtcolor, txtcolor_hover, txtcolor_pressed, txtcolor_inactive):
 		self.name = name
 		self.font = font
 		self.size = size
@@ -26,6 +26,10 @@ class GameStyle:
 		self.bgcolor_hover = bgcolor_hover
 		self.bgcolor_pressed = bgcolor_pressed
 		self.bgcolor_inactive = bgcolor_inactive
+		self.txtcolor = txtcolor
+		self.txtcolor_hover = txtcolor_hover
+		self.txtcolor_pressed = txtcolor_pressed
+		self.txtcolor_inactive = txtcolor_inactive
 
 class GameStyles():
 	def __init__(self) -> None:
@@ -43,23 +47,39 @@ class GameStyles():
 		with open(file_name, 'r') as file:
 			data = file.read()
 		pattern = (r'<STYLE name="(.*?)"'
-           	r' font="(.*?)"'
-            r' size="(.*?)"'
-          	r' fontcolor="(\(\d+,\d+,\d+\))"'
-           	r' bgimg="(.*?)"'
-           	r' bgimg_hover="(.*?)"'
-           	r' bgimg_pressed="(.*?)"'
-           	r' bgimg_inactive="(.*?)"'
-           	r' bgcolor="(.*?)"'
-           	r' bgcolor_hover="(.*?)"'
-           	r' bgcolor_pressed="(.*?)"'
-           	r' bgcolor_inactive="(.*?)"')
+           r' font="(.*?)"'
+           r' size="(.*?)"'
+           r' fontcolor="(\(\d+,\d+,\d+\))"'
+		   r' bgimg="([^"]*)"'
+           r' bgimg_hover="([^"]*)"'
+           r' bgimg_pressed="([^"]*)"'
+           r' bgimg_inactive="([^"]*)"'
+           r' bgcolor="([^"]*)"'
+           r' bgcolor_hover="(\(\d+,\d+,\d+\))"'
+           r' bgcolor_pressed="(\(\d+,\d+,\d+\))"'
+           r' bgcolor_inactive="(\(\d+,\d+,\d+\))"'
+           r' txtcolor="(\(\d+,\d+,\d+\))"'
+           r' txtcolor_hover="(\(\d+,\d+,\d+\))"'
+           r' txtcolor_pressed="(\(\d+,\d+,\d+\))"'
+           r' txtcolor_inactive="(\(\d+,\d+,\d+\))">')
+           		
+		print(pattern)
 		matches = re.findall(pattern, data)
+		print(data)
+		print(matches)
 		for match in matches:
 			print(match)
-			name, font, size, fontcolor, bgimg, bgimg_hover, bgimg_pressed, bgimg_inactive, bgcolor, bgcolor_hover, bgcolor_pressed, bgcolor_inactive = match
+			name, font, size, fontcolor, bgimg, bgimg_hover, bgimg_pressed, bgimg_inactive, bgcolor, bgcolor_hover, bgcolor_pressed, bgcolor_inactive, txtcolor, txtcolor_hover, txtcolor_pressed, txtcolor_inactive = match
 			fontcolor = tuple(map(int, fontcolor.strip("()").split(',')))
-			game_style = GameStyle(name, font, int(size), fontcolor, bgimg, bgimg_hover, bgimg_pressed, bgimg_inactive, bgcolor, bgcolor_hover, bgcolor_pressed, bgcolor_inactive)
+			bgcolor = tuple(map(int, bgcolor.strip("()").split(',')))
+			bgcolor_hover = tuple(map(int, bgcolor_hover.strip("()").split(',')))
+			bgcolor_pressed = tuple(map(int, bgcolor_pressed.strip("()").split(',')))
+			bgcolor_inactive = tuple(map(int, bgcolor_inactive.strip("()").split(',')))
+			txtcolor = tuple(map(int, txtcolor.strip("()").split(',')))
+			txtcolor_hover = tuple(map(int, txtcolor_hover.strip("()").split(',')))
+			txtcolor_pressed = tuple(map(int, txtcolor_pressed.strip("()").split(',')))
+			txtcolor_inactive = tuple(map(int, txtcolor_inactive.strip("()").split(',')))
+			game_style = GameStyle(name, font, int(size), fontcolor, bgimg, bgimg_hover, bgimg_pressed, bgimg_inactive, bgcolor, bgcolor_hover, bgcolor_pressed, bgcolor_inactive, txtcolor, txtcolor_hover, txtcolor_pressed, txtcolor_inactive)
 			self.game_styles.append(game_style)
 
 gs = GameStyles()

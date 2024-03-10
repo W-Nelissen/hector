@@ -159,7 +159,8 @@ class Button(EventHandler):
         pass
 
     def write_string(self, win, strText, text_color, x, y, mode="LEFT"):
-        self.font = pg.font.Font("freesansbold.ttf", 24)
+        #self.font = pg.font.Font("freesansbold.ttf", 24)
+        self.font = pg.font.Font(self.game_style.font, self.game_style.size)
         text_surface = self.font.render(strText, True, text_color)
         width = text_surface.get_width()
         height = text_surface.get_height()
@@ -169,15 +170,15 @@ class Button(EventHandler):
             win.blit(text_surface, (x - width // 2, y - height // 2))
 
     def draw(self, win):
-        bg_color = BLUE
-        fg_color = RED
-        txt_color = RED
+        bg_color = self.game_style.bgcolor
+        fg_color = self.game_style.bgcolor_pressed
+        txt_color = self.game_style.txtcolor
         bg_image = self.game_style.bg_image
         if self.isPressed and self.isWithin:
             bg_image = self.game_style.bg_image_pressed
-            fg_color = BLUE
-            bg_color = RED
-            txt_color = BLUE
+            txt_color = self.game_style.txtcolor_pressed
+            fg_color = self.game_style.bgcolor
+            bg_color = self.game_style.bgcolor_pressed
         if bg_image:
             scaled_bg_image = pg.transform.scale(bg_image,(self.rect.width, self.rect.height))
             win.blit(scaled_bg_image,(self.rect.x,self.rect.y))

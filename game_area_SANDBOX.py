@@ -66,26 +66,26 @@ class GameAreaSANDBOX(GameArea):
         # code om button te testen
         self.test_button = Button(self, self._x(10), self._y(10), self.rect.width - 20, BUTTON_HEIGHT, "Klik mij", "DEMO_CLICK")
         #self.evtObjects.append(self.test_button)
-        self.nr_of_clicks_text = Textje(self, self._x(40), self._y(60), 150, 36, '0')
+        self.nr_of_clicks_text = Textje(self, self._x(40), self._y(50), 150, 36, '0')
         self.nr_of_clicks = 0
 
         # code om paardje te slepen
-        self.drag_instruction = Textje(self, self._x(10), self._y(120), 160, 36, "Sleep het paardje")
+        self.drag_instruction = Textje(self, self._x(10), self._y(100), 160, 36, "Sleep het paardje")
         self.chessSquares = []
         for i in range(3):
             for j in range(3):
-                new_square = ChessSquare(self, self._x(20 + j * 60), self._y(160 + i * 60 + j * 10), 44,44)
+                new_square = ChessSquare(self, self._x(20 + j * 60), self._y(140 + i * 60 + j * 10), 44,44)
                 self.chessSquares.append(new_square)
                 self.addEvtObj(new_square)
-        self.horse = Horse(self, self._x(20), self._y(160))
+        self.horse = Horse(self, self._x(20), self._y(140))
         self.addEvtObj(self.horse)
 
         # code om keyboard te lezen
-        self.keyboard_instruction = Textje(self, self._x(10), self._y(360), 150, 36, "Tik 'a' of 'b'")
+        self.keyboard_instruction = Textje(self, self._x(10), self._y(320), 150, 36, "Tik 'a' of 'b'")
         self.game.key_handler.set_key(pg.K_a, "HILITE_A")
         self.game.key_handler.set_key(pg.K_b, "HILITE_B")
-        self.A_pressed = NamedRect(self, self._x(10), self._y(400), 160, 36, "'a' is pressed")
-        self.B_pressed = NamedRect(self, self._x(10), self._y(440), 160, 36, "'b' is pressed")
+        self.A_pressed = NamedRect(self, self._x(10), self._y(360), 160, 32, "'a' is pressed")
+        self.B_pressed = NamedRect(self, self._x(10), self._y(400), 160, 32, "'b' is pressed")
 
     def checkMove(self, chessPiece):
         for chess_square in self.chessSquares:
