@@ -63,12 +63,9 @@ class GameStyles():
            r' txtcolor_pressed="(\(\d+,\d+,\d+\))"'
            r' txtcolor_inactive="(\(\d+,\d+,\d+\))">')
            		
-		print(pattern)
+		
 		matches = re.findall(pattern, data)
-		print(data)
-		print(matches)
 		for match in matches:
-			print(match)
 			name, font, size, fontcolor, bgimg, bgimg_hover, bgimg_pressed, bgimg_inactive, bgcolor, bgcolor_hover, bgcolor_pressed, bgcolor_inactive, txtcolor, txtcolor_hover, txtcolor_pressed, txtcolor_inactive = match
 			fontcolor = tuple(map(int, fontcolor.strip("()").split(',')))
 			bgcolor = tuple(map(int, bgcolor.strip("()").split(',')))

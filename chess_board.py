@@ -87,6 +87,41 @@ class ChessBoard(EventHandler):
         # Returnt het BoardSquare (zie lijn 12) dat op die plaats op het bord ligt
         return self.squares[x - 1][y - 1]
     
+    def isOnBoard(x, y):
+        return 0 < x < 9 and 0 < y < 9
+ 
+    def isValidMove(self, x1, y1, x2, y2):
+        startsquare = self.GetSquare(x1, y1)
+        endsquare = self.GetSquare(x2, y2)
+        chesspiece = startsquare.piece
+        if chesspiece is None:
+            return False
+        for move in chesspiece.possible_moves:
+            repeat = True
+            new_x = x1
+            new_y = y1
+            while repeat:
+                repeat = chesspiece.repeat_moves
+                new_x = new_x + move[0]
+                new_y = new_y + move[1]
+                if self.isOnBoard(new_x, new_y):
+                    square = self.GetSquare(new_x, new_y)
+                    piece = square.piece
+                    if square is endsquare:
+                        if piece is None:
+                            return True
+                        elif not chesspiece.BW == piece.BW:
+                            return True
+                        else:
+                            return False
+                    elif piece:
+                        repeat = False
+                else:
+                    repeat = False
+
+                    
+
+
     def AddPiece(self, x, y, piece):
         square = self.GetSquare(x, y)
         square.setPiece(piece)
