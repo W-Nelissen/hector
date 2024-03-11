@@ -25,7 +25,11 @@ class ChessPiece(Button):
         self.image_opacity = pg.image.load(self.image_name).convert_alpha()
         opacity = 100  # Opaciteitswaarde tussen 0 (transparant) en 255 (ondoorzichtig)
         self.image_opacity.set_alpha(opacity)
-
+    
+    def action_pressed(self):
+        chessboard = self.parent
+        chessboard.showValidMoves(self.square.x, self.square.y)
+    
     def setSquare(self, square):
         self.square = square
         self.rect = square.rect
@@ -35,12 +39,12 @@ class ChessPiece(Button):
         # De positie is in pixels en moet worden doorgegeven
         # Je kan images gebruiken uit data/pieces/
         # Of je laadt zelf images op in data/pieces/
-        """
+        
         # altijd eerst kijken of er wel een stuk is
         if self.image:
         # je kan een image altijd blitten
             win.blit(self.image, self.square.rect)
-        """
+        
 
 class ChessPieceKing(ChessPiece):
     def __init__(self, parent, black_or_white):
@@ -85,12 +89,12 @@ class ChessPieceTower(ChessPiece):
 class ChessPiecePawn(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_Pawn.png", "assets/pieces/W_Pawn.png")
-        self.repeat_moves = True
+        self.repeat_moves = False
         # Standaard 1 stapje voorruit
-        self.possible_moves = [(1, 0)]
+        self.possible_moves = [(0, 1)]
         # 2 stapjes vooruit indien nog niet bewogen
-        self.extra_moves = [(2, 0)]
+        self.extra_moves = [(0, 2)]
         # Schuin slaan
-        self.capture_moves = [(1, 1),(1, -1)]
+        self.capture_moves = [(1, 1),(-1, 1)]
         # En passant slaan
-        self.extra_capture_moves = [(1, 1),(1, -1)]
+        self.extra_capture_moves = [(1, 1),(-1, 1)]

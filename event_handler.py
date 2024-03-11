@@ -131,6 +131,7 @@ class Button(EventHandler):
             self.y1 = mouse_y
             self.x2 = mouse_x
             self.y2 = mouse_y
+            self.action_pressed()
 
     def MOUSEBUTTONUP(self, mouse_x, mouse_y):
         self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
@@ -149,6 +150,9 @@ class Button(EventHandler):
     def action_dragged(self):
         pass
     
+    def action_pressed(self):
+        pass
+
     def action_clicked(self):
         if self.parent:
             self.parent.execute_action(self.action)

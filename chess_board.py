@@ -16,6 +16,7 @@ class BoardSquare(EventHandler):
         EventHandler.__init__(self, parent)
         self.x = x
         self.y = y
+        self.isValidMove = False
         if (self.x + self.y) % 2 == 0:
             self.type = LIGHTSQUARE
         else:
@@ -27,6 +28,8 @@ class BoardSquare(EventHandler):
             c = B_chocolate
         elif self.type == LIGHTSQUARE:
             c = B_burlywood
+        if self.isValidMove:
+            c = GREEN
         pg.draw.rect(win, c, self.rect)
 
     def drawPiece(self, win):
@@ -35,7 +38,16 @@ class BoardSquare(EventHandler):
 
     def setPiece(self, piece):
         self.piece = piece
-        piece.square = self
+        piece.setSquare(self)
+    def MOUSEBUTTONDOWN(self, mouse_x, mouse_y):
+        if self.piece:
+            self.piece.MOUSEBUTTONDOWN(mouse_x, mouse_y)
+    def MOUSEBUTTONUP(self, mouse_x, mouse_y):
+        if self.piece:
+            self.piece.MOUSEBUTTONUP(mouse_x, mouse_y)
+    def MOUSEBUTTONMOVE(self, mouse_x, mouse_y):
+        if self.piece:
+            self.piece.MOUSEBUTTONMOVE(mouse_x, mouse_y)
 
 
 class ChessBoard(EventHandler):
@@ -75,7 +87,7 @@ class ChessBoard(EventHandler):
             for y in range(8):
                 size = self.size // 8
                 self.squares[x][y].rect.left = self.rect.left + x * size
-                self.squares[x][y].rect.top = self.rect.top + y * size
+                self.squares[x][y].rect.top = self.rect.bottom - (y+1) * size
                 self.squares[x][y].rect.height, self.squares[x][y].rect.width = size, size
 
     def ClearBoard(self):
@@ -87,7 +99,7 @@ class ChessBoard(EventHandler):
         # Returnt het BoardSquare (zie lijn 12) dat op die plaats op het bord ligt
         return self.squares[x - 1][y - 1]
     
-    def isOnBoard(x, y):
+    def isOnBoard(self, x, y):
         return 0 < x < 9 and 0 < y < 9
  
     def isValidMove(self, x1, y1, x2, y2):
@@ -102,8 +114,12 @@ class ChessBoard(EventHandler):
             new_y = y1
             while repeat:
                 repeat = chesspiece.repeat_moves
-                new_x = new_x + move[0]
-                new_y = new_y + move[1]
+                if chesspiece.BW == cp.CP_WHITE:
+                    new_x = new_x + move[0]
+                    new_y = new_y + move[1]
+                else:
+                    new_x = new_x - move[0]
+                    new_y = new_y - move[1]
                 if self.isOnBoard(new_x, new_y):
                     square = self.GetSquare(new_x, new_y)
                     piece = square.piece
@@ -119,8 +135,11 @@ class ChessBoard(EventHandler):
                 else:
                     repeat = False
 
-                    
-
+    def showValidMoves(self, x0, y0):
+        for x in range(8):
+            for y in range(8):
+                square=self.GetSquare(x,y)
+                square.isValidMove = self.isValidMove(x0, y0, x, y)                    
 
     def AddPiece(self, x, y, piece):
         square = self.GetSquare(x, y)
@@ -179,6 +198,8 @@ class ChessBoard(EventHandler):
             for y in range(8):
                 square=self.GetSquare(x,y) # jullie waren hier vergeten om het keyword "self" toe te voegen
                 square.draw(win)
+                if square.piece:
+                    square.piece.draw(win)
         # probeer ook te begrijpen hoe het komt dat de squares juist getekend worden!
 
         
