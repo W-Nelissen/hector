@@ -54,7 +54,7 @@ class ChessPieceKing(ChessPiece):
         # Koning mag maar 1 stapje zetten, dus repeat_moves = False
         self.repeat_moves = False
         # Alle mogelijke moves, zonder rekening te houden met het bord
-        self.possible_moves=[(1,0),(1,1),(0,1),(-1,-1),(-1,0),(-1,-1),(0,-1),(1,-1)]
+        self.possible_moves=[(1,0),(1,1),(0,1),(-1, 1),(-1,0),(-1,-1),(0,-1),(1,-1)]
 
 class ChessPieceQueen(ChessPiece):
     def __init__(self, parent, black_or_white):

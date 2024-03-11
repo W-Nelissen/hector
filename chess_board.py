@@ -176,7 +176,10 @@ class ChessBoard(EventHandler):
         self.AddPiece(8, 1, cp.ChessPieceTower(self,cp.CP_WHITE))
         # Ook een rij witte pionnen
         for i in range(1, 9):
-            self.AddPiece(i, 2, cp.ChessPiecePawn(self,cp.CP_WHITE))
+            if i==4:
+                self.AddPiece(i, 4, cp.ChessPiecePawn(self,cp.CP_WHITE))
+            else:
+                self.AddPiece(i, 2, cp.ChessPiecePawn(self,cp.CP_WHITE))
 
 
     def draw(self,win):
