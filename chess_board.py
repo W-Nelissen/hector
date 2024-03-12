@@ -82,7 +82,8 @@ class ChessBoard(EventHandler):
             self.size = r.width - 2 * self.margin_x
         else:
             self.size = r.height - 2 * self.margin_y
-        self.rect = pg.Rect(r.left + self.margin_x, r.top + self.margin_y, self.size, self.size)
+        self.size = 8 * (self.size // 8)
+        self.rect = pg.Rect(r.left + (r.width-self.size)//2, r.top + self.margin_y, self.size, self.size)
         for x in range(8):
             for y in range(8):
                 size = self.size // 8

@@ -125,30 +125,34 @@ class Button(EventHandler):
         self.x2 = 0
         self.y2 = 0
         self.game_style = gs.get_style(btn_style)
+        self.enabled = True
 
     def MOUSEBUTTONDOWN(self, mouse_x, mouse_y):
-        self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
-        if self.isWithin:
-            self.isPressed = True
-            self.x1 = mouse_x
-            self.y1 = mouse_y
-            self.x2 = mouse_x
-            self.y2 = mouse_y
-            self.action_pressed()
+        if self.enabled:
+            self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
+            if self.isWithin:
+                self.isPressed = True
+                self.x1 = mouse_x
+                self.y1 = mouse_y
+                self.x2 = mouse_x
+                self.y2 = mouse_y
+                self.action_pressed()
 
     def MOUSEBUTTONUP(self, mouse_x, mouse_y):
-        self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
-        if self.has_dragging:
-            if self.isPressed:
-                self.action_dragged(mouse_x, mouse_y)
-        elif self.isWithin and self.isPressed:
-            self.action_clicked()
-        self.isPressed = False
+        if self.enabled:
+            self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
+            if self.has_dragging:
+                if self.isPressed:
+                    self.action_dragged(mouse_x, mouse_y)
+            elif self.isWithin and self.isPressed:
+                self.action_clicked()
+            self.isPressed = False
 
     def MOUSEMOTION(self, mouse_x, mouse_y):
-        self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
-        self.x2 = mouse_x
-        self.y2 = mouse_y
+        if self.enabled:
+            self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
+            self.x2 = mouse_x
+            self.y2 = mouse_y
 
     def action_dragged(self, mouse_x, mouse_y):
         pass
@@ -181,7 +185,10 @@ class Button(EventHandler):
         fg_color = self.game_style.bgcolor_pressed
         txt_color = self.game_style.txtcolor
         bg_image = self.game_style.bg_image
-        if self.isPressed and self.isWithin:
+        if not self.enabled:
+            bg_image = self.game_style.bg_image_inactive
+            txt_color = self.game_style.txtcolor_inactive
+        elif self.isPressed and self.isWithin:
             bg_image = self.game_style.bg_image_pressed
             txt_color = self.game_style.txtcolor_pressed
             fg_color = self.game_style.bgcolor

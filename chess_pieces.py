@@ -23,7 +23,7 @@ class ChessPiece(Button):
         self.image_opacity = self.image_name
         self.image = pg.image.load(self.image_name)
         self.image_opacity = pg.image.load(self.image_name).convert_alpha()
-        opacity = 100  # Opaciteitswaarde tussen 0 (transparant) en 255 (ondoorzichtig)
+        opacity = 150  # Opaciteitswaarde tussen 0 (transparant) en 255 (ondoorzichtig)
         self.image_opacity.set_alpha(opacity)
     
     def action_pressed(self):
@@ -37,12 +37,18 @@ class ChessPiece(Button):
     def draw(self,win):
         if not self.isPressed:
             if self.image:
-                win.blit(self.image, self.square.rect)
+                r = self.rect
+                x = r.x + (r.width - self.image.get_width()) // 2
+                y = r.y + (r.height - self.image.get_height()) // 2
+                win.blit(self.image, (x, y))
         
     def draw_dragged(self,win):
         if self.isPressed:
             if self.image_opacity:
-                win.blit(self.image_opacity,self.getOffsetRect(self.x2-self.x1,self.y2-self.y1))
+                r = self.getOffsetRect(self.x2-self.x1,self.y2-self.y1)
+                x = r.x + (r.width - self.image.get_width()) // 2
+                y = r.y + (r.height - self.image.get_height()) // 2
+                win.blit(self.image_opacity, (x, y))
 
 class ChessPieceKing(ChessPiece):
     def __init__(self, parent, black_or_white):

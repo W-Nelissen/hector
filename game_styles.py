@@ -19,7 +19,13 @@ class GameStyle:
 			self.bg_image_pressed = pg.image.load(bgimg_pressed)
 		else:
 			self.bg_image_pressed = self.bg_image
-			
+
+		self.bg_image_inactive = None
+		if bgimg_inactive:
+			self.bg_image_inactive = pg.image.load(bgimg_inactive)
+		else:
+			self.bg_image_inactive = self.bg_image
+
 		self.bgimg_hover = bgimg_hover
 		self.bgimg_inactive = bgimg_inactive
 		self.bgcolor = bgcolor
