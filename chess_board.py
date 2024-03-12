@@ -203,6 +203,11 @@ class ChessBoard(EventHandler):
                 square.draw(win)
                 if square.piece:
                     square.piece.draw(win)
+        for x in range(8):
+            for y in range(8):
+                square=self.GetSquare(x,y)
+                if square.piece:
+                    square.piece.draw_dragged(win)
         # probeer ook te begrijpen hoe het komt dat de squares juist getekend worden!
 
         

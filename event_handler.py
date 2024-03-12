@@ -54,6 +54,9 @@ class EventHandler:
         else:
             return False
         
+    def getOffsetRect(self, dx, dy):
+        return pg.Rect(self.rect.left + dx, self.rect.top + dy, self.rect.width, self.rect.height)
+
     def _x(self, x):
         """
         What does this function do? How should the user use it?
@@ -137,7 +140,7 @@ class Button(EventHandler):
         self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
         if self.has_dragging:
             if self.isPressed:
-                self.action_dragged()
+                self.action_dragged(mouse_x, mouse_y)
         elif self.isWithin and self.isPressed:
             self.action_clicked()
         self.isPressed = False
@@ -147,7 +150,7 @@ class Button(EventHandler):
         self.x2 = mouse_x
         self.y2 = mouse_y
 
-    def action_dragged(self):
+    def action_dragged(self, mouse_x, mouse_y):
         pass
     
     def action_pressed(self):

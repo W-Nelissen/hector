@@ -35,16 +35,14 @@ class ChessPiece(Button):
         self.rect = square.rect
         
     def draw(self,win):
-        # Teken stuk, square_width = de afmeting van het vakje en de positie
-        # De positie is in pixels en moet worden doorgegeven
-        # Je kan images gebruiken uit data/pieces/
-        # Of je laadt zelf images op in data/pieces/
+        if not self.isPressed:
+            if self.image:
+                win.blit(self.image, self.square.rect)
         
-        # altijd eerst kijken of er wel een stuk is
-        if self.image:
-        # je kan een image altijd blitten
-            win.blit(self.image, self.square.rect)
-        
+    def draw_dragged(self,win):
+        if self.isPressed:
+            if self.image_opacity:
+                win.blit(self.image_opacity,self.getOffsetRect(self.x2-self.x1,self.y2-self.y1))
 
 class ChessPieceKing(ChessPiece):
     def __init__(self, parent, black_or_white):
@@ -63,14 +61,14 @@ class ChessPieceQueen(ChessPiece):
         self.repeat_moves = True
         # Alle mogelijke moves, zonder rekening te houden met het bord
         # Dus hetzelfde als bij de Koning
-        self.possible_moves = [(1, 0), (1, 1), (0, 1), (-1, -1), (-1, 0), (-1, -1), (0, -1), (1, -1)]
+        self.possible_moves = [(1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1)]
 
 class ChessPieceKnight(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_Knight.png", "assets/pieces/W_Knight.png")
         self.repeat_moves = False
         # 8 mogelijke zetten van het paard
-        self.possible_moves=[(2, 1),(1,2),(-1, 2),(1,-2),(-2,-1),(-1,-2),(1,-2),(2,-1)]
+        self.possible_moves=[(2, 1),(1,2),(-1, 2),(-2,1),(-2,-1),(-1,-2),(1,-2),(2,-1)]
 
 class ChessPieceBishop(ChessPiece):
     def __init__(self, parent, black_or_white):
