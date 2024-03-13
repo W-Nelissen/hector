@@ -28,10 +28,13 @@ class BoardSquare(EventHandler):
             c = B_chocolate
         elif self.type == LIGHTSQUARE:
             c = B_burlywood
-        if self.isValidMove:
-            c = GREEN
         pg.draw.rect(win, c, self.rect)
-
+        if self.isValidMove:
+            #pg.draw.rect(win, GREEN, self.rect)
+            s = pg.Surface((self.rect.width,self.rect.height), pg.SRCALPHA)
+            s.fill((0,255,0,80))
+            win.blit(s, (self.rect.x,self.rect.y))
+ 
     def drawPiece(self, win):
         if self.piece:
             self.piece.draw(win, self.rect)

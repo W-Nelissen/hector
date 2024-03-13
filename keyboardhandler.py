@@ -1,15 +1,5 @@
 #from pynput import keyboard
 import pygame as pg
-""""
- keyboardhandler handles only keyboard events.
-    This causes less lag than pygame
-    Repeats of keys are disposed of faster
-    Creates a global object KBH = KeyboardHandler() that can be linked in any object that needs keyboard input
-    One object can override settings of another: have a plan before you start.
-        
-    ...
-
-"""
 
 class Key:
     def __init__(self, key, action):
@@ -67,13 +57,4 @@ class KeyboardHandler:
             if k.action == action:
                 return keys[int(k.key)]
         return False
-
- #   def active(self, action):
- #       for k in self.keys:
- #           if k.action == action:
- #               return k.down
- #       return False
-
-
-# KBH = KeyboardHandler()
 
