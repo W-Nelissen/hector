@@ -9,10 +9,12 @@ Project: schaakbot.
 * 14 Maart: Implementatie van classes voor sound en video (handle_sound.py; handle_video.py)
 * 15 Maart: Implementatie van move + slaan, pion kan 2 vakjes bij start
 ## TODO: (in willekeurige volgorde)
-* Alle mogelijke moves implementeren
+* Alle mogelijke moves implementeren (rokade, pion aan eind)(lastmoved,lastmove bijhouden)
+* Slaan voor Pionnen (schuin en en passant)
+* Detectie van schaak en stalemate
+* Rokade: Toren mee verzetten
 * Console implementeren (messages en later commands)
 * klok laten switchen bij zet (enkel speler aan zet kan stukken verzetten)
-* Detectie van schaak en stalemate
 * History van zetten bijhouden
 * Eigen file formaat (als tussenstap)
 * History area: Weergeven van historiek (chess_area_history.py)
