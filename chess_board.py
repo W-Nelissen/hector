@@ -116,8 +116,9 @@ class ChessBoard(EventHandler):
             repeat = True
             new_x = x1
             new_y = y1
-            while repeat:
-                repeat = chesspiece.repeat_moves
+            repeat = chesspiece.getRepeat()
+            while repeat > 0:
+                repeat -= 1
                 if chesspiece.BW == cp.CP_WHITE:
                     new_x = new_x + move[0]
                     new_y = new_y + move[1]
@@ -144,14 +145,27 @@ class ChessBoard(EventHandler):
             for y in range(8):
                 square=self.GetSquare(x,y)
                 square.isValidMove = self.isValidMove(x0, y0, x, y)                    
+    def clearValidMoves(self):
+        for x in range(8):
+            for y in range(8):
+                square=self.GetSquare(x,y)
+                square.isValidMove = False
 
     def AddPiece(self, x, y, piece):
         square = self.GetSquare(x, y)
         square.setPiece(piece)
 
-    def removePiece(self, piece):
-        pass
+    def removePiece(self, square):
+        square.piece.rect = pg.Rect(0,0,0,0)
+        square.piece.square = None
+        square.piece = None
 
+    def movePiece(self, startsquare, endsquare):
+        if endsquare.piece:
+            self.removePiece(endsquare)
+        endsquare.setPiece(startsquare.piece)
+        startsquare.piece = None
+        self.clearValidMoves()
     def resetBoard(self):
         # We vegen alle stukken van het bord
         self.ClearBoard()
