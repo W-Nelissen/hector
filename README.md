@@ -2,27 +2,22 @@
 Codebase voor het seminarie "Programmeren in Python" van de zesdejaars van het Sint-Pieterscollege in Jette 
 Project: schaakbot.
 
-
-## developers checking in 
-* Willem Nelissen: INSTALLATIE OK
-* Bintou Barrie: installatie ok
-* Robin Berger: PC:PYCHARM / Chromebook:VSCode + Git
-* Chems Dahhane: installatie OK
-* Adam Idan: installatie ok
-* Abdullah Tahir: INSTALLATIE OK
-* Vivianne Michiels: Installatie OK
-* Nuri TEST TEST NUMMER 2
-
-## Te verdelen taken
-* Taak 1: Aanmaken basisstructuur chessboard+pieces: Robin Berger (reeds gedaan want nodig voor alle volgende taken)
-### In willekeurige volgorde:
-* Taak 2: Tekenen van schaakbord en stukken (chess_area_game.py)
-* Taak 3: Wegschrijven en lezen van schaakbord in FEN formaat (chess_file_handler.py)
-* Taak 4: Verplaatsen van een stuk (chess_board.py)
-* Taak 5: Bepalen van geldige zetten (chess_board.py, chess_pieces.py)
-* Taak 6: Player area tekenen (chess_area_players.py)
-* Taak 7: Beoordeling waarde van het bord
-* Taak 8: History area: Weergeven van historiek (chess_area_history.py)
+## Progress:
+* 12 Maart: Tekenen van chessboard+pieces
+* 12 Maart: Basisklassen voor klok (chess_clock.py)
+* 12 Maart: Basismechanisme voor moves (chess_board.py)
+* 14 Maart: Implementatie van classes voor sound en video (handle_sound.py; handle_video.py)
+## TODO: (in willekeurige volgorde)
+* Alle mogelijke moves implementeren
+* Console implementeren (messages en later commands)
+* klok laten switchen bij zet (enkel speler aan zet kan stukken verzetten)
+* Detectie van schaak en stalemate
+* History van zetten bijhouden
+* Eigen file formaat (als tussenstap)
+* History area: Weergeven van historiek (chess_area_history.py)
     +bord terugzetten naar vorige toestand (multiple undo)
-* Taak 9: Uittesten background routines; Robin Berger
-
+* Uittesten background routines
+* Uittesten dialog boxes
+* Evaluatie: class voor stukken + class voor positie (modifier)
+* Alpha-Beta pruning routine
+* PC laten spelen tegen speler
