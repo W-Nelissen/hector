@@ -93,9 +93,12 @@ class ChessBoard(EventHandler):
                 self.squares[x][y].rect.left = self.rect.left + x * size
                 self.squares[x][y].rect.top = self.rect.bottom - (y+1) * size
                 self.squares[x][y].rect.height, self.squares[x][y].rect.width = size, size
-
+        
     def ClearBoard(self):
-        pass
+        for x in range(8):
+            for y in range(8):
+                # Garbage collection ruimt het huidige piece op
+                self.squares[x][y].piece = None
 
     def GetSquare(self, x, y):
         # We nummeren onze vierkantjes van 1-8,1-8
@@ -116,9 +119,9 @@ class ChessBoard(EventHandler):
             repeat = True
             new_x = x1
             new_y = y1
-            repeat = chesspiece.getRepeat()
-            while repeat > 0:
-                repeat -= 1
+            steps = chesspiece.getRepeat()
+            while steps > 0:
+                steps -= 1
                 if chesspiece.BW == cp.CP_WHITE:
                     new_x = new_x + move[0]
                     new_y = new_y + move[1]
@@ -136,15 +139,16 @@ class ChessBoard(EventHandler):
                         else:
                             return False
                     elif piece:
-                        repeat = False
+                        steps = False
                 else:
-                    repeat = False
+                    steps = False
 
     def showValidMoves(self, x0, y0):
         for x in range(8):
             for y in range(8):
                 square=self.GetSquare(x,y)
                 square.isValidMove = self.isValidMove(x0, y0, x, y)                    
+
     def clearValidMoves(self):
         for x in range(8):
             for y in range(8):
@@ -156,8 +160,12 @@ class ChessBoard(EventHandler):
         square.setPiece(piece)
 
     def removePiece(self, square):
+        # Garbage collection ruimt normaal het piece op
+        # Later kunnen we beslissen dat het piece naast het bord blijft bestaan
+        # We moeten het dus leeg maken
         square.piece.rect = pg.Rect(0,0,0,0)
         square.piece.square = None
+        # square heeft geen piece meer
         square.piece = None
 
     def movePiece(self, startsquare, endsquare):
@@ -175,7 +183,7 @@ class ChessBoard(EventHandler):
         self.AddPiece( 2, 8, cp.ChessPieceKnight(self,cp.CP_BLACK))
         self.AddPiece( 3, 8, cp.ChessPieceBishop(self,cp.CP_BLACK))
         self.AddPiece( 4, 8, cp.ChessPieceQueen(self,cp.CP_BLACK))
-        self.AddPiece(5, 8, cp.ChessPieceKing(self,cp.CP_BLACK))
+        self.AddPiece( 5, 8, cp.ChessPieceKing(self,cp.CP_BLACK))
         self.AddPiece( 6, 8, cp.ChessPieceBishop(self,cp.CP_BLACK))
         self.AddPiece( 7, 8, cp.ChessPieceKnight(self,cp.CP_BLACK))
         self.AddPiece( 8, 8, cp.ChessPieceTower(self,cp.CP_BLACK))
@@ -194,10 +202,7 @@ class ChessBoard(EventHandler):
         self.AddPiece(8, 1, cp.ChessPieceTower(self,cp.CP_WHITE))
         # Ook een rij witte pionnen
         for i in range(1, 9):
-            if i==4:
-                self.AddPiece(i, 4, cp.ChessPiecePawn(self,cp.CP_WHITE))
-            else:
-                self.AddPiece(i, 2, cp.ChessPiecePawn(self,cp.CP_WHITE))
+            self.AddPiece(i, 2, cp.ChessPiecePawn(self,cp.CP_WHITE))
 
 
     def draw(self,win):
