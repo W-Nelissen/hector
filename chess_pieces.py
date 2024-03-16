@@ -110,7 +110,7 @@ class ChessPiecePawn(ChessPiece):
         # 2 stapjes vooruit indien nog niet bewogen
         # Standaard 1 stapje voorruit
         # getRepeat() overruled deze waarde, ze heeft dus geen belang.
-        self.repeat_moves = 2
+        self.repeat_moves = 0
         self.possible_moves = [(0, 1)]
         # Een move is geen capture move.
         self.moveIsCapture = False
