@@ -1,6 +1,11 @@
 import pygame as pg
 
-class Sound:
+def play_mp3(file_path):
+        pg.mixer.init()
+        pg.mixer.music.load(file_path)
+        pg.mixer.music.play()
+
+class GameSound:
     """
     For now only mp3 files
     """

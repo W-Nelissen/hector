@@ -3,7 +3,7 @@ from colors import *
 from game_constants import *
 import chess_pieces as cp
 import pygame as pg
-
+import handle_sound as sound
 
 
 # Een schaakbord heeft donkere en lichte vakjes
@@ -64,7 +64,7 @@ class ChessBoard(EventHandler):
         self.margin_y = 20
         self.size = 0
         self.rect = None
-
+        self.silent = False
         # Een 8x8 matrix waar elk element overeen komt met een vierkantje op het bord
         self.squares = [[None for _ in range(8)] for _ in range(8)]  # Lege 8x8-matrix
         for x in range(8):
@@ -174,6 +174,8 @@ class ChessBoard(EventHandler):
         endsquare.setPiece(startsquare.piece)
         startsquare.piece = None
         self.clearValidMoves()
+        if not self.silent:
+            sound.play_mp3("assets/sounds/move-self.mp3")
     def resetBoard(self):
         # We vegen alle stukken van het bord
         self.ClearBoard()
