@@ -7,7 +7,7 @@ CP_BLACK = 2
 class ChessPiece(Button):
     def __init__(self, parent, black_or_white, B_name, W_name):
         Button.__init__(self, parent, 0, 0, 0, 0, "", 0, has_dragging=True) 
-        # positie van het schaakstuk (1-8,1-8)
+        # positie van het schaakstuk (0-7,0-7)
         self.square = None
         # een generiek stuk heeft nog geen moves, elk schaakstuk moet dat zelf invullen
         self.possible_moves = []
@@ -32,18 +32,18 @@ class ChessPiece(Button):
     
     def action_pressed(self):
         chessboard = self.parent
+        print(self.square.x, self.square.y)
         chessboard.showValidMoves(self.square.x, self.square.y)
 
     def action_dragged(self, mouse_x, mouse_y):
         chessboard = self.parent
         for x in range(8):
             for y in range(8):
-                square = chessboard.GetSquare(x, y)
+                square = chessboard.Square(x, y)
                 if square.isMouseWithin(mouse_x, mouse_y):
                     if square.isValidMove:
                         chessboard.movePiece(self.square, square)
     
-
     def setSquare(self, square):
         self.square = square
         self.rect = square.rect
@@ -67,7 +67,6 @@ class ChessPiece(Button):
 class ChessPieceKing(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_King.png", "assets/pieces/W_King.png")
-
 
         # Koning mag maar 1 stapje zetten, dus repeat_moves = 1
         self.repeat_moves = 1
@@ -120,7 +119,7 @@ class ChessPiecePawn(ChessPiece):
         self.extra_capture_moves = [(1, 1),(-1, 1)]
 
     def getRepeat(self):
-        if (self.BW == CP_BLACK and self.square.y == 7) or (self.BW == CP_WHITE and self.square.y == 2):
+        if (self.BW == CP_BLACK and self.square.y == 6) or (self.BW == CP_WHITE and self.square.y == 1):
             return 2
         else:
             return 1

@@ -12,7 +12,7 @@ LIGHTSQUARE = 2
 
 
 class BoardSquare(EventHandler):
-    def __init__(self, parent, x, y): #x en y gaan van 1 tot 8
+    def __init__(self, parent, x, y): #x en y gaan van 0 tot 7
         EventHandler.__init__(self, parent)
         self.x = x
         self.y = y
@@ -72,7 +72,7 @@ class ChessBoard(EventHandler):
         self.squares = [[None for _ in range(8)] for _ in range(8)]  # Lege 8x8-matrix
         for x in range(8):
             for y in range(8):
-                self.squares[x][y] = BoardSquare(self, x + 1, y + 1)
+                self.squares[x][y] = BoardSquare(self,x,y)
 
         # Wanneer de game area met het schaakbord wordt vergroot of verkleind moet de afmetingen van het schaakbord worden herrekend
         # We roepen die functie ook op bij de aanmaak van het schaakbord
@@ -93,29 +93,27 @@ class ChessBoard(EventHandler):
         for x in range(8):
             for y in range(8):
                 size = self.size // 8
-                self.squares[x][y].rect.left = self.rect.left + x * size
-                self.squares[x][y].rect.top = self.rect.bottom - (y+1) * size
-                self.squares[x][y].rect.height, self.squares[x][y].rect.width = size, size
-        
+                srect=self.Square(x,y).rect
+                srect.left = self.rect.left + x * size
+                srect.top = self.rect.bottom - (y+1) * size
+                srect.height, srect.width = size, size
+    
+    def Square(self,x,y):
+        return self.squares[x][y]
+    
     def ClearBoard(self):
         for x in range(8):
             for y in range(8):
                 # Garbage collection ruimt het huidige piece op
-                self.squares[x][y].piece = None
+                self.Square(x,y).piece = None
 
-    def GetSquare(self, x, y):
-        # We nummeren onze vierkantjes van 1-8,1-8
-        # Maar arrays beginnen te tellen van 0
-        # Returnt het BoardSquare (zie lijn 12) dat op die plaats op het bord ligt
-        return self.squares[x - 1][y - 1]
-    
     def isOnBoard(self, x, y):
-        return 0 < x < 9 and 0 < y < 9
+        return -1 < x < 8 and -1 < y < 8
  
     def isValidMove(self, x1, y1, x2, y2):
         validmove = False
-        startsquare = self.GetSquare(x1, y1)
-        endsquare = self.GetSquare(x2, y2)
+        startsquare = self.Square(x1, y1)
+        endsquare = self.Square(x2, y2)
         chesspiece = startsquare.piece
         if chesspiece is None:
             return False
@@ -132,7 +130,7 @@ class ChessBoard(EventHandler):
                     new_x = new_x - move[0]
                     new_y = new_y - move[1]
                 if self.isOnBoard(new_x, new_y):
-                    square = self.GetSquare(new_x, new_y)
+                    square = self.Square(new_x, new_y)
                     piece = square.piece
                     if square is endsquare:
                         if piece is None:
@@ -156,7 +154,7 @@ class ChessBoard(EventHandler):
                     new_x = new_x - move[0]
                     new_y = new_y - move[1]
                 if self.isOnBoard(new_x, new_y):
-                    square = self.GetSquare(new_x, new_y)
+                    square = self.Square(new_x, new_y)
                     piece = square.piece
                     if square is endsquare:
                         if piece is not None:
@@ -167,17 +165,20 @@ class ChessBoard(EventHandler):
     def showValidMoves(self, x0, y0):
         for x in range(8):
             for y in range(8):
-                square=self.GetSquare(x,y)
+                square=self.Square(x,y)
                 square.isValidMove = self.isValidMove(x0, y0, x, y)                    
 
     def clearValidMoves(self):
         for x in range(8):
             for y in range(8):
-                square=self.GetSquare(x,y)
+                square=self.Square(x,y)
                 square.isValidMove = False
 
-    def AddPiece(self, x, y, piece):
-        square = self.GetSquare(x, y)
+    def AddPiece(self, strPos, piece):
+        x="abcdefgh".find(strPos[0])
+        y="12345678".find(strPos[1])
+        print(x,y)
+        square = self.Square(x, y)
         square.setPiece(piece)
 
     def removePiece(self, square):
@@ -202,30 +203,30 @@ class ChessBoard(EventHandler):
         self.ClearBoard()
 
         # We plaatsen alle zwarte stukken bovenaan
-        self.AddPiece( 1, 8, cp.ChessPieceTower(self,cp.CP_BLACK))
-        self.AddPiece( 2, 8, cp.ChessPieceKnight(self,cp.CP_BLACK))
-        self.AddPiece( 3, 8, cp.ChessPieceBishop(self,cp.CP_BLACK))
-        self.AddPiece( 4, 8, cp.ChessPieceQueen(self,cp.CP_BLACK))
-        self.AddPiece( 5, 8, cp.ChessPieceKing(self,cp.CP_BLACK))
-        self.AddPiece( 6, 8, cp.ChessPieceBishop(self,cp.CP_BLACK))
-        self.AddPiece( 7, 8, cp.ChessPieceKnight(self,cp.CP_BLACK))
-        self.AddPiece( 8, 8, cp.ChessPieceTower(self,cp.CP_BLACK))
+        self.AddPiece( "a8", cp.ChessPieceTower(self,cp.CP_BLACK))
+        self.AddPiece( "b8", cp.ChessPieceKnight(self,cp.CP_BLACK))
+        self.AddPiece( "c8", cp.ChessPieceBishop(self,cp.CP_BLACK))
+        self.AddPiece( "d8", cp.ChessPieceQueen(self,cp.CP_BLACK))
+        self.AddPiece( "e8", cp.ChessPieceKing(self,cp.CP_BLACK))
+        self.AddPiece( "f8", cp.ChessPieceBishop(self,cp.CP_BLACK))
+        self.AddPiece( "g8", cp.ChessPieceKnight(self,cp.CP_BLACK))
+        self.AddPiece( "h8", cp.ChessPieceTower(self,cp.CP_BLACK))
         # Ook een rij pionnen
-        for i in range(1, 9):
-            self.AddPiece(i, 7, cp.ChessPiecePawn(self,cp.CP_BLACK))
+        for i in range(8):
+            self.AddPiece("abcdefgh"[i]+"7", cp.ChessPiecePawn(self,cp.CP_BLACK))
 
         # We plaatsen alle witte stukken onderaan
-        self.AddPiece(1, 1, cp.ChessPieceTower(self,cp.CP_WHITE))
-        self.AddPiece(2, 1, cp.ChessPieceKnight(self,cp.CP_WHITE))
-        self.AddPiece(3, 1, cp.ChessPieceBishop(self,cp.CP_WHITE))
-        self.AddPiece(4, 1, cp.ChessPieceQueen(self,cp.CP_WHITE))
-        self.AddPiece(5, 1, cp.ChessPieceKing(self,cp.CP_WHITE))
-        self.AddPiece(6, 1, cp.ChessPieceBishop(self,cp.CP_WHITE))
-        self.AddPiece(7, 1, cp.ChessPieceKnight(self,cp.CP_WHITE))
-        self.AddPiece(8, 1, cp.ChessPieceTower(self,cp.CP_WHITE))
+        self.AddPiece( "a1", cp.ChessPieceTower(self,cp.CP_WHITE))
+        self.AddPiece( "b1", cp.ChessPieceKnight(self,cp.CP_WHITE))
+        self.AddPiece( "c1", cp.ChessPieceBishop(self,cp.CP_WHITE))
+        self.AddPiece( "d1", cp.ChessPieceQueen(self,cp.CP_WHITE))
+        self.AddPiece( "e1", cp.ChessPieceKing(self,cp.CP_WHITE))
+        self.AddPiece( "f1", cp.ChessPieceBishop(self,cp.CP_WHITE))
+        self.AddPiece( "g1", cp.ChessPieceKnight(self,cp.CP_WHITE))
+        self.AddPiece( "h1", cp.ChessPieceTower(self,cp.CP_WHITE))
         # Ook een rij witte pionnen
-        for i in range(1, 9):
-            self.AddPiece(i, 2, cp.ChessPiecePawn(self,cp.CP_WHITE))
+        for i in range(8):
+            self.AddPiece("abcdefgh"[i]+"2", cp.ChessPiecePawn(self,cp.CP_WHITE))
 
 
     def draw(self,win):
@@ -237,21 +238,21 @@ class ChessBoard(EventHandler):
         # Je kan daartoe een dubbele for-loop gebruiken.
         # for x in range(8):
         #    for y in range(8):
-        # Gebruik steeds de GetSquare(x,y) functie om een vakje te krijgen                 
-        #       square=GetSquare(x,y)
+        # Gebruik steeds de Square(x,y) functie om een vakje te krijgen                 
+        #       square=Square(x,y)
         #       square.draw(win)             
         # Vervolgens moet je de schaakstukken tekenen.
         # Overloop de vakjes en teken het schaakstuk dat erop staat.
 
         for x in range(8):
             for y in range(8):
-                square=self.GetSquare(x,y) # jullie waren hier vergeten om het keyword "self" toe te voegen
+                square=self.Square(x,y) # jullie waren hier vergeten om het keyword "self" toe te voegen
                 square.draw(win)
                 if square.piece:
                     square.piece.draw(win)
         for x in range(8):
             for y in range(8):
-                square=self.GetSquare(x,y)
+                square=self.Square(x,y)
                 if square.piece:
                     square.piece.draw_dragged(win)
         # probeer ook te begrijpen hoe het komt dat de squares juist getekend worden!
