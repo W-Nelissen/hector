@@ -69,7 +69,7 @@ class ChessPieceKing(ChessPiece):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_King.png", "assets/pieces/W_King.png")
 
 
-        # Koning mag maar 1 stapje zetten, dus repeat_moves = False
+        # Koning mag maar 1 stapje zetten, dus repeat_moves = 1
         self.repeat_moves = 1
         # Alle mogelijke moves, zonder rekening te houden met het bord
         self.possible_moves=[(1,0),(1,1),(0,1),(-1, 1),(-1,0),(-1,-1),(0,-1),(1,-1)]
@@ -77,7 +77,7 @@ class ChessPieceKing(ChessPiece):
 class ChessPieceQueen(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_Queen.png", "assets/pieces/W_Queen.png")
-        # Koningin mag maar meerde stapjes zetten, dus repeat_moves = True
+        # Koningin mag maar meerde stapjes zetten, dus repeat_moves = 99 (schaakbord mag dus maximum  100x100 zijn)
         self.repeat_moves = 99
         # Alle mogelijke moves, zonder rekening te houden met het bord
         # Dus hetzelfde als bij de Koning
@@ -107,13 +107,13 @@ class ChessPieceTower(ChessPiece):
 class ChessPiecePawn(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_Pawn.png", "assets/pieces/W_Pawn.png")
-        self.repeat_moves = 2
-        # Standaard 1 stapje voorruit
-        self.possible_moves = [(0, 1)]
         # 2 stapjes vooruit indien nog niet bewogen
+        # Standaard 1 stapje voorruit
+        # getRepeat() overruled deze waarde, ze heeft dus geen belang.
+        self.repeat_moves = 2
+        self.possible_moves = [(0, 1)]
+        # Een move is geen capture move.
         self.moveIsCapture = False
-        
-        self.extra_moves = [(0, 2)]
         # Schuin slaan
         self.capture_moves = [(1, 1),(-1, 1)]
         # En passant slaan
