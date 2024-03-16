@@ -4,7 +4,7 @@ from game_constants import *
 from colors import *
 
 from event_handler import Button
-
+from event_handler import ToggleButton
 
 
 class GameAreaControls(GameArea):
@@ -15,6 +15,7 @@ class GameAreaControls(GameArea):
         self.loadbutton.enabled = False
         self.savebutton = Button(self, self._x(30 + 2 * BUTTON_WIDTH), self._y(10), BUTTON_WIDTH, BUTTON_HEIGHT, "save", "save_game" )
         self.savebutton.enabled = False
+        self.testtogglebutton = ToggleButton(self, self._x(30 + 3 * BUTTON_WIDTH), self._y(10), BUTTON_WIDTH, BUTTON_HEIGHT, "toggle", "" )
 
     def draw(self):
         GameArea.draw(self)
@@ -30,10 +31,12 @@ class GameAreaControls(GameArea):
         self.startbutton.draw(self.game.win)
         self.loadbutton.draw(self.game.win)
         self.savebutton.draw(self.game.win)
+        self.testtogglebutton.draw(self.game.win)
 
-    def execute_action(self, action):
+    def execute_action(self, action, toggle=None):
         if action == "launch_start":
             self.game.chess_board.resetBoard()
+        
 
 
 

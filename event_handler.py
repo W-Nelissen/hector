@@ -176,9 +176,11 @@ class Button(EventHandler):
         width = text_surface.get_width()
         height = text_surface.get_height()
         if mode == "LEFT":
-            win.blit(text_surface, (x, y))
+            win.blit(text_surface, (x, y - height // 2))
         elif mode == "CENTER":
             win.blit(text_surface, (x - width // 2, y - height // 2))
+        elif mode == "RIGHT":
+            win.blit(text_surface, (x - width, y - height // 2))
 
     def draw(self, win):
         bg_color = self.game_style.bgcolor
@@ -201,3 +203,57 @@ class Button(EventHandler):
             pg.draw.rect(win, fg_color, self.rect, 4)
         self.write_string(win, self.name, txt_color, self.rect.centerx, self.rect.centery, "CENTER")
 
+class ToggleButton(Button):
+    """
+    Class for buttons that can toggle on and off.
+    Parameters:
+    parent: use 'self' here when defining the object
+    x, y: coördinates of top-left
+    w: width
+    h: height
+    name: text on the button
+    action: unique string to identify your action e.g.:"move_chess_piece"
+    """
+    def __init__(self, parent, x, y, w, h, name, action, has_select=False, has_dragging=False, btn_style = "STDTOGGLE"):
+        Button.__init__(self, parent, x, y, w, h, name, action, has_select, has_dragging, btn_style)
+        self.toggle = False
+
+    def action_clicked(self):
+        if self.parent:
+            self.parent.execute_action(self.action, self.toggle)
+        else:
+            self.execute()
+
+    def MOUSEBUTTONUP(self, mouse_x, mouse_y):
+        if self.enabled:
+            self.isWithin = self.isMouseWithin(mouse_x, mouse_y)
+            if self.has_dragging:
+                if self.isPressed:
+                    self.action_dragged(mouse_x, mouse_y)
+            elif self.isWithin and self.isPressed:
+                if self.toggle:
+                    self.toggle = False
+                else: self.toggle = True
+                self.action_clicked()
+            self.isPressed = False
+
+    def draw(self, win):
+        bg_color = self.game_style.bgcolor
+        fg_color = self.game_style.bgcolor_pressed
+        txt_color = self.game_style.txtcolor
+        bg_image = self.game_style.bg_image
+        if not self.enabled:
+            bg_image = self.game_style.bg_image_inactive
+            txt_color = self.game_style.txtcolor_inactive
+        elif self.toggle:
+            bg_image = self.game_style.bg_image_pressed
+            txt_color = self.game_style.txtcolor_pressed
+            fg_color = self.game_style.bgcolor
+            bg_color = self.game_style.bgcolor_pressed
+        if bg_image:
+            scaled_bg_image = pg.transform.scale(bg_image,(self.rect.height, self.rect.height))
+            win.blit(scaled_bg_image,(self.rect.x,self.rect.y))
+        else:
+            pg.draw.rect(win, bg_color, self.rect, 0)
+            pg.draw.rect(win, fg_color, self.rect, 4)
+        self.write_string(win, self.name, txt_color, self.rect.left + self.rect.height, self.rect.centery, "LEFT")
