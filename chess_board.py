@@ -32,7 +32,10 @@ class BoardSquare(EventHandler):
         if self.isValidMove:
             #pg.draw.rect(win, GREEN, self.rect)
             s = pg.Surface((self.rect.width,self.rect.height), pg.SRCALPHA)
-            s.fill((0,255,0,80))
+            if self.piece:
+                s.fill((255,0,255,80))
+            else:
+                s.fill((0,255,0,80))
             win.blit(s, (self.rect.x,self.rect.y))
  
     def drawPiece(self, win):
