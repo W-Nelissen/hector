@@ -15,6 +15,7 @@ class ChessPiece(Button):
         self.capture_moves = []
         self.extra_capture_moves = []
         self.repeat_moves = 0
+        self.moveIsCapture = True
         self.BW = black_or_white
         if black_or_white == CP_BLACK:
             self.image_name = B_name
@@ -110,6 +111,8 @@ class ChessPiecePawn(ChessPiece):
         # Standaard 1 stapje voorruit
         self.possible_moves = [(0, 1)]
         # 2 stapjes vooruit indien nog niet bewogen
+        self.moveIsCapture = False
+        
         self.extra_moves = [(0, 2)]
         # Schuin slaan
         self.capture_moves = [(1, 1),(-1, 1)]
