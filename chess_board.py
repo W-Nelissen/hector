@@ -37,7 +37,12 @@ class BoardSquare(EventHandler):
             else:
                 s.fill((0,255,0,80))
             win.blit(s, (self.rect.x,self.rect.y))
- 
+        if self.piece:
+            if self.piece.isPressed:
+               s = pg.Surface((self.rect.width,self.rect.height), pg.SRCALPHA)
+               s.fill((0,0,255,80))
+               win.blit(s, (self.rect.x,self.rect.y))
+
     def drawPiece(self, win):
         if self.piece:
             self.piece.draw(win, self.rect)
@@ -214,7 +219,6 @@ class ChessBoard(EventHandler):
             self.removePiece(endsquare)
         endsquare.setPiece(startsquare.piece)
         startsquare.piece = None
-        self.clearValidMoves()
         if not self.silent:
             sound.play_mp3("assets/sounds/move-self.mp3")
         self.startNextMove()

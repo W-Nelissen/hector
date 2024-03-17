@@ -48,7 +48,7 @@ class ChessPiece(Button):
                 if square.isMouseWithin(mouse_x, mouse_y):
                     if square.isValidMove:
                         chessboard.movePiece(self.square, square)
-    
+        chessboard.clearValidMoves()
     def setSquare(self, square):
         self.square = square
         self.rect = square.rect
