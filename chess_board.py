@@ -55,7 +55,8 @@ class BoardSquare(EventHandler):
         if self.piece:
             self.piece.MOUSEBUTTONMOVE(mouse_x, mouse_y)
 
-
+PLAYER1 = 1
+PLAYER2 = 2
 class ChessBoard(EventHandler):
     """
     Het chessboard bevat vakjes (BoardSquare). 
@@ -73,17 +74,36 @@ class ChessBoard(EventHandler):
         for x in range(8):
             for y in range(8):
                 self.squares[x][y] = BoardSquare(self,x,y)
-
+        self.player = None
+        self.turn_nr = 0
+        self.move_nr = 0
         # Wanneer de game area met het schaakbord wordt vergroot of verkleind moet de afmetingen van het schaakbord worden herrekend
         # We roepen die functie ook op bij de aanmaak van het schaakbord
         self.resize(pg.Rect(self.parent.rect))
         # Om snel te starten resetten we het bord bij initialisatie zodat er stukken opstaan
         self.resetBoard()
 
-    def resize(self, r):
+    def startNextMove(self):
+        self.switchPlayer()
+        self.move_nr +=1
+        if self.player == PLAYER1:
+            self.turn_nr +=1
+
+    def switchPlayer(self):
+        if self.player == PLAYER1:
+            self.player = PLAYER2
+        else:
+            self.player = PLAYER1
+    def ResetMoves(self):
+        self.player = PLAYER1
+        self.turn_nr = 1
+        self.move_nr = 1
+    def resize(self, rect):
         """
         r: Rect waarbinnen het schaakbord moet worden getekend
         """
+        infomargin = 30
+        r = pg.Rect(rect.x, rect.y + infomargin, rect.width, rect.height - infomargin)
         if r.height - 2 * self.margin_y >= r.width - 2 * self.margin_x:
             self.size = r.width - 2 * self.margin_x
         else:
@@ -197,10 +217,12 @@ class ChessBoard(EventHandler):
         self.clearValidMoves()
         if not self.silent:
             sound.play_mp3("assets/sounds/move-self.mp3")
+        self.startNextMove()
+
     def resetBoard(self):
         # We vegen alle stukken van het bord
         self.ClearBoard()
-
+        self.ResetMoves()
         # We plaatsen alle zwarte stukken bovenaan
         self.AddPiece( "a8", cp.ChessPieceTower(self,cp.CP_BLACK))
         self.AddPiece( "b8", cp.ChessPieceKnight(self,cp.CP_BLACK))
@@ -229,23 +251,17 @@ class ChessBoard(EventHandler):
 
 
     def draw(self,win):
-        #voorlopige rechthoek waar het schaakbord zal komen
-        pg.draw.rect(win, RED, self.rect)
-        pg.draw.rect(win,GREEN,(400,300,2,2))
 
-        # Je moet nu de vakjes tekenen.
-        # Je kan daartoe een dubbele for-loop gebruiken.
-        # for x in range(8):
-        #    for y in range(8):
-        # Gebruik steeds de Square(x,y) functie om een vakje te krijgen                 
-        #       square=Square(x,y)
-        #       square.draw(win)             
-        # Vervolgens moet je de schaakstukken tekenen.
-        # Overloop de vakjes en teken het schaakstuk dat erop staat.
+
+        str_aan_zet = "Zwart is aan zet"
+        if self.player == PLAYER1:
+            str_aan_zet = "Wit is aan zet"
+        self.write_string(win, str_aan_zet, RED, self.rect.x, self.rect.top - 20, "LEFT")
+
 
         for x in range(8):
             for y in range(8):
-                square=self.Square(x,y) # jullie waren hier vergeten om het keyword "self" toe te voegen
+                square=self.Square(x,y)
                 square.draw(win)
                 if square.piece:
                     square.piece.draw(win)
@@ -254,6 +270,4 @@ class ChessBoard(EventHandler):
                 square=self.Square(x,y)
                 if square.piece:
                     square.piece.draw_dragged(win)
-        # probeer ook te begrijpen hoe het komt dat de squares juist getekend worden!
-
         

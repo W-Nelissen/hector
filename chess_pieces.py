@@ -1,6 +1,7 @@
 from event_handler import Button
 from colors import *
 import pygame as pg
+import handle_sound as sound
 
 CP_WHITE = 1
 CP_BLACK = 2
@@ -32,7 +33,12 @@ class ChessPiece(Button):
     
     def action_pressed(self):
         chessboard = self.parent
-        chessboard.showValidMoves(self.square.x, self.square.y)
+        if self.BW == chessboard.player:
+            chessboard.showValidMoves(self.square.x, self.square.y)
+        else:
+            self.isPressed = False
+            if not chessboard.silent:
+                sound.play_mp3("assets/sounds/notify.mp3")
 
     def action_dragged(self, mouse_x, mouse_y):
         chessboard = self.parent
