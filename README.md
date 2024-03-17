@@ -9,13 +9,14 @@ Project: schaakbot.
 * 14 Maart: Implementatie van classes voor sound en video (handle_sound.py; handle_video.py)
 * 15 Maart: Implementatie van move + slaan, pion kan 2 vakjes bij start
 * 16 Maart: Pion move + slaan. (nog niet en passant)
+* 17 Maart: Na move switchen we van speler. (enkel speler aan zet kan stukken verzetten)
 ## TODO: (in willekeurige volgorde)
 * Alle mogelijke moves implementeren (rokade, pion aan eind)(lastmoved,lastmove bijhouden)
 * Slaan voor Pionnen (en passant)
 * Detectie van schaak en stalemate
 * Rokade: Toren mee verzetten
 * Console implementeren (messages en later commands)
-* klok laten switchen bij zet (enkel speler aan zet kan stukken verzetten)
+* klok laten switchen bij zet
 * History van zetten bijhouden
 * Eigen file formaat (als tussenstap)
 * History area: Weergeven van historiek (chess_area_history.py)
