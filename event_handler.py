@@ -10,7 +10,9 @@ class EventHandler:
     has_select: ??
     has_dragging: ??
     """
-    def __init__(self, parent, has_select=False, has_dragging=False):
+    def __init__(self, parent, has_select=False, has_dragging=False, game_style = "STDEVT"):
+        self.game_style = gs.get_style(game_style)
+
         #all features are turned off by default, but adding them is just adding parameters
         self.parent = parent
         self.has_select = has_select
@@ -75,6 +77,19 @@ class EventHandler:
         else:
             return y
 
+    def write_string(self, win, strText, text_color, x, y, mode="LEFT"):
+        #self.font = pg.font.Font("freesansbold.ttf", 24)
+        self.font = pg.font.Font(self.game_style.font, self.game_style.size)
+        text_surface = self.font.render(strText, True, text_color)
+        width = text_surface.get_width()
+        height = text_surface.get_height()
+        if mode == "LEFT":
+            win.blit(text_surface, (x, y - height // 2))
+        elif mode == "CENTER":
+            win.blit(text_surface, (x - width // 2, y - height // 2))
+        elif mode == "RIGHT":
+            win.blit(text_surface, (x - width, y - height // 2))
+
     def MOUSEWHEEL(self, _wheel):
         for obj in self.evtObjects:
             obj.MOUSEWHEEL(_wheel)
@@ -114,8 +129,8 @@ class Button(EventHandler):
     name: text on the button
     action: unique string to identify your action e.g.:"move_chess_piece"
     """
-    def __init__(self, parent, x, y, w, h, name, action, has_select=False, has_dragging=False, btn_style = "STDBTN"):
-        EventHandler.__init__(self, parent, has_select, has_dragging)
+    def __init__(self, parent, x, y, w, h, name, action, has_select=False, has_dragging=False, game_style = "STDBTN"):
+        EventHandler.__init__(self, parent, has_select, has_dragging, game_style)
         self.parent = parent
         self.rect = pg.Rect((x, y, w, h))
         self.name = name
@@ -124,7 +139,6 @@ class Button(EventHandler):
         self.y1 = 0
         self.x2 = 0
         self.y2 = 0
-        self.game_style = gs.get_style(btn_style)
         self.enabled = True
 
     def MOUSEBUTTONDOWN(self, mouse_x, mouse_y):
@@ -168,19 +182,6 @@ class Button(EventHandler):
 
     def execute(self):
         pass
-
-    def write_string(self, win, strText, text_color, x, y, mode="LEFT"):
-        #self.font = pg.font.Font("freesansbold.ttf", 24)
-        self.font = pg.font.Font(self.game_style.font, self.game_style.size)
-        text_surface = self.font.render(strText, True, text_color)
-        width = text_surface.get_width()
-        height = text_surface.get_height()
-        if mode == "LEFT":
-            win.blit(text_surface, (x, y - height // 2))
-        elif mode == "CENTER":
-            win.blit(text_surface, (x - width // 2, y - height // 2))
-        elif mode == "RIGHT":
-            win.blit(text_surface, (x - width, y - height // 2))
 
     def draw(self, win):
         bg_color = self.game_style.bgcolor

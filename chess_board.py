@@ -177,7 +177,6 @@ class ChessBoard(EventHandler):
     def AddPiece(self, strPos, piece):
         x="abcdefgh".find(strPos[0])
         y="12345678".find(strPos[1])
-        print(x,y)
         square = self.Square(x, y)
         square.setPiece(piece)
 

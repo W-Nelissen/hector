@@ -32,7 +32,6 @@ class ChessPiece(Button):
     
     def action_pressed(self):
         chessboard = self.parent
-        print(self.square.x, self.square.y)
         chessboard.showValidMoves(self.square.x, self.square.y)
 
     def action_dragged(self, mouse_x, mouse_y):
