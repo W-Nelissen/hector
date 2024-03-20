@@ -78,16 +78,13 @@ class ChessBoard(EventHandler):
         self.rect = None
         self.silent = False
         # Een 8x8 matrix waar elk element overeen komt met een vierkantje op het bord
-        self.squares = [[None for _ in range(8)] for _ in range(8)]  # Lege 8x8-matrix
-        for x in range(8):
-            for y in range(8):
-                self.squares[x][y] = BoardSquare(self,x,y)
+        self.squares = [[BoardSquare(self,x,y) for y in range(8)] for x in range(8)]  # Lege 8x8-matrix
         self.player = None
         self.turn_nr = 0
         self.move_nr = 0
         # Wanneer de game area met het schaakbord wordt vergroot of verkleind moet de afmetingen van het schaakbord worden herrekend
         # We roepen die functie ook op bij de aanmaak van het schaakbord
-        self.resize(pg.Rect(self.parent.rect))
+        self.resize()
         # Om snel te starten resetten we het bord bij initialisatie zodat er stukken opstaan
         self.resetBoard()
 
@@ -106,10 +103,8 @@ class ChessBoard(EventHandler):
         self.player = PLAYER1
         self.turn_nr = 1
         self.move_nr = 1
-    def resize(self, rect):
-        """
-        r: Rect waarbinnen het schaakbord moet worden getekend
-        """
+    def resize(self):
+        rect = pg.Rect(self.parent.rect)
         infomargin = 30
         r = pg.Rect(rect.x, rect.y + infomargin, rect.width, rect.height - infomargin)
         if r.height - 2 * self.margin_y >= r.width - 2 * self.margin_x:
@@ -134,7 +129,7 @@ class ChessBoard(EventHandler):
     
     def flipBoard(self):
         self.flipped = not self.flipped
-        self.resize(pg.Rect(self.parent.rect))
+        self.resize()
 
     def ClearBoard(self):
         for x in range(8):
@@ -265,7 +260,8 @@ class ChessBoard(EventHandler):
         # Ook een rij witte pionnen
         for i in range(8):
             self.AddPiece("abcdefgh"[i]+"2", cp.ChessPiecePawn(self,cp.CP_WHITE))
-
+        self.flipped = False
+        self.resize()
 
     def draw(self,win):
 
@@ -275,7 +271,6 @@ class ChessBoard(EventHandler):
             str_aan_zet = "Wit is aan zet"
             c = WHITE
         self.write_string(win, str_aan_zet, c, self.rect.x, self.rect.top - 20, "LEFT")
-
 
         for x in range(8):
             for y in range(8):

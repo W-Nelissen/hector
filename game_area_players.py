@@ -14,5 +14,4 @@ class GameAreaPlayers(GameArea):
 
     def draw(self):
         GameArea.draw(self)
-
         self.game.chess_clock.draw(self.game.win)

@@ -4,11 +4,9 @@ from game import Game
 from game_area_chessboard import GameAreaChessBoard
 from game_area_history import GameAreaHistory
 from game_area_players import GameAreaPlayers
-from game_area_SANDBOX import GameAreaSANDBOX
 from game_area_controls import GameAreaControls
 from chess_board import ChessBoard
 from chess_clock import ChessClock
-
 
 class ChessGame(Game):
     """
@@ -24,14 +22,10 @@ class ChessGame(Game):
         self.player_area = GameAreaPlayers(self, PLAYER_RECT)
         self.control_area = GameAreaControls(self, CONTROL_RECT)
 
-        # SANDBOX is een zandbak waarin je mag spelen, maar die in het afgewerkte spel niet wordt getoond
-        if SHOW_SANDBOX:
-            self.SANDBOX_area = GameAreaSANDBOX(self, SANDBOX_RECT)
-
         # We definieren de datastructuren van ons spel
         self.chess_board = ChessBoard(self.chessboard_area)
         self.chess_clock = ChessClock(self.player_area)
-        
+
         self.history_area = GameAreaHistory(self, HIST_RECT)
     def update_data(self):
         # whatever needs to change (animation,...)
@@ -45,11 +39,8 @@ class ChessGame(Game):
 
 
     def draw(self):
-        # Dit object vraagt aan de deelobjecten om zichzelf te tekenen
         self.clear_window()
         self.chessboard_area.draw()
         self.history_area.draw()
         self.player_area.draw()
         self.control_area.draw()
-        if SHOW_SANDBOX:
-            self.SANDBOX_area.draw()
