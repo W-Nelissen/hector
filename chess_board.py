@@ -4,7 +4,7 @@ from game_constants import *
 import chess_pieces as cp
 import pygame as pg
 import handle_sound as sound
-
+from chess_history import *
 
 # Een schaakbord heeft donkere en lichte vakjes
 DARKSQUARE = 1
@@ -69,6 +69,7 @@ class ChessBoard(EventHandler):
     """
     def __init__(self,parent):
         EventHandler.__init__(self, parent)
+        self.h = H_Move()
         self.margin_x = 20
         self.margin_y = 20
         self.size = 0
@@ -221,6 +222,7 @@ class ChessBoard(EventHandler):
         startsquare.piece = None
         if not self.silent:
             sound.play_mp3("assets/sounds/move-self.mp3")
+        self.h.add(self.turn_nr, self.move_nr, startsquare, endsquare)
         self.startNextMove()
 
     def resetBoard(self):
@@ -258,9 +260,11 @@ class ChessBoard(EventHandler):
 
 
         str_aan_zet = "Zwart is aan zet"
+        c = BLACK
         if self.player == PLAYER1:
             str_aan_zet = "Wit is aan zet"
-        self.write_string(win, str_aan_zet, RED, self.rect.x, self.rect.top - 20, "LEFT")
+            c = WHITE
+        self.write_string(win, str_aan_zet, c, self.rect.x, self.rect.top - 20, "LEFT")
 
 
         for x in range(8):

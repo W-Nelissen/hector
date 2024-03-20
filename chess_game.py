@@ -20,7 +20,7 @@ class ChessGame(Game):
         # We definieren de verschillende delen van het scherm, die elk weten hoe ze zich moeten tekenen.
         # De invulling van die klassen gebeurt in aparte files: chess_area_game.py, ...
         self.chessboard_area = GameAreaChessBoard(self, GAME_RECT)
-        self.history_area = GameAreaHistory(self, HIST_RECT)
+        
         self.player_area = GameAreaPlayers(self, PLAYER_RECT)
         self.control_area = GameAreaControls(self, CONTROL_RECT)
 
@@ -31,7 +31,8 @@ class ChessGame(Game):
         # We definieren de datastructuren van ons spel
         self.chess_board = ChessBoard(self.chessboard_area)
         self.chess_clock = ChessClock(self.player_area)
-
+        
+        self.history_area = GameAreaHistory(self, HIST_RECT)
     def update_data(self):
         # whatever needs to change (animation,...)
         pass

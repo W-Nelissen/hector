@@ -23,7 +23,7 @@ class GameArea(EventHandler):
         # - Achtergrond patroon
 
         # Teken een kader rond de game area
-        pg.draw.rect(self.game.win, BLUE, self.rect,4)
+        pg.draw.rect(self.game.win, B_chocolate, self.rect,4)
 
     def draw(self):
         # Indien de afgeleide klasse nog geen draw(self) methode heeft wordt een frame getekend
