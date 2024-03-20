@@ -69,6 +69,8 @@ class ChessBoard(EventHandler):
     """
     def __init__(self,parent):
         EventHandler.__init__(self, parent)
+        self.flipped = False
+        self.flip = False
         self.h = H_Move()
         self.margin_x = 20
         self.margin_y = 20
@@ -119,7 +121,10 @@ class ChessBoard(EventHandler):
         for x in range(8):
             for y in range(8):
                 size = self.size // 8
-                srect=self.Square(x,y).rect
+                if self.flipped:
+                    srect=self.Square(7-x,7-y).rect    
+                else:
+                    srect=self.Square(x,y).rect
                 srect.left = self.rect.left + x * size
                 srect.top = self.rect.bottom - (y+1) * size
                 srect.height, srect.width = size, size
@@ -127,6 +132,10 @@ class ChessBoard(EventHandler):
     def Square(self,x,y):
         return self.squares[x][y]
     
+    def flipBoard(self):
+        self.flipped = not self.flipped
+        self.resize(pg.Rect(self.parent.rect))
+
     def ClearBoard(self):
         for x in range(8):
             for y in range(8):
@@ -223,6 +232,8 @@ class ChessBoard(EventHandler):
         if not self.silent:
             sound.play_mp3("assets/sounds/move-self.mp3")
         self.h.add(self.turn_nr, self.move_nr, startsquare, endsquare)
+        if self.flip:
+            self.flipBoard()
         self.startNextMove()
 
     def resetBoard(self):
@@ -257,7 +268,6 @@ class ChessBoard(EventHandler):
 
 
     def draw(self,win):
-
 
         str_aan_zet = "Zwart is aan zet"
         c = BLACK
