@@ -10,6 +10,9 @@ Project: schaakbot.
 * 15 Maart: Implementatie van move + slaan, pion kan 2 vakjes bij start
 * 16 Maart: Pion move + slaan. (nog niet en passant)
 * 17 Maart: Na move switchen we van speler. (enkel speler aan zet kan stukken verzetten)
+* 20 Maart: Bijhouden en tonen van historiek van zetten
+* 20 Maart: Kleurenschema verbeterd
+* 20 Maart: Optie om steeds wit onderaan te hebben of steeds te flippen bij zet
 ## TODO: (in willekeurige volgorde)
 * Alle mogelijke moves implementeren (rokade, pion aan eind)(lastmoved,lastmove bijhouden)
 * Slaan voor Pionnen (en passant)
