@@ -14,16 +14,15 @@ Project: schaakbot.
 * 20 Maart: Kleurenschema verbeterd
 * 20 Maart: Optie om steeds wit onderaan te hebben of steeds te flippen bij zet
 ## TODO: (in willekeurige volgorde)
+* Clear history bij reset van het bord
 * Alle mogelijke moves implementeren (rokade, pion aan eind)(lastmoved,lastmove bijhouden)
 * Slaan voor Pionnen (en passant)
 * Detectie van schaak en stalemate
 * Rokade: Toren mee verzetten
 * Console implementeren (messages en later commands)
 * klok laten switchen bij zet
-* History van zetten bijhouden
 * Eigen file formaat (als tussenstap)
-* History area: Weergeven van historiek (chess_area_history.py)
-    +bord terugzetten naar vorige toestand (multiple undo)
+* History area: bord terugzetten naar vorige toestand (multiple undo)
 * Uittesten background routines
 * Uittesten dialog boxes
 * Evaluatie: class voor stukken + class voor positie (modifier)
