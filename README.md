@@ -20,10 +20,8 @@ Project: schaakbot.
 * Rokade: Toren mee verzetten
 * Console implementeren (messages en later commands)
 * klok laten switchen bij zet
-* History van zetten bijhouden
 * Eigen file formaat (als tussenstap)
-* History area: Weergeven van historiek (chess_area_history.py)
-    +bord terugzetten naar vorige toestand (multiple undo)
+* History area: bord terugzetten naar vorige toestand (multiple undo)
 * Uittesten background routines
 * Uittesten dialog boxes
 * Evaluatie: class voor stukken + class voor positie (modifier)
