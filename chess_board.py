@@ -103,6 +103,7 @@ class ChessBoard(EventHandler):
         self.player = PLAYER1
         self.turn_nr = 1
         self.move_nr = 1
+        self.h.resetTo(0)
     def resize(self):
         rect = pg.Rect(self.parent.rect)
         infomargin = 30

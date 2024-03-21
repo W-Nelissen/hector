@@ -26,13 +26,15 @@ class ListBox(Button):
             self.drawRow(win, i)
 
 class ListBoxHistory(ListBox):
-    def __init__(self, parent, rect):
+    def __init__(self, parent, rect, h):
         super().__init__(parent, rect)
+        self.h = h
 
     def drawRow(self, win, i):
         ListBox.drawRow(self, win, i)
-        if self.listobjects:
-            if len(self.listobjects) > i*2:
-                self.write_string(win,self.listobjects[i*2].get_string(), WHITE, self._rowrect.x + 6, self._rowrect.centery, "LEFT")
-            if len(self.listobjects) > i*2 + 1:
-                self.write_string(win,self.listobjects[i*2 + 1].get_string(), DKGREY, self._rowrect.right - 6, self._rowrect.centery, "RIGHT")
+        moves = self.h.moves
+        if moves:
+            if len(moves) > i*2:
+                self.write_string(win, moves[i*2].get_string(), WHITE, self._rowrect.x + 6, self._rowrect.centery, "LEFT")
+            if len(moves) > i*2 + 1:
+                self.write_string(win, moves[i*2 + 1].get_string(), DKGREY, self._rowrect.right - 6, self._rowrect.centery, "RIGHT")

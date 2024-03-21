@@ -37,3 +37,5 @@ class H_Move():
         self.moves = []
     def add(self, turn_nr, move_nr, square1, square2):
         self.moves.append(h_Move(turn_nr, move_nr, square1, square2))
+    def resetTo(self, move_nr):
+        self.moves = [m for m in self.moves if m.move_nr <= move_nr]
