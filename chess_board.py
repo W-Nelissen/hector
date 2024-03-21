@@ -205,6 +205,29 @@ class ChessBoard(EventHandler):
                 square=self.Square(x,y)
                 square.isValidMove = False
 
+    def getKingSquare(self, BW):
+        for x in range(8):
+            for y in range(8):
+                square=self.Square(x,y)
+                if square.piece:
+                    if square.piece.BW == BW and square.piece.letter == "k":
+                        return square
+
+
+
+    def IsCheck(self, BW):
+        kingsquare = self.getKingSquare(BW)
+        for x in range(8):
+            for y in range(8):
+                square=self.Square(x,y)
+                if self.isValidMove(square.x, square.y, kingsquare.x, kingsquare.y):
+                    return True
+    
+    def IsCheckmate(self):
+        pass
+    def IsStalemate(self):
+        pass
+
     def AddPiece(self, strPos, piece):
         x="abcdefgh".find(strPos[0])
         y="12345678".find(strPos[1])
@@ -224,10 +247,14 @@ class ChessBoard(EventHandler):
         if endsquare.piece:
             self.removePiece(endsquare)
         endsquare.setPiece(startsquare.piece)
-        startsquare.piece = None
         if not self.silent:
             sound.play_mp3("assets/sounds/move-self.mp3")
-        self.h.add(self.turn_nr, self.move_nr, startsquare, endsquare)
+        if startsquare.piece.BW == cp.CP_BLACK:
+            isCheck = self.IsCheck(cp.CP_WHITE)
+        else:
+            isCheck = self.IsCheck(cp.CP_BLACK)
+        self.h.add(self.turn_nr, self.move_nr, startsquare, endsquare, isCheck)
+        startsquare.piece = None
         if self.flip:
             self.flipBoard()
         self.startNextMove()

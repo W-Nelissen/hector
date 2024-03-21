@@ -18,6 +18,7 @@ class ChessPiece(Button):
         self.repeat_moves = 0
         self.moveIsCapture = True
         self.BW = black_or_white
+        self.letter = "x"
         if black_or_white == CP_BLACK:
             self.image_name = B_name
         else:
@@ -72,7 +73,7 @@ class ChessPiece(Button):
 class ChessPieceKing(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_King.png", "assets/pieces/W_King.png")
-
+        self.letter = "k"
         # Koning mag maar 1 stapje zetten, dus repeat_moves = 1
         self.repeat_moves = 1
         # Alle mogelijke moves, zonder rekening te houden met het bord
@@ -81,6 +82,7 @@ class ChessPieceKing(ChessPiece):
 class ChessPieceQueen(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_Queen.png", "assets/pieces/W_Queen.png")
+        self.letter = "q"
         # Koningin mag maar meerde stapjes zetten, dus repeat_moves = 99 (schaakbord mag dus maximum  100x100 zijn)
         self.repeat_moves = 99
         # Alle mogelijke moves, zonder rekening te houden met het bord
@@ -90,6 +92,7 @@ class ChessPieceQueen(ChessPiece):
 class ChessPieceKnight(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_Knight.png", "assets/pieces/W_Knight.png")
+        self.letter = "n"
         self.repeat_moves = 1
         # 8 mogelijke zetten van het paard
         self.possible_moves=[(2, 1),(1,2),(-1, 2),(-2,1),(-2,-1),(-1,-2),(1,-2),(2,-1)]
@@ -97,6 +100,7 @@ class ChessPieceKnight(ChessPiece):
 class ChessPieceBishop(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_Bishop.png", "assets/pieces/W_Bishop.png")
+        self.letter = "b"
         self.repeat_moves = 99
         # Enkel schuin bewegen
         self.possible_moves = [(1, 1), (-1, 1), (-1, -1), (1, -1)]
@@ -104,6 +108,7 @@ class ChessPieceBishop(ChessPiece):
 class ChessPieceTower(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_Tower.png", "assets/pieces/W_Tower.png")
+        self.letter = "t"
         self.repeat_moves = 99
         # Enkel recht bewegen
         self.possible_moves=[(0,-1),(1,0),(0,1),(-1,0)]
@@ -111,6 +116,7 @@ class ChessPieceTower(ChessPiece):
 class ChessPiecePawn(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_Pawn.png", "assets/pieces/W_Pawn.png")
+        self.letter = ""
         # 2 stapjes vooruit indien nog niet bewogen
         # Standaard 1 stapje voorruit
         # getRepeat() overruled deze waarde, ze heeft dus geen belang.

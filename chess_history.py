@@ -11,14 +11,17 @@ class h_SquarePiece():
         self.piece = piece
 
 class h_Move():
-    def __init__(self, turn_nr, move_nr, square1, square2):
+    def __init__(self, turn_nr, move_nr, square1, square2, isCheck):
         self.turn_nr = turn_nr
         self.move_nr = move_nr
         self.square1 = square1
         self.square2 = square2
-
+        self.isCheck = isCheck
     def get_string(self):
-        return "abcdefgh"[self.square1.x] + "12345678"[self.square1.y] + " - " + "abcdefgh"[self.square2.x] + "12345678"[self.square2.y]
+        if not self.isCheck:
+            return "abcdefgh"[self.square1.x] + "12345678"[self.square1.y] + " - " + "abcdefgh"[self.square2.x] + "12345678"[self.square2.y]
+        else:
+            return "abcdefgh"[self.square1.x] + "12345678"[self.square1.y] + " - " + "abcdefgh"[self.square2.x] + "12345678"[self.square2.y] + " Check"
 
 
 class H_PiecePosition():
@@ -35,7 +38,7 @@ class H_SquarePiece():
 class H_Move():
     def __init__(self):
         self.moves = []
-    def add(self, turn_nr, move_nr, square1, square2):
-        self.moves.append(h_Move(turn_nr, move_nr, square1, square2))
+    def add(self, turn_nr, move_nr, square1, square2, isCheck):
+        self.moves.append(h_Move(turn_nr, move_nr, square1, square2, isCheck))
     def resetTo(self, move_nr):
         self.moves = [m for m in self.moves if m.move_nr <= move_nr]
