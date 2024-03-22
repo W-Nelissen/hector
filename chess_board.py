@@ -137,14 +137,13 @@ class ChessBoard(EventHandler):
             for y in range(8):
                 # Garbage collection ruimt het huidige piece op
                 self.Square(x,y).piece = None
-
+ 
     def isOnBoard(self, x, y):
         return -1 < x < 8 and -1 < y < 8
  
-    def isValidMove(self, x1, y1, x2, y2):
+    def isSemiValidMove(self, startsquare, endsquare):
         validmove = False
-        startsquare = self.Square(x1, y1)
-        endsquare = self.Square(x2, y2)
+        x1,y1 = startsquare.x,startsquare.y
         chesspiece = startsquare.piece
         if chesspiece is None:
             return False
@@ -193,11 +192,23 @@ class ChessBoard(EventHandler):
                                 validmove = True
         return validmove
 
-    def showValidMoves(self, x0, y0):
+    def isValidMove(self, startsquare, endsquare):
+        isValidmove = self.isSemiValidMove(startsquare, endsquare)
+        p1 = startsquare.piece
+        p2 = endsquare.piece
+        endsquare.piece = p1
+        startsquare.piece = None
+        if self.isCheck(self.player):
+            isValidmove = False
+        startsquare.piece = p1
+        endsquare.piece = p2      
+        return isValidmove
+
+    def showValidMoves(self, startsquare):
         for x in range(8):
             for y in range(8):
                 square=self.Square(x,y)
-                square.isValidMove = self.isValidMove(x0, y0, x, y)                    
+                square.isValidMove = self.isValidMove(startsquare, square)                    
 
     def clearValidMoves(self):
         for x in range(8):
@@ -215,17 +226,17 @@ class ChessBoard(EventHandler):
 
 
 
-    def IsCheck(self, BW):
+    def isCheck(self, BW):
         kingsquare = self.getKingSquare(BW)
         for x in range(8):
             for y in range(8):
                 square=self.Square(x,y)
-                if self.isValidMove(square.x, square.y, kingsquare.x, kingsquare.y):
+                if self.isSemiValidMove(square, kingsquare):
                     return True
     
-    def IsCheckmate(self):
+    def isCheckmate(self):
         pass
-    def IsStalemate(self):
+    def isStalemate(self):
         pass
 
     def AddPiece(self, strPos, piece):
@@ -250,9 +261,9 @@ class ChessBoard(EventHandler):
         if not self.silent:
             sound.play_mp3("assets/sounds/move-self.mp3")
         if startsquare.piece.BW == cp.CP_BLACK:
-            isCheck = self.IsCheck(cp.CP_WHITE)
+            isCheck = self.isCheck(cp.CP_WHITE)
         else:
-            isCheck = self.IsCheck(cp.CP_BLACK)
+            isCheck = self.isCheck(cp.CP_BLACK)
         self.h.add(self.turn_nr, self.move_nr, startsquare, endsquare, isCheck)
         startsquare.piece = None
         if self.flip:

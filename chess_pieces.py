@@ -35,7 +35,7 @@ class ChessPiece(Button):
     def action_pressed(self):
         chessboard = self.parent
         if self.BW == chessboard.player:
-            chessboard.showValidMoves(self.square.x, self.square.y)
+            chessboard.showValidMoves(self.square)
         else:
             self.isPressed = False
             if not chessboard.silent:

@@ -25,7 +25,7 @@ class ListBox(Button):
         for i in range(self.maxrows):
             self.drawRow(win, i)
 
-class ListBoxHistory(ListBox):
+class ListBox_MoveHistory(ListBox):
     def __init__(self, parent, rect, h):
         super().__init__(parent, rect)
         self.h = h
