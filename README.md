@@ -13,7 +13,7 @@ Project: schaakbot.
 * 20 Maart: Bijhouden en tonen van historiek van zetten
 * 20 Maart: Kleurenschema verbeterd
 * 20 Maart: Optie om steeds wit onderaan te hebben of steeds te flippen bij zet
-* 22 Maart: Check of je schaak staat en onmogelijk om jezelf schaak te zetten
+* 23 Maart: Check of je schaak of schaakmat staat en onmogelijk om jezelf schaak te zetten
 ## TODO: (in willekeurige volgorde)
 * Alle mogelijke moves implementeren (rokade, pion aan eind)(lastmoved,lastmove bijhouden)
 * Slaan voor Pionnen (en passant)
