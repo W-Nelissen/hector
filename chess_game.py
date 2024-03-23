@@ -7,6 +7,7 @@ from game_area_players import GameAreaPlayers
 from game_area_controls import GameAreaControls
 from chess_board import ChessBoard
 from chess_clock import ChessClock
+from ai_calculator import ai
 
 class ChessGame(Game):
     """
@@ -27,6 +28,8 @@ class ChessGame(Game):
         self.chess_clock = ChessClock(self.player_area)
 
         self.history_area = GameAreaHistory(self, HIST_RECT)
+
+        self.ai = ai()
     def update_data(self):
         # whatever needs to change (animation,...)
         pass

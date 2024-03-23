@@ -61,8 +61,8 @@ class BoardSquare(EventHandler):
             self.piece.MOUSEBUTTONMOVE(mouse_x, mouse_y)
 
 NOPLAYER = 0
-PLAYER1 = 1
-PLAYER2 = 2
+PLAYER1 = cp.CP_WHITE
+PLAYER2 = cp.CP_BLACK
 class ChessBoard(EventHandler):
     """
     Het chessboard bevat vakjes (BoardSquare). 
@@ -104,6 +104,7 @@ class ChessBoard(EventHandler):
             self.player = PLAYER2
         else:
             self.player = PLAYER1
+    
     def ResetMoves(self):
         self.player = PLAYER1
         self.turn_nr = 1
@@ -337,6 +338,10 @@ class ChessBoard(EventHandler):
             c = BLACK
         
         self.write_string(win, str_aan_zet, c, self.rect.x, self.rect.top - 20, "LEFT")
+
+        witscore = self.parent.game.ai.calc_board(self, PLAYER1)
+        str_white_value = "Score Wit is " + str(witscore)
+        self.write_string(win, str_white_value, c, self.rect.right, self.rect.top - 20, "RIGHT")
 
         for x in range(8):
             for y in range(8):
