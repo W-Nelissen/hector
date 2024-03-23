@@ -17,12 +17,17 @@ class h_Move():
         self.square1 = square1
         self.square2 = square2
         self.isCheck = isCheck
+        self.checkmate = 0
     def get_string(self):
-        if not self.isCheck:
-            return "abcdefgh"[self.square1.x] + "12345678"[self.square1.y] + " - " + "abcdefgh"[self.square2.x] + "12345678"[self.square2.y]
+        if not self.checkmate:
+            if not self.isCheck:
+                return "abcdefgh"[self.square1.x] + "12345678"[self.square1.y] + " - " + "abcdefgh"[self.square2.x] + "12345678"[self.square2.y]
+            else:
+                return "abcdefgh"[self.square1.x] + "12345678"[self.square1.y] + " - " + "abcdefgh"[self.square2.x] + "12345678"[self.square2.y] + " Check"
         else:
-            return "abcdefgh"[self.square1.x] + "12345678"[self.square1.y] + " - " + "abcdefgh"[self.square2.x] + "12345678"[self.square2.y] + " Check"
-
+            return "abcdefgh"[self.square1.x] + "12345678"[self.square1.y] + " - " + "abcdefgh"[self.square2.x] + "12345678"[self.square2.y] + " Mate"
+    def setCheckmate(self, checkmate):
+        self.checkmate = checkmate
 
 class H_PiecePosition():
     def __init__(self):

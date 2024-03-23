@@ -60,6 +60,7 @@ class BoardSquare(EventHandler):
         if self.piece:
             self.piece.MOUSEBUTTONMOVE(mouse_x, mouse_y)
 
+NOPLAYER = 0
 PLAYER1 = 1
 PLAYER2 = 2
 class ChessBoard(EventHandler):
@@ -80,6 +81,7 @@ class ChessBoard(EventHandler):
         # Een 8x8 matrix waar elk element overeen komt met een vierkantje op het bord
         self.squares = [[BoardSquare(self,x,y) for y in range(8)] for x in range(8)]  # Lege 8x8-matrix
         self.player = None
+        self.checkmate = NOPLAYER
         self.turn_nr = 0
         self.move_nr = 0
         # Wanneer de game area met het schaakbord wordt vergroot of verkleind moet de afmetingen van het schaakbord worden herrekend
@@ -93,6 +95,9 @@ class ChessBoard(EventHandler):
         self.move_nr +=1
         if self.player == PLAYER1:
             self.turn_nr +=1
+        if self.isCheckmate(self.player):
+            self.checkmate = self.player
+            self.h.moves[-1].setCheckmate(self.checkmate)
 
     def switchPlayer(self):
         if self.player == PLAYER1:
@@ -104,6 +109,7 @@ class ChessBoard(EventHandler):
         self.turn_nr = 1
         self.move_nr = 1
         self.h.resetTo(0)
+        self.checkmate = NOPLAYER
     def resize(self):
         rect = pg.Rect(self.parent.rect)
         infomargin = 30
@@ -234,8 +240,22 @@ class ChessBoard(EventHandler):
                 if self.isSemiValidMove(square, kingsquare):
                     return True
     
-    def isCheckmate(self):
-        pass
+    def isCheckmate(self, BW):
+        isCheckmate = False
+        if self.isCheck(BW):
+            isCheckmate = True
+            for x in range(8):
+                for y in range(8):
+                    square=self.Square(x,y)
+                    if square.piece:
+                        if square.piece.BW == BW:
+                            for x2 in range(8):
+                                for y2 in range(8):
+                                        endsquare=self.Square(x2,y2)
+                                        if self.isValidMove(square, endsquare):
+                                            return False
+        return isCheckmate
+
     def isStalemate(self):
         pass
 
@@ -309,6 +329,13 @@ class ChessBoard(EventHandler):
         if self.player == PLAYER1:
             str_aan_zet = "Wit is aan zet"
             c = WHITE
+        if self.checkmate == PLAYER1:
+            str_aan_zet = "Wit staat schaakmat"
+            c = WHITE
+        elif self.checkmate == PLAYER2:
+            str_aan_zet = "Zwart staat schaakmat"
+            c = BLACK
+        
         self.write_string(win, str_aan_zet, c, self.rect.x, self.rect.top - 20, "LEFT")
 
         for x in range(8):
