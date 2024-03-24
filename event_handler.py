@@ -77,9 +77,12 @@ class EventHandler:
         else:
             return y
 
-    def write_string(self, win, strText, text_color, x, y, mode="LEFT"):
-        #self.font = pg.font.Font("freesansbold.ttf", 24)
-        self.font = pg.font.Font(self.game_style.font, self.game_style.size)
+    def write_string(self, win, strText, text_color, x, y, mode="LEFT", size=0):
+        if size == 0:
+            size = self.game_style.size
+        elif size < 0:
+            size = self.game_style.size + size
+        self.font = pg.font.Font(self.game_style.font, size)
         text_surface = self.font.render(strText, True, text_color)
         width = text_surface.get_width()
         height = text_surface.get_height()

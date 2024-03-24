@@ -276,17 +276,17 @@ class ChessBoard(EventHandler):
         square.piece = None
 
     def movePiece(self, startsquare, endsquare):
+        pieceColor = startsquare.piece.BW
         if endsquare.piece:
             self.removePiece(endsquare)
         endsquare.setPiece(startsquare.piece)
-        if not self.silent:
-            sound.play_mp3("assets/sounds/move-self.mp3")
-        if startsquare.piece.BW == cp.CP_BLACK:
+        startsquare.piece = None
+        if not self.silent: sound.play_mp3("assets/sounds/move-self.mp3")
+        if pieceColor == cp.CP_BLACK:
             isCheck = self.isCheck(cp.CP_WHITE)
         else:
             isCheck = self.isCheck(cp.CP_BLACK)
         self.h.add(self.turn_nr, self.move_nr, startsquare, endsquare, isCheck)
-        startsquare.piece = None
         if self.flip:
             self.flipBoard()
         self.startNextMove()
@@ -337,11 +337,15 @@ class ChessBoard(EventHandler):
             str_aan_zet = "Zwart staat schaakmat"
             c = BLACK
         
-        self.write_string(win, str_aan_zet, c, self.rect.x, self.rect.top - 20, "LEFT")
+        self.write_string(win, str_aan_zet, c, self.rect.x, self.rect.top - 20, "LEFT",-2)
 
         witscore = self.parent.game.ai.calc_board(self, PLAYER1)
         str_white_value = "Score Wit is " + str(witscore)
-        self.write_string(win, str_white_value, c, self.rect.right, self.rect.top - 20, "RIGHT")
+        self.write_string(win, str_white_value, WHITE, self.rect.right, self.rect.top - 30, "RIGHT", 12)
+        zwartscore = self.parent.game.ai.calc_board(self, PLAYER2)
+        str_black_value = "Score Zwart is " + str(zwartscore)
+        self.write_string(win, str_black_value, BLACK, self.rect.right, self.rect.top - 10, "RIGHT", 12)
+
 
         for x in range(8):
             for y in range(8):

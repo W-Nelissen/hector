@@ -1,5 +1,5 @@
 from ai_default_tables import *
-
+import chess_pieces as cp
 
 class calc_rule:
     def __init__(self):
@@ -30,9 +30,26 @@ class cr_piece_value(calc_rule):
 class cr_piece_position_value(calc_rule):
     def __init__(self):
         super().__init__()
-
-    def calc(self, cb):
-        pass
+        self.values = []
+        self.values.append(PAWN_TABLE)
+        self.values.append(KNIGHT_TABLE)
+        self.values.append(BISHOP_TABLE)
+        self.values.append(ROOK_TABLE)
+        self.values.append(QUEEN_TABLE)
+        self.values.append(KING_TABLE)
+    def calc(self, cb, BW):
+        value = 0
+        for x in range(8):
+            for y in range(8):
+                square=cb.Square(x,y)
+                if square.piece:
+                    if BW == square.piece.BW:
+                        ID = square.piece.ID
+                        if BW == cp.CP_BLACK:
+                            value += self.values[ID][y][x]
+                        else:
+                            value += self.values[ID][7 - y][x]
+        return value
 
 class ai_rule:
     def __init__(self, rule, weight):
@@ -42,6 +59,7 @@ class ai:
     def __init__(self):
         self.rules = []
         self.rules.append(ai_rule(cr_piece_value(), 1))
+        self.rules.append(ai_rule(cr_piece_position_value(), 1))
     def calc_board(self, cb, BW):
         value = 0
         for ai_rule in self.rules:
