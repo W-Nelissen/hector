@@ -14,6 +14,7 @@ Project: schaakbot.
 * 20 Maart: Kleurenschema verbeterd
 * 20 Maart: Optie om steeds wit onderaan te hebben of steeds te flippen bij zet
 * 23 Maart: Check of je schaak of schaakmat staat en onmogelijk om jezelf schaak te zetten
+* 24 Maart: Berekening bordwaarde (Regel 1: stukwaarde; Regel 2: positiewaarde)
 ## TODO: (in willekeurige volgorde)
 * Alle mogelijke moves implementeren (rokade, pion aan eind)(lastmoved,lastmove bijhouden)
 * Slaan voor Pionnen (en passant)
