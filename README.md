@@ -26,6 +26,5 @@ Project: schaakbot.
 * History area: bord terugzetten naar vorige toestand (multiple undo)
 * Uittesten background routines
 * Uittesten dialog boxes
-* Evaluatie: class voor stukken + class voor positie (modifier)
 * Alpha-Beta pruning routine
 * PC laten spelen tegen speler
