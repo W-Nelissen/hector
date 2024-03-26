@@ -15,13 +15,13 @@ Project: schaakbot.
 * 20 Maart: Optie om steeds wit onderaan te hebben of steeds te flippen bij zet
 * 23 Maart: Check of je schaak of schaakmat staat en onmogelijk om jezelf schaak te zetten
 * 24 Maart: Berekening bordwaarde (Regel 1: stukwaarde; Regel 2: positiewaarde)
+* 26 Maart: Klok start bij zet 1 en switcht na elke zet
 ## TODO: (in willekeurige volgorde)
 * Alle mogelijke moves implementeren (rokade, pion aan eind)(lastmoved,lastmove bijhouden)
 * Slaan voor Pionnen (en passant)
 * Detectie stalemate
 * Rokade: Toren mee verzetten
 * Console implementeren (messages en later commands)
-* klok laten switchen bij zet
 * Eigen file formaat (als tussenstap)
 * History area: bord terugzetten naar vorige toestand (multiple undo)
 * Uittesten background routines
