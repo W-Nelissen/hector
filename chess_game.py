@@ -24,9 +24,9 @@ class ChessGame(Game):
         self.control_area = GameAreaControls(self, CONTROL_RECT)
 
         # We definieren de datastructuren van ons spel
-        self.chess_board = ChessBoard(self.chessboard_area)
         self.chess_clock = ChessClock(self.player_area)
-
+        self.chess_board = ChessBoard(self.chessboard_area)
+        
         self.history_area = GameAreaHistory(self, HIST_RECT)
 
         self.ai = ai()

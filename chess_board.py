@@ -5,7 +5,6 @@ import chess_pieces as cp
 import pygame as pg
 import handle_sound as sound
 from chess_history import *
-
 # Een schaakbord heeft donkere en lichte vakjes
 DARKSQUARE = 1
 LIGHTSQUARE = 2
@@ -92,6 +91,7 @@ class ChessBoard(EventHandler):
 
     def startNextMove(self):
         self.switchPlayer()
+        self.parent.game.chess_clock.switchClock(self.player)
         self.move_nr +=1
         if self.player == PLAYER1:
             self.turn_nr +=1
@@ -111,6 +111,8 @@ class ChessBoard(EventHandler):
         self.move_nr = 1
         self.h.resetTo(0)
         self.checkmate = NOPLAYER
+        self.parent.game.chess_clock.resetClock()
+        
     def resize(self):
         rect = pg.Rect(self.parent.rect)
         infomargin = 30
