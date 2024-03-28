@@ -87,13 +87,13 @@ class ai:
             return self.transposvalue[self.transpostable.index(transposcode)]
         #print("new")
 
-        if player == maximizing_player:
+        if maximizing_player:
             max_eval = float('-inf')
             for move in board.possible_moves(player):
-                endsquare, startsquare = move
+                startsquare, endsquare = move
                 p1, p2 = startsquare.piece, endsquare.piece
                 endsquare.piece, startsquare.piece = p1, None
-                eval = self.alpha_beta_search(board, depth - 1, alpha, beta, player, board.opponent(player))
+                eval = self.alpha_beta_search(board, depth - 1, alpha, beta, board.opponent(player), False)
                 startsquare.piece, endsquare.piece = p1, p2
                 max_eval = max(max_eval, eval)
                 alpha = max(alpha, eval)
@@ -103,10 +103,10 @@ class ai:
         else:
             min_eval = float('inf')
             for move in board.possible_moves(player):
-                endsquare, startsquare = move
+                startsquare, endsquare = move
                 p1, p2 = startsquare.piece, endsquare.piece
                 endsquare.piece, startsquare.piece = p1, None
-                eval = self.alpha_beta_search(board, depth - 1, alpha, beta, player, board.opponent(player))
+                eval = self.alpha_beta_search(board, depth - 1, alpha, beta, board.opponent(player), True)
                 startsquare.piece, endsquare.piece = p1, p2
                 min_eval = min(min_eval, eval)
                 beta = min(beta, eval)
@@ -125,10 +125,10 @@ class ai:
         alpha = float('-inf')
         beta = float('inf')
         for move in board.possible_moves(player):
-            endsquare, startsquare = move
+            startsquare, endsquare = move
             p1, p2 = startsquare.piece, endsquare.piece
             endsquare.piece, startsquare.piece = p1, None
-            eval = self.alpha_beta_search(board, depth - 1, alpha, beta, player, board.opponent(player))
+            eval = self.alpha_beta_search(board, depth - 1, alpha, beta, board.opponent(player), False)
             startsquare.piece, endsquare.piece = p1, p2
             if eval > max_eval:
                 max_eval = eval
