@@ -19,6 +19,8 @@ class ChessPiece(Button):
         self.moveIsCapture = True
         self.BW = black_or_white
         self.letter = "x"
+        self.code = "x" if black_or_white == CP_BLACK else "X"
+        
         self.ID = 0
         if black_or_white == CP_BLACK:
             self.image_name = B_name
@@ -75,6 +77,7 @@ class ChessPieceKing(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_King.png", "assets/pieces/W_King.png")
         self.letter = "k"
+        self.code = "k" if black_or_white == CP_BLACK else "K"
         self.ID = 5
         # Koning mag maar 1 stapje zetten, dus repeat_moves = 1
         self.repeat_moves = 1
@@ -85,6 +88,7 @@ class ChessPieceQueen(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_Queen.png", "assets/pieces/W_Queen.png")
         self.letter = "q"
+        self.code = "q" if black_or_white == CP_BLACK else "Q"
         self.ID = 4
         # Koningin mag maar meerde stapjes zetten, dus repeat_moves = 99 (schaakbord mag dus maximum  100x100 zijn)
         self.repeat_moves = 99
@@ -96,6 +100,7 @@ class ChessPieceKnight(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_Knight.png", "assets/pieces/W_Knight.png")
         self.letter = "n"
+        self.code = "n" if black_or_white == CP_BLACK else "N"
         self.ID = 1
         self.repeat_moves = 1
         # 8 mogelijke zetten van het paard
@@ -105,6 +110,7 @@ class ChessPieceBishop(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_Bishop.png", "assets/pieces/W_Bishop.png")
         self.letter = "b"
+        self.code = "b" if black_or_white == CP_BLACK else "B"
         self.ID = 2
         self.repeat_moves = 99
         # Enkel schuin bewegen
@@ -114,6 +120,7 @@ class ChessPieceTower(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_Tower.png", "assets/pieces/W_Tower.png")
         self.letter = "t"
+        self.code = "t" if black_or_white == CP_BLACK else "B"
         self.ID = 3
         self.repeat_moves = 99
         # Enkel recht bewegen
@@ -123,6 +130,7 @@ class ChessPiecePawn(ChessPiece):
     def __init__(self, parent, black_or_white):
         ChessPiece.__init__(self, parent, black_or_white, "assets/pieces/B_Pawn.png", "assets/pieces/W_Pawn.png")
         self.letter = ""
+        self.code = "p" if black_or_white == CP_BLACK else "P"
         self.ID = 0
         # 2 stapjes vooruit indien nog niet bewogen
         # Standaard 1 stapje voorruit

@@ -15,6 +15,7 @@ class BoardSquare(EventHandler):
         EventHandler.__init__(self, parent)
         self.x = x
         self.y = y
+        self.code = "abcdefgh"[x] + "12345678"[y]
         self.isValidMove = False
         if (self.x + self.y) % 2 == 0:
             self.type = LIGHTSQUARE

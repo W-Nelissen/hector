@@ -69,11 +69,24 @@ class ai:
             value += ai_rule.rule.calc(cb, BW) * ai_rule.weight
         return value
 
-
+    def transposcode(self, cb):
+        strcode = ""
+        for square in cb.allsquares:
+            if square.piece:
+                strcode = strcode + square.code + square.piece.code
+        return strcode
+        
     def alpha_beta_search(self, board, depth, alpha, beta, player, maximizing_player):
+        returnVal = 0
         if depth == 0 or board.isCheckmate(player):
             return self.calc_board(board, player)
         
+        transposcode = self.transposcode(board)
+        if transposcode in self.transpostable:
+            #print("duplicate",transposcode)
+            return self.transposvalue[self.transpostable.index(transposcode)]
+        #print("new")
+
         if player == maximizing_player:
             max_eval = float('-inf')
             for move in board.possible_moves(player):
@@ -86,7 +99,7 @@ class ai:
                 alpha = max(alpha, eval)
                 if beta <= alpha:
                     break  # Beta cut-off
-            return max_eval
+            returnVal = max_eval
         else:
             min_eval = float('inf')
             for move in board.possible_moves(player):
@@ -99,9 +112,14 @@ class ai:
                 beta = min(beta, eval)
                 if beta <= alpha:
                     break  # Alpha cut-off
-            return min_eval
+            returnVal = min_eval
+        self.transpostable.append(transposcode)
+        self.transposvalue.append(returnVal)
+        return returnVal
 
     def find_best_move(self, board, depth, player):
+        self.transpostable = []
+        self.transposvalue = []
         best_move = None
         max_eval = float('-inf')
         alpha = float('-inf')
