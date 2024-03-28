@@ -60,8 +60,59 @@ class ai:
         self.rules = []
         self.rules.append(ai_rule(cr_piece_value(), 1))
         self.rules.append(ai_rule(cr_piece_position_value(), 1))
+        self.transpostable = []
+        self.transposvalue = []
+
     def calc_board(self, cb, BW):
         value = 0
         for ai_rule in self.rules:
             value += ai_rule.rule.calc(cb, BW) * ai_rule.weight
         return value
+
+
+    def alpha_beta_search(self, board, depth, alpha, beta, player, maximizing_player):
+        if depth == 0 or board.isCheckmate(player):
+            return self.calc_board(board, player)
+        
+        if player == maximizing_player:
+            max_eval = float('-inf')
+            for move in board.possible_moves(player):
+                endsquare, startsquare = move
+                p1, p2 = startsquare.piece, endsquare.piece
+                endsquare.piece, startsquare.piece = p1, None
+                eval = self.alpha_beta_search(board, depth - 1, alpha, beta, player, board.opponent(player))
+                startsquare.piece, endsquare.piece = p1, p2
+                max_eval = max(max_eval, eval)
+                alpha = max(alpha, eval)
+                if beta <= alpha:
+                    break  # Beta cut-off
+            return max_eval
+        else:
+            min_eval = float('inf')
+            for move in board.possible_moves(player):
+                endsquare, startsquare = move
+                p1, p2 = startsquare.piece, endsquare.piece
+                endsquare.piece, startsquare.piece = p1, None
+                eval = self.alpha_beta_search(board, depth - 1, alpha, beta, player, board.opponent(player))
+                startsquare.piece, endsquare.piece = p1, p2
+                min_eval = min(min_eval, eval)
+                beta = min(beta, eval)
+                if beta <= alpha:
+                    break  # Alpha cut-off
+            return min_eval
+
+    def find_best_move(self, board, depth, player):
+        best_move = None
+        max_eval = float('-inf')
+        alpha = float('-inf')
+        beta = float('inf')
+        for move in board.possible_moves(player):
+            endsquare, startsquare = move
+            p1, p2 = startsquare.piece, endsquare.piece
+            endsquare.piece, startsquare.piece = p1, None
+            eval = self.alpha_beta_search(board, depth - 1, alpha, beta, player, board.opponent(player))
+            startsquare.piece, endsquare.piece = p1, p2
+            if eval > max_eval:
+                max_eval = eval
+                best_move = move
+        return best_move

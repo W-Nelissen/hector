@@ -79,6 +79,7 @@ class ChessBoard(EventHandler):
         self.silent = False
         # Een 8x8 matrix waar elk element overeen komt met een vierkantje op het bord
         self.squares = [[BoardSquare(self,x,y) for y in range(8)] for x in range(8)]  # Lege 8x8-matrix
+        self.allsquares = [self.squares[x][y] for y in range(8) for x in range(8)]
         self.player = None
         self.checkmate = NOPLAYER
         self.turn_nr = 0
@@ -98,6 +99,10 @@ class ChessBoard(EventHandler):
         if self.isCheckmate(self.player):
             self.checkmate = self.player
             self.h.moves[-1].setCheckmate(self.checkmate)
+        elif self.player == PLAYER2:
+            depth = 2
+            startsquare, endsquare = self.parent.game.ai.find_best_move(self, depth, self.player)
+            self.movePiece(startsquare, endsquare)
 
     def switchPlayer(self):
         if self.player == PLAYER1:
@@ -105,6 +110,12 @@ class ChessBoard(EventHandler):
         else:
             self.player = PLAYER1
     
+    def opponent(self, player):
+        if player == PLAYER1:
+            return PLAYER2
+        else:
+            return PLAYER1
+
     def ResetMoves(self):
         self.player = PLAYER1
         self.turn_nr = 1
@@ -142,10 +153,8 @@ class ChessBoard(EventHandler):
         self.resize()
 
     def ClearBoard(self):
-        for x in range(8):
-            for y in range(8):
-                # Garbage collection ruimt het huidige piece op
-                self.Square(x,y).piece = None
+        for square in self.allsquares:
+            square.piece = None
  
     def isOnBoard(self, x, y):
         return -1 < x < 8 and -1 < y < 8
@@ -203,64 +212,102 @@ class ChessBoard(EventHandler):
 
     def isValidMove(self, startsquare, endsquare):
         isValidmove = self.isSemiValidMove(startsquare, endsquare)
-        p1 = startsquare.piece
-        p2 = endsquare.piece
-        endsquare.piece = p1
-        startsquare.piece = None
+        p1, p2 = startsquare.piece, endsquare.piece
+        endsquare.piece, startsquare.piece = p1, None
         if self.isCheck(self.player):
             isValidmove = False
-        startsquare.piece = p1
-        endsquare.piece = p2      
+        startsquare.piece, endsquare.piece = p1, p2
         return isValidmove
 
+    def appendMoveIfNotSelfCheck(self, moves, startsquare, endsquare):
+        p1, p2 = startsquare.piece, endsquare.piece
+        endsquare.piece, startsquare.piece = p1, None
+        if not self.isCheck(self.player):
+            moves.append((startsquare, endsquare))
+        startsquare.piece, endsquare.piece = p1, p2
+
+
     def showValidMoves(self, startsquare):
-        for x in range(8):
-            for y in range(8):
-                square=self.Square(x,y)
-                square.isValidMove = self.isValidMove(startsquare, square)                    
+        for square in self.allsquares:
+            square.isValidMove = self.isValidMove(startsquare, square)                    
 
     def clearValidMoves(self):
-        for x in range(8):
-            for y in range(8):
-                square=self.Square(x,y)
-                square.isValidMove = False
+        for square in self.allsquares:
+            square.isValidMove = False
 
     def getKingSquare(self, BW):
-        for x in range(8):
-            for y in range(8):
-                square=self.Square(x,y)
-                if square.piece:
-                    if square.piece.BW == BW and square.piece.letter == "k":
-                        return square
-
-
+        for square in self.allsquares:
+            if square.piece and square.piece.BW == BW and square.piece.letter == "k":
+                return square
 
     def isCheck(self, BW):
         kingsquare = self.getKingSquare(BW)
-        for x in range(8):
-            for y in range(8):
-                square=self.Square(x,y)
-                if self.isSemiValidMove(square, kingsquare):
-                    return True
+        for square in self.allsquares:
+            if self.isSemiValidMove(square, kingsquare):
+                return True
+        return False
     
     def isCheckmate(self, BW):
         isCheckmate = False
         if self.isCheck(BW):
             isCheckmate = True
-            for x in range(8):
-                for y in range(8):
-                    square=self.Square(x,y)
-                    if square.piece:
-                        if square.piece.BW == BW:
-                            for x2 in range(8):
-                                for y2 in range(8):
-                                        endsquare=self.Square(x2,y2)
-                                        if self.isValidMove(square, endsquare):
-                                            return False
+            for square in self.allsquares:
+                if square.piece:
+                    if square.piece.BW == BW:
+                        for endsquare in self.allsquares:
+                            if self.isValidMove(square, endsquare):
+                                return False
         return isCheckmate
 
     def isStalemate(self):
         pass
+
+    def possible_moves(self, player):
+        validmoves = []
+        for startsquare in self.allsquares:
+            x1, y1 = startsquare.x, startsquare.y
+            chesspiece = startsquare.piece
+            if chesspiece and chesspiece.BW == player:
+                for move in chesspiece.possible_moves:
+                    new_x , new_y = x1, y1
+                    steps = chesspiece.getRepeat()
+                    while steps > 0:
+                        steps -= 1
+                        if chesspiece.BW == cp.CP_WHITE:
+                            new_x = new_x + move[0]
+                            new_y = new_y + move[1]
+                        else:
+                            new_x = new_x - move[0]
+                            new_y = new_y - move[1]
+                        if not self.isOnBoard(new_x, new_y):
+                            break
+                        square = self.Square(new_x, new_y)
+                        piece = square.piece
+                        if piece is None:
+                            self.appendMoveIfNotSelfCheck(validmoves, startsquare, square)
+                        else:
+                            if (not chesspiece.BW == piece.BW) and chesspiece.moveIsCapture:
+                                self.appendMoveIfNotSelfCheck(validmoves, startsquare, square)
+                            steps = False
+    
+                if chesspiece.capture_moves:
+                    for move in chesspiece.capture_moves:
+                        new_x = x1
+                        new_y = y1
+                        if chesspiece.BW == cp.CP_WHITE:
+                            new_x = new_x + move[0]
+                            new_y = new_y + move[1]
+                        else:
+                            new_x = new_x - move[0]
+                            new_y = new_y - move[1]
+                        if self.isOnBoard(new_x, new_y):
+                            square = self.Square(new_x, new_y)
+                            piece = square.piece
+                            if piece is not None:
+                                if not chesspiece.BW == piece.BW:
+                                    self.appendMoveIfNotSelfCheck(validmoves, startsquare, square)
+        return validmoves
+
 
     def AddPiece(self, strPos, piece):
         x="abcdefgh".find(strPos[0])
@@ -349,15 +396,11 @@ class ChessBoard(EventHandler):
         self.write_string(win, str_black_value, BLACK, self.rect.right, self.rect.top - 10, "RIGHT", 12)
 
 
-        for x in range(8):
-            for y in range(8):
-                square=self.Square(x,y)
-                square.draw(win)
-                if square.piece:
-                    square.piece.draw(win)
-        for x in range(8):
-            for y in range(8):
-                square=self.Square(x,y)
-                if square.piece:
-                    square.piece.draw_dragged(win)
-        
+        for square in self.allsquares:
+            square.draw(win)
+            if square.piece:
+                square.piece.draw(win)
+        for square in self.allsquares:
+            if square.piece:
+                square.piece.draw_dragged(win)        
+
