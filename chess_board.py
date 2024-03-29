@@ -13,8 +13,7 @@ LIGHTSQUARE = 2
 class BoardSquare(EventHandler):
     def __init__(self, parent, x, y): #x en y gaan van 0 tot 7
         EventHandler.__init__(self, parent)
-        self.x = x
-        self.y = y
+        self.x, self.y = x, y
         self.code = "abcdefgh"[x] + "12345678"[y]
         self.isValidMove = False
         if (self.x + self.y) % 2 == 0:
@@ -167,17 +166,16 @@ class ChessBoard(EventHandler):
         if chesspiece is None:
             return False
         for move in chesspiece.possible_moves:
-            new_x = x1
-            new_y = y1
+            new_x, new_y = x1, y1
             steps = chesspiece.getRepeat()
             while steps > 0:
                 steps -= 1
                 if chesspiece.BW == cp.CP_WHITE:
-                    new_x = new_x + move[0]
-                    new_y = new_y + move[1]
+                    new_x += move[0]
+                    new_y += move[1]
                 else:
-                    new_x = new_x - move[0]
-                    new_y = new_y - move[1]
+                    new_x -= move[0]
+                    new_y -= move[1]
                 if self.isOnBoard(new_x, new_y):
                     square = self.Square(new_x, new_y)
                     piece = square.piece
@@ -194,14 +192,13 @@ class ChessBoard(EventHandler):
                     steps = False
         if chesspiece.capture_moves:
             for move in chesspiece.capture_moves:
-                new_x = x1
-                new_y = y1
+                new_x, new_y = x1, y1
                 if chesspiece.BW == cp.CP_WHITE:
-                    new_x = new_x + move[0]
-                    new_y = new_y + move[1]
+                    new_x += move[0]
+                    new_y += move[1]
                 else:
-                    new_x = new_x - move[0]
-                    new_y = new_y - move[1]
+                    new_x -= move[0]
+                    new_y -= move[1]
                 if self.isOnBoard(new_x, new_y):
                     square = self.Square(new_x, new_y)
                     piece = square.piece
@@ -226,7 +223,6 @@ class ChessBoard(EventHandler):
         if not self.isCheck(self.player):
             moves.append((startsquare, endsquare))
         startsquare.piece, endsquare.piece = p1, p2
-
 
     def showValidMoves(self, startsquare):
         for square in self.allsquares:
@@ -270,16 +266,16 @@ class ChessBoard(EventHandler):
             chesspiece = startsquare.piece
             if chesspiece and chesspiece.BW == player:
                 for move in chesspiece.possible_moves:
-                    new_x , new_y = x1, y1
+                    new_x, new_y = x1, y1
                     steps = chesspiece.getRepeat()
                     while steps > 0:
                         steps -= 1
                         if chesspiece.BW == cp.CP_WHITE:
-                            new_x = new_x + move[0]
-                            new_y = new_y + move[1]
+                            new_x += move[0]
+                            new_y += move[1]
                         else:
-                            new_x = new_x - move[0]
-                            new_y = new_y - move[1]
+                            new_x -= move[0]
+                            new_y -= move[1]
                         if not self.isOnBoard(new_x, new_y):
                             break
                         square = self.Square(new_x, new_y)
@@ -293,20 +289,18 @@ class ChessBoard(EventHandler):
     
                 if chesspiece.capture_moves:
                     for move in chesspiece.capture_moves:
-                        new_x = x1
-                        new_y = y1
+                        new_x, new_y = x1, y1
                         if chesspiece.BW == cp.CP_WHITE:
-                            new_x = new_x + move[0]
-                            new_y = new_y + move[1]
+                            new_x += move[0]
+                            new_y += move[1]
                         else:
-                            new_x = new_x - move[0]
-                            new_y = new_y - move[1]
+                            new_x -= move[0]
+                            new_y -= move[1]
                         if self.isOnBoard(new_x, new_y):
                             square = self.Square(new_x, new_y)
                             piece = square.piece
-                            if piece is not None:
-                                if not chesspiece.BW == piece.BW:
-                                    self.appendMoveIfNotSelfCheck(validmoves, startsquare, square)
+                            if piece and not chesspiece.BW == piece.BW:
+                                self.appendMoveIfNotSelfCheck(validmoves, startsquare, square)
         return validmoves
 
 
