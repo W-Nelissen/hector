@@ -16,6 +16,8 @@ Project: schaakbot.
 * 23 Maart: Check of je schaak of schaakmat staat en onmogelijk om jezelf schaak te zetten
 * 24 Maart: Berekening bordwaarde (Regel 1: stukwaarde; Regel 2: positiewaarde)
 * 26 Maart: Klok start bij zet 1 en switcht na elke zet
+* 28 Maart: PC speelt zwart via alpha-beta pruning routine
+* 28 Maart: AI optimalisatie met transpositietabel (+ bug fix pruning routine)
 ## TODO: (in willekeurige volgorde)
 * Alle mogelijke moves implementeren (rokade, pion aan eind)(lastmoved,lastmove bijhouden)
 * Slaan voor Pionnen (en passant)
@@ -26,5 +28,3 @@ Project: schaakbot.
 * History area: bord terugzetten naar vorige toestand (multiple undo)
 * Uittesten background routines
 * Uittesten dialog boxes
-* Alpha-Beta pruning routine
-* PC laten spelen tegen speler
