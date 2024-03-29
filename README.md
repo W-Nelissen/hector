@@ -19,6 +19,7 @@ Project: schaakbot.
 * 28 Maart: PC speelt zwart via alpha-beta pruning routine
 * 28 Maart: AI optimalisatie met transpositietabel (+ bug fix pruning routine)
 ## TODO: (in willekeurige volgorde)
+* PC moves via background routine om klok en user events te laten doorgaan
 * Alle mogelijke moves implementeren (rokade, pion aan eind)(lastmoved,lastmove bijhouden)
 * Slaan voor Pionnen (en passant)
 * Detectie stalemate
