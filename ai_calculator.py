@@ -1,17 +1,23 @@
 from ai_default_tables import *
 import chess_pieces as cp
+import numpy as n
 
 class calc_rule:
     def __init__(self):
-        pass
+        self.calc_level = False
+
 
     def calc(self, cb):
         pass
+
+    def calc_diff(self, cb, move):
+        return 0
 
 class cr_piece_value(calc_rule):
     def __init__(self):
         super().__init__()
         self.values = DEFAULT_PIECE_VALUES
+        self.calc_level = 99
     def calc(self, cb, BW):
         """
         Calculates the total piece value of 1 colour
@@ -23,6 +29,18 @@ class cr_piece_value(calc_rule):
                 value += self.values[ID]
         return value
 
+    def calc_diff(self, cb, BW, move):
+        startsquare, endsquare = move
+        taken_piece = endsquare.piece
+        
+        if taken_piece:
+            ID = taken_piece.ID
+            if BW != taken_piece.BW: 
+                return self.values[ID]
+            else:
+                return -self.values[ID]
+        return 0
+    
 class cr_piece_position_value(calc_rule):
     def __init__(self):
         super().__init__()
@@ -69,7 +87,7 @@ class ai:
                 strcode = strcode + square.code + square.piece.code
         return strcode
         
-    def alpha_beta_search(self, board, depth, alpha, beta, player, maximizing_player):
+    def alpha_beta_search(self, board, rule_eval, depth, alpha, beta, player, maximizing_player):
         returnVal = 0
         #TODO: is_game_over
         if depth == 0 or board.isCheckmate(player):
@@ -85,10 +103,11 @@ class ai:
         if maximizing_player:
             max_eval = float('-inf')
             for move in board.possible_moves(player):
+                self.calc_rule_eval(board, rule_eval, player, move, depth - 1)
                 startsquare, endsquare = move
                 p1, p2 = startsquare.piece, endsquare.piece
                 endsquare.piece, startsquare.piece = p1, None
-                eval = self.alpha_beta_search(board, depth - 1, alpha, beta, board.opponent(player), False)
+                eval = self.alpha_beta_search(board, rule_eval, depth - 1, alpha, beta, board.opponent(player), False)
                 startsquare.piece, endsquare.piece = p1, p2
                 max_eval = max(max_eval, eval)
                 #fail-soft set alpha before break
@@ -99,10 +118,11 @@ class ai:
         else:
             min_eval = float('inf')
             for move in board.possible_moves(player):
+                self.calc_rule_eval(board, rule_eval, player, move, depth - 1)
                 startsquare, endsquare = move
                 p1, p2 = startsquare.piece, endsquare.piece
                 endsquare.piece, startsquare.piece = p1, None
-                eval = self.alpha_beta_search(board, depth - 1, alpha, beta, board.opponent(player), True)
+                eval = self.alpha_beta_search(board, rule_eval, depth - 1, alpha, beta, board.opponent(player), True)
                 startsquare.piece, endsquare.piece = p1, p2
                 min_eval = min(min_eval, eval)
                 #fail-soft beta before break
@@ -113,8 +133,20 @@ class ai:
         self.transpostable.append(transposcode)
         self.transposvalue.append(returnVal)
         return returnVal
-
+    
+    def calc_rule_eval(self, cb, rule_eval, BW, move, depth, isTopLevel=False):
+        for i in range(len(self.rules)):
+            ai_rule = self.rules[i]
+            if isTopLevel and ai_rule.rule.calc_level == 99:
+                rule_eval[i][depth-1] = ai_rule.rule.calc(cb, BW)
+            elif ai_rule.rule.calc_level == depth:
+                rule_eval[i][depth-1] = ai_rule.rule.calc(cb, BW)
+            elif ai_rule.rule.calc_level > depth:
+                rule_eval[i][depth-1] = rule_eval[i][depth] + ai_rule.rule.calc_diff(cb, BW, move)
+    
     def find_best_move(self, board, depth, player):
+        rule_eval = n.zeros((len(self.rules), depth))
+        self.calc_rule_eval(board, rule_eval, player, None, depth, True)
         self.transpostable = []
         self.transposvalue = []
         best_move = None
@@ -122,10 +154,11 @@ class ai:
         alpha = float('-inf')
         beta = float('inf')
         for move in board.possible_moves(player):
+            self.calc_rule_eval(board, rule_eval, player, move, depth - 1)
             startsquare, endsquare = move
             p1, p2 = startsquare.piece, endsquare.piece
             endsquare.piece, startsquare.piece = p1, None
-            eval = self.alpha_beta_search(board, depth - 1, alpha, beta, board.opponent(player), False)
+            eval = self.alpha_beta_search(board, rule_eval, depth - 1, alpha, beta, board.opponent(player), False)
             startsquare.piece, endsquare.piece = p1, p2
             if eval > max_eval:
                 max_eval = eval

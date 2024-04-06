@@ -1,6 +1,7 @@
 from game_constants import *
 from chess_game import ChessGame
 import pygame as pg
+
 pg.init()
 
 #GAME SPECIFIC BLOCK
