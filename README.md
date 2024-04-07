@@ -16,10 +16,11 @@ Project: schaakbot.
 * 23 Maart: Check of je schaak of schaakmat staat en onmogelijk om jezelf schaak te zetten
 * 24 Maart: Berekening bordwaarde (Regel 1: stukwaarde; Regel 2: positiewaarde)
 * 26 Maart: Klok start bij zet 1 en switcht na elke zet
-* 28 Maart: PC speelt zwart via alpha-beta pruning routine (maximum diepte = 3)
-* 28 Maart: AI optimalisatie met transpositietabel (maximum diepte = 5)
+* 28 Maart: PC speelt zwart via alpha-beta pruning routine (maximum diepte = 3 voor live game)
+* 28 Maart: AI optimalisatie met transpositietabel (maximum diepte = 4 voor live game)
+* 06 April: Voorbereiding differentiaalmode (nog niet toegepast)
 ## TODO: (in willekeurige volgorde)
-* differentiaalmode voor alpha-beta pruning (hopelijk maximum diepte 7)
+* differentiaalmode voor alpha-beta pruning (hopelijk maximum diepte 6 voor live game)
 * PC moves via background routine om klok en user events te laten doorgaan
 * Alle mogelijke moves implementeren (rokade, pion aan eind)(lastmoved,lastmove bijhouden)
 * Slaan voor Pionnen (en passant)
