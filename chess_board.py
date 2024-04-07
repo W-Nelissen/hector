@@ -100,7 +100,7 @@ class ChessBoard(EventHandler):
             self.checkmate = self.player
             self.h.moves[-1].setCheckmate(self.checkmate)
         elif self.player == PLAYER2:
-            depth = 3
+            depth = 2
             startsquare, endsquare = self.parent.game.ai.find_best_move(self, depth, self.player)
             self.movePiece(startsquare, endsquare)
 
